@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             StringBuffer sbParams = new StringBuffer();
             sbParams.append("__VIEWSTATE=").append(URLEncoder.encode("dDwyODE2NTM0OTg7Oz4I/BV0f3bU3Jxu0+rIKYuntoTTNg==" , "GBK"));
             sbParams.append("&txtUserName=").append("3114005890");
-            sbParams.append("&TextBox2=").append("******");
+            sbParams.append("&TextBox2=").append("a6585086s");
             sbParams.append("&txtSecretCode=").append(et.getText().toString());
             sbParams.append("&RadioButtonList1=").append(URLEncoder.encode("学生" , "GBK"));
             sbParams.append("&Button1=").append("");
