@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.zzh.gdut.gduthelper.util.NetworkConnection;
+import com.zzh.gdut.gduthelper.util.callback.ByteListener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,16 +44,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         imgCode = (ImageView) findViewById(R.id.img_code);
         et = (EditText) findViewById(R.id.et);
+        Log.e(TAG, "onCreate: ");
     }
 
     public void getCode(View view) {
-        new Thread() {
+       /* new Thread() {
             @Override
             public void run() {
                 super.run();
                 getImageCode();
             }
-        }.start();
+        }.start();*/
+        Log.e(TAG, "getCode: " );
+        NetworkConnection connection = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).connectTimeOut(5000).readTimeOut(5000).build();
+        connection.get("http://jwgl.gdut.edu.cn/CheckCode.aspx", new ByteListener() {
+            @Override
+            public void setBytesSuccess(byte[] bytes) {
+                Log.e(TAG, "setImageBytes: " + bytes.length );
+                bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
+                handler.sendEmptyMessage(0x123);
+            }
+
+            @Override
+            public void setBytesFail(String fail) {
+
+            }
+
+        });
     }
 
     private void getImageCode() {

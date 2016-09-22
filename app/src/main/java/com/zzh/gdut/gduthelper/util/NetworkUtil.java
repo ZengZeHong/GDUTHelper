@@ -2,7 +2,7 @@ package com.zzh.gdut.gduthelper.util;
 
 /**
  * Created by ZengZeHong on 2016/9/21.
- * 网络请求类
+ * 网络请求类，对NetworkConnection进行二次封装
  */
 
 public class NetworkUtil {

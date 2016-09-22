@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Created by ZengZeHong on 2016/9/21.
- * 请求类
+ * 请求体
  */
 
 public class PostBody {
@@ -20,11 +20,27 @@ public class PostBody {
         values = builder.values;
     }
 
+    public List<String> getKeys() {
+        return keys;
+    }
+
+    public void setKeys(List<String> keys) {
+        this.keys = keys;
+    }
+
+    public List<String> getValues() {
+        return values;
+    }
+
+    public void setValues(List<String> values) {
+        this.values = values;
+    }
+
     public int size() {
         return keys.size();
     }
 
-    private final class Builder {
+    public static final class Builder {
         private final List<String> keys = new ArrayList<>();
         private final List<String> values = new ArrayList<>();
 
@@ -33,11 +49,15 @@ public class PostBody {
 
         /**
          * 添加请求参数
+         *
          * @param key
          * @param value
          * @return
          */
         public Builder addParams(String key, String value) {
+            //为空则报空指针
+            if (key == null || value == null)
+                throw new NullPointerException();
             if (keys != null && values != null) {
                 keys.add(key);
                 values.add(value);
