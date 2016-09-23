@@ -11,11 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zzh.gdut.gduthelper.util.NetworkUtil;
-import com.zzh.gdut.gduthelper.util.PostBody;
-import com.zzh.gdut.gduthelper.util.callback.ByteListener;
-import com.zzh.gdut.gduthelper.util.callback.ProgressListener;
-import com.zzh.gdut.gduthelper.util.callback.ResultListener;
+import com.zzh.gdut.gduthelper.networkutil.NetworkUtil;
+import com.zzh.gdut.gduthelper.networkutil.PostBody;
+import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;

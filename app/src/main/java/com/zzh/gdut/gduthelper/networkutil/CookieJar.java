@@ -1,4 +1,4 @@
-package com.zzh.gdut.gduthelper.util;
+package com.zzh.gdut.gduthelper.networkutil;
 
 import android.util.Log;
 

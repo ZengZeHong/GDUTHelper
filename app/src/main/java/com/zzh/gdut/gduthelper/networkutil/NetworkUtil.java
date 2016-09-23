@@ -1,10 +1,10 @@
-package com.zzh.gdut.gduthelper.util;
+package com.zzh.gdut.gduthelper.networkutil;
 
 import android.util.Log;
 
-import com.zzh.gdut.gduthelper.util.callback.ByteListener;
-import com.zzh.gdut.gduthelper.util.callback.ProgressListener;
-import com.zzh.gdut.gduthelper.util.callback.ResultListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
 
 import java.io.IOException;
 import java.net.CookieStore;

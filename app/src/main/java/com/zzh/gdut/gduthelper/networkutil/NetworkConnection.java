@@ -1,11 +1,11 @@
-package com.zzh.gdut.gduthelper.util;
+package com.zzh.gdut.gduthelper.networkutil;
 
 import android.util.Log;
 
-import com.zzh.gdut.gduthelper.util.callback.ByteListener;
-import com.zzh.gdut.gduthelper.util.callback.Callback;
-import com.zzh.gdut.gduthelper.util.callback.ProgressListener;
-import com.zzh.gdut.gduthelper.util.callback.ResultListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.Callback;
+import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
+import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -181,11 +181,7 @@ public class NetworkConnection implements Callback {
                         //初始化进度
                         if (progressListener != null)
                             progressListener.onUpdate(0, httpURLConnection.getContentLength(), false);
-                        //初始化定时
-                    //    ConnectionTimer timer = new ConnectionTimer(httpURLConnection);
-                    //   timer.start();
                         while ((len = in.read(buff)) != -1) {
-                      //      timer.reset();
                             out.write(buff, 0, len);
                             //下载过程中的进度
                             if (progressListener != null)
