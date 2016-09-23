@@ -6,5 +6,6 @@ package com.zzh.gdut.gduthelper.util.callback;
 
 public interface ByteListener {
     void setBytesSuccess(byte[] bytes);
+
     void setBytesFail(String fail);
 }

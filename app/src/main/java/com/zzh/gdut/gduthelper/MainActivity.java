@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zzh.gdut.gduthelper.util.NetworkConnection;
+import com.zzh.gdut.gduthelper.util.NetworkUtil;
+import com.zzh.gdut.gduthelper.util.PostBody;
 import com.zzh.gdut.gduthelper.util.callback.ByteListener;
+import com.zzh.gdut.gduthelper.util.callback.ProgressListener;
+import com.zzh.gdut.gduthelper.util.callback.ResultListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,22 +58,32 @@ public class MainActivity extends AppCompatActivity {
                 getImageCode();
             }
         }.start();*/
-        Log.e(TAG, "getCode: " );
-        NetworkConnection connection = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).connectTimeOut(5000).readTimeOut(5000).build();
-        connection.get("http://jwgl.gdut.edu.cn/CheckCode.aspx", new ByteListener() {
+        Log.e(TAG, "getCode: ");
+        PostBody postBody = new PostBody.Builder().addParams("userId", "1").addParams("password", "111111").build();
+        NetworkUtil.getInstance().post("http://115.28.64.167/spg/user/login", postBody, new ResultListener() {
             @Override
-            public void setBytesSuccess(byte[] bytes) {
-                Log.e(TAG, "setImageBytes: " + bytes.length );
-                bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
-                handler.sendEmptyMessage(0x123);
+            public void onResultSuccess(String success) {
+                Log.e(TAG, "onResultSuccess: " + success);
             }
 
             @Override
-            public void setBytesFail(String fail) {
-
+            public void onResultFail(String fail) {
+                Log.e(TAG, "onResultFail: " + fail);
             }
-
         });
+        /*NetworkConnection connection = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).cookieManager(new CookieManager()).connectTimeOut(5000).readTimeOut(5000).build();
+        PostBody postBody = new PostBody.Builder().build();
+        connection.post("http://115.28.64.167/spg/user/login", postBody, new ResultListener() {
+            @Override
+            public void onResultSuccess(String success) {
+                Log.e(TAG, "onResultSuccess: " + success );
+            }
+
+            @Override
+            public void onResultFail(String fail) {
+
+            }
+        });*/
     }
 
     private void getImageCode() {
@@ -93,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -120,11 +133,11 @@ public class MainActivity extends AppCompatActivity {
             OutputStream out = conn.getOutputStream();
             Log.e(TAG, "login: 3");
             StringBuffer sbParams = new StringBuffer();
-            sbParams.append("__VIEWSTATE=").append(URLEncoder.encode("dDwyODE2NTM0OTg7Oz4I/BV0f3bU3Jxu0+rIKYuntoTTNg==" , "GBK"));
+            sbParams.append("__VIEWSTATE=").append(URLEncoder.encode("dDwyODE2NTM0OTg7Oz4I/BV0f3bU3Jxu0+rIKYuntoTTNg==", "GBK"));
             sbParams.append("&txtUserName=").append("3114005890");
             sbParams.append("&TextBox2=").append("a6585086s");
             sbParams.append("&txtSecretCode=").append(et.getText().toString());
-            sbParams.append("&RadioButtonList1=").append(URLEncoder.encode("学生" , "GBK"));
+            sbParams.append("&RadioButtonList1=").append(URLEncoder.encode("学生", "GBK"));
             sbParams.append("&Button1=").append("");
             sbParams.append("&lbLanguage=").append("");
             sbParams.append("&hidPdrs=").append("");
@@ -137,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             InputStreamReader isr = new InputStreamReader(is, "GBK");
             BufferedReader bufferReader = new BufferedReader(isr);
             String inputLine = "";
-            Log.e(TAG, "login: location" + conn.getHeaderField("Location") );
+            Log.e(TAG, "login: location" + conn.getHeaderField("Location"));
             while ((inputLine = bufferReader.readLine()) != null) {
                 resultData += inputLine + "\n";
             }
@@ -146,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
     }
-
 
 
     /**
@@ -202,12 +214,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void get(View view) {
-        new Thread() {
+        NetworkUtil.getInstance().get("http://img.my.csdn.net/uploads/201609/04/1472992660_6905.jpg", new ByteListener() {
+            @Override
+            public void setBytesSuccess(byte[] bytes) {
+                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                handler.sendEmptyMessage(0x123);
+            }
+
+            @Override
+            public void setBytesFail(String fail) {
+
+            }
+        }, new ProgressListener() {
+            @Override
+            public void onUpdate(long bytesRead, long contentLength, boolean done) {
+                Log.e(TAG, "onUpdate: " + bytesRead + ">>" + contentLength + ">>" + done);
+                Log.e(TAG, "progress: " + (bytesRead * 100) / contentLength);
+            }
+        });
+   /*     new Thread() {
             @Override
             public void run() {
                 super.run();
                 getURLResponse("http://jwgl.gdut.edu.cn/xs_main.aspx?xh=3114005890");
             }
-        }.start();
+        }.start();*/
     }
 }
