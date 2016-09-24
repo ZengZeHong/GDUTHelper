@@ -1,6 +1,6 @@
 package com.zzh.gdut.gduthelper.networkutil;
 
-import android.util.Log;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 
 import java.net.CookieManager;
 import java.net.CookieStore;
@@ -33,8 +33,7 @@ public abstract class CookieJar extends CookieManager {
     public boolean isCookieStoreNull(String url) {
         CookieStore cookieStore = getCookieStore();
         try {
-            Log.e(TAG, "isCookieStoreNull: " + cookieStore.get(new URI(url)).size());
-            if (cookieStore.get(new URI(url)).size() == 0)
+            if (cookieStore.get(new URI(AppConstants.URL_HOST)).size() == 0)
                 return true;
         } catch (URISyntaxException e) {
             e.printStackTrace();

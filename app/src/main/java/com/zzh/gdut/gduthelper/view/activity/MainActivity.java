@@ -12,11 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.zzh.gdut.gduthelper.R;
-import com.zzh.gdut.gduthelper.networkutil.NetworkUtil;
-import com.zzh.gdut.gduthelper.networkutil.PostBody;
-import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
-import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
-import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,39 +47,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getCode(View view) {
-       /* new Thread() {
+        new Thread() {
             @Override
             public void run() {
                 super.run();
                 getImageCode();
             }
-        }.start();*/
+        }.start();
         Log.e(TAG, "getCode: ");
-        PostBody postBody = new PostBody.Builder().addParams("userId", "1").addParams("password", "111111").build();
-        NetworkUtil.getInstance().post("http://115.28.64.167/spg/user/login", postBody, new ResultListener() {
-            @Override
-            public void onResultSuccess(String success) {
-                Log.e(TAG, "onResultSuccess: " + success);
-            }
 
-            @Override
-            public void onResultFail(String fail) {
-                Log.e(TAG, "onResultFail: " + fail);
-            }
-        });
-        /*NetworkConnection connection = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).cookieManager(new CookieManager()).connectTimeOut(5000).readTimeOut(5000).build();
-        PostBody postBody = new PostBody.Builder().build();
-        connection.post("http://115.28.64.167/spg/user/login", postBody, new ResultListener() {
-            @Override
-            public void onResultSuccess(String success) {
-                Log.e(TAG, "onResultSuccess: " + success );
-            }
 
-            @Override
-            public void onResultFail(String fail) {
-
-            }
-        });*/
     }
 
     private void getImageCode() {
@@ -215,30 +187,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void get(View view) {
-        NetworkUtil.getInstance().get("http://img.my.csdn.net/uploads/201609/04/1472992660_6905.jpg", new ByteListener() {
-            @Override
-            public void setBytesSuccess(byte[] bytes) {
-                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                handler.sendEmptyMessage(0x123);
-            }
 
-            @Override
-            public void setBytesFail(String fail) {
-                Log.e(TAG, "setBytesFail: " + fail );
-            }
-        }, new ProgressListener() {
-            @Override
-            public void onUpdate(long bytesRead, long contentLength, boolean done) {
-                Log.e(TAG, "onUpdate: " + bytesRead + ">>" + contentLength + ">>" + done);
-                Log.e(TAG, "progress: " + (bytesRead * 100) / contentLength);
-            }
-        });
-   /*     new Thread() {
+        new Thread() {
             @Override
             public void run() {
                 super.run();
                 getURLResponse("http://jwgl.gdut.edu.cn/xs_main.aspx?xh=3114005890");
             }
-        }.start();*/
+        }.start();
     }
 }

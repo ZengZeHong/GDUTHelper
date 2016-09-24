@@ -5,13 +5,16 @@ import android.util.Log;
 import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 
 import java.io.IOException;
 import java.net.CookieStore;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -31,9 +34,9 @@ public class NetworkUtil {
         @Override
         void setCookies(String url, HttpURLConnection httpURLConnection) {
             try {
-                URI uri = new URI(url);
-                Log.e(TAG, "run: uri " + uri.getPath());
-                this.put(new URI(url), httpURLConnection.getHeaderFields());
+                URI uri = new URI(new URL(url).getHost());
+                Log.e(TAG, "run: uri " + new URL(url).getHost());
+                this.put(new URI(AppConstants.URL_HOST), httpURLConnection.getHeaderFields());
                 CookieStore cookieStore = this.getCookieStore();
                 Log.e(TAG, "run: store size " + cookieStore.getCookies().size());
                 for (HttpCookie httpCookie : cookieStore.getCookies()) {
@@ -60,8 +63,11 @@ public class NetworkUtil {
             //获取之前CookieManager保存的Cookie;
             CookieStore cookieStore = getCookieStore();
             try {
-                return cookieStore.get(new URI(url));
+                Log.e(TAG, "getCookies: " + new URL(url).getHost() );
+                return cookieStore.get(new URI(AppConstants.URL_HOST));
             } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
             return null;

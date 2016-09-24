@@ -76,6 +76,8 @@ public class NetworkConnection implements Callback {
         httpURLConnection.setDoInput(doInput);
         httpURLConnection.setDoOutput(doOutput);
         httpURLConnection.setUseCaches(useCaches);
+        //取消重定向
+        httpURLConnection.setInstanceFollowRedirects(false);
         //添加请求头
         for (int i = 0; i < keys.size(); i++) {
             httpURLConnection.setRequestProperty(keys.get(i), values.get(i));
@@ -236,7 +238,6 @@ public class NetworkConnection implements Callback {
                 HttpURLConnection httpURLConnection = null;
                 try {
                     httpURLConnection = createConnection(url, "POST");
-                    httpURLConnection.setChunkedStreamingMode(0);
                     //Cookie处理
                     getCookie(url, httpURLConnection);
                     Log.e(TAG, "run: size" + postBody.size());
@@ -260,7 +261,7 @@ public class NetworkConnection implements Callback {
                     //成功响应
                     if (httpURLConnection.getResponseCode() == 200) {
                         in = httpURLConnection.getInputStream();
-                        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                        BufferedReader br = new BufferedReader(new InputStreamReader(in , "GB2312"));
                         String inputLine = "";
                         StringBuffer sb = new StringBuffer();
                         while ((inputLine = br.readLine()) != null) {
@@ -276,6 +277,7 @@ public class NetworkConnection implements Callback {
                     Log.e(TAG, "throw MalformedURLException");
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.e(TAG, "IOException " );
                     resultListener.onResultFail(ERROR_NETWORK);
                 } finally {
                     try {

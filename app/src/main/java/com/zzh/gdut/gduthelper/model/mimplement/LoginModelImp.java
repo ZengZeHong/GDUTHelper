@@ -23,15 +23,15 @@ public class LoginModelImp implements LoginModel {
         try {
             //添加登陆的请求参数
             PostBody postBody = new PostBody.Builder().
-                    addParams("__VIEWSTATE=", URLEncoder.encode("dDwyODE2NTM0OTg7Oz5ymfdcUjEae97aD7oAp0vekoeicw==", "GBK")).
-                    addParams("&txtUserName=", studentInfo.getAccount()).
-                    addParams("&TextBox2=", studentInfo.getPassword()).
-                    addParams("&txtSecretCode=", studentInfo.getImgCode()).
-                    addParams("&RadioButtonList1=", URLEncoder.encode("学生", "GBK")).
-                    addParams("&Button1=", "").
-                    addParams("&lbLanguage=", "").
-                    addParams("&hidPdrs=", "").
-                    addParams("&hidsc=", "").
+                    addParams("__VIEWSTATE", URLEncoder.encode("dDwyODE2NTM0OTg7Oz5ymfdcUjEae97aD7oAp0vekoeicw==", "GBK")).
+                    addParams("txtUserName", studentInfo.getAccount()).
+                    addParams("TextBox2", studentInfo.getPassword()).
+                    addParams("txtSecretCode", studentInfo.getImgCode()).
+                    addParams("RadioButtonList1", URLEncoder.encode("学生", "GBK")).
+                    addParams("Button1", "").
+                    addParams("lbLanguage", "").
+                    addParams("hidPdrs", "").
+                    addParams("hidsc", "").
                     build();
             NetworkUtil.getInstance().post(AppConstants.URL_LOGIN_FIRST, postBody, resultListener);
         } catch (UnsupportedEncodingException e) {
