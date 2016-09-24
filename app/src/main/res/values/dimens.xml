@@ -2,4 +2,12 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- TestView dimen -->
+    <dimen name="mainTestSize">16sp</dimen>
+    <dimen name="secondTestSize">14sp</dimen>
+
+    <!-- View margin and padding-->
+    <dimen name="viewMargin">10dp</dimen>
+    <dimen name="viewPadding">10dp</dimen>
 </resources>

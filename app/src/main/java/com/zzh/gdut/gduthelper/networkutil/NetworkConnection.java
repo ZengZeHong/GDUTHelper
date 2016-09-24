@@ -133,7 +133,7 @@ public class NetworkConnection implements Callback {
                     Log.e(TAG, "throw MalformedURLException");
                 } catch (IOException e) {
                     e.printStackTrace();
-                    resultListener.onResultFail(ERROR_EXCEPTION);
+                    resultListener.onResultFail(ERROR_NETWORK);
                     Log.e(TAG, "throw IOException");
                 } finally {
                     try {
@@ -201,7 +201,8 @@ public class NetworkConnection implements Callback {
                         byteListener.setBytesFail(httpURLConnection.getResponseCode() + ">>" + httpURLConnection.getResponseMessage());
                 } catch (IOException e) {
                     e.printStackTrace();
-                    byteListener.setBytesFail(ERROR_EXCEPTION);
+                    Log.e(TAG, "IOException 一般是断网的情况去请求");
+                    byteListener.setBytesFail(ERROR_NETWORK);
                 } finally {
                     try {
                         if (in != null)
@@ -253,9 +254,7 @@ public class NetworkConnection implements Callback {
                     }
 
                     //Cookie的管理
-                    String cookie1 = httpURLConnection.getHeaderField("Set-Cookie");
                     setCookie(url, httpURLConnection);
-                    Log.e(TAG, "run: cookie2222 : " + cookie1);
                     Log.e(TAG, "post: getResponseCode " + httpURLConnection.getResponseCode());
                     Log.e(TAG, "post: getResponseMessage " + httpURLConnection.getResponseMessage());
                     //成功响应
@@ -277,6 +276,7 @@ public class NetworkConnection implements Callback {
                     Log.e(TAG, "throw MalformedURLException");
                 } catch (IOException e) {
                     e.printStackTrace();
+                    resultListener.onResultFail(ERROR_NETWORK);
                 } finally {
                     try {
                         if (in != null)
@@ -353,7 +353,7 @@ public class NetworkConnection implements Callback {
                         byteListener.setBytesFail(httpURLConnection.getResponseCode() + ">>" + httpURLConnection.getResponseMessage());
                 } catch (IOException e) {
                     e.printStackTrace();
-                    byteListener.setBytesFail(ERROR_EXCEPTION);
+                    byteListener.setBytesFail(ERROR_NETWORK);
                 } finally {
                     try {
                         if (in != null)

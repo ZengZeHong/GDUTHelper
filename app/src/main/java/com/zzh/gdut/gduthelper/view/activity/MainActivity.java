@@ -1,4 +1,4 @@
-package com.zzh.gdut.gduthelper;
+package com.zzh.gdut.gduthelper.view.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.networkutil.NetworkUtil;
 import com.zzh.gdut.gduthelper.networkutil.PostBody;
 import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
@@ -223,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void setBytesFail(String fail) {
-
+                Log.e(TAG, "setBytesFail: " + fail );
             }
         }, new ProgressListener() {
             @Override
