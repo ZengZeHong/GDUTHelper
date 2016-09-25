@@ -36,7 +36,7 @@ public class NetworkUtil {
             try {
                 URI uri = new URI(new URL(url).getHost());
                 Log.e(TAG, "run: uri " + new URL(url).getHost());
-                this.put(new URI(AppConstants.URL_HOST), httpURLConnection.getHeaderFields());
+                this.put(new URI(AppConstants.URL_HOST_TWO), httpURLConnection.getHeaderFields());
                 CookieStore cookieStore = this.getCookieStore();
                 Log.e(TAG, "run: store size " + cookieStore.getCookies().size());
                 for (HttpCookie httpCookie : cookieStore.getCookies()) {
@@ -63,8 +63,8 @@ public class NetworkUtil {
             //获取之前CookieManager保存的Cookie;
             CookieStore cookieStore = getCookieStore();
             try {
-                Log.e(TAG, "getCookies: " + new URL(url).getHost() );
-                return cookieStore.get(new URI(AppConstants.URL_HOST));
+                Log.e(TAG, "getCookies: " + new URL(url).getHost());
+                return cookieStore.get(new URI(AppConstants.URL_HOST_TWO));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             } catch (MalformedURLException e) {
@@ -98,7 +98,7 @@ public class NetworkUtil {
      * @param resultListener
      */
     public void post(final String url, final PostBody postBody, final ResultListener resultListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(true).useCaches(false).connectTimeOut(5000).readTimeOut(5000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(true).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();
@@ -113,7 +113,7 @@ public class NetworkUtil {
      * @param byteListener
      */
     public void post(final String url, final PostBody postBody, final ByteListener byteListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(true).useCaches(false).connectTimeOut(5000).readTimeOut(5000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(true).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();
@@ -129,7 +129,7 @@ public class NetworkUtil {
      * @param progressListener 下载进度
      */
     public void post(final String url, final PostBody postBody, final ByteListener byteListener, ProgressListener progressListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(true).useCaches(false).connectTimeOut(5000).readTimeOut(5000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(true).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();
@@ -139,12 +139,13 @@ public class NetworkUtil {
 
     /**
      * 普通get请求
+     * 教务系统登陆后，后续操作都需要设置Reference 和 Host
      *
      * @param url
      * @param resultListener
      */
     public void get(final String url, final ResultListener resultListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).connectTimeOut(5000).readTimeOut(5000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).addHeader("HOST", AppConstants.URL_HOST_TWO).addHeader("Referer", AppConstants.URL_LOGIN_SECOND).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();
@@ -158,7 +159,7 @@ public class NetworkUtil {
      * @param byteListener
      */
     public void get(final String url, final ByteListener byteListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).connectTimeOut(5000).readTimeOut(5000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();
@@ -173,7 +174,7 @@ public class NetworkUtil {
      * @param progressListener 下载进度监听
      */
     public void get(final String url, final ByteListener byteListener, ProgressListener progressListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).connectTimeOut(5000).readTimeOut(5000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();

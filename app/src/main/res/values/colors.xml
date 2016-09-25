@@ -5,11 +5,12 @@
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorPrimaryLight">#BBDEFB</color>
     <color name="colorAccent">#FFE83B</color>
-    <color name="primaryTest">#212121</color>
-    <color name="secondaryTest">#757575</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#757575</color>
     <color name="dividerColor">#DBDBDB</color>
 
     <!-- Custom Color-->
     <color name="customWhite">#FFFFFF</color>
     <color name="customBlack">#333333</color>
+    <color name="customRed">#FFF52C2C</color>
 </resources>

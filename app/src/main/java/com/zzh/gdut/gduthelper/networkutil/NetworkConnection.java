@@ -1,5 +1,7 @@
 package com.zzh.gdut.gduthelper.networkutil;
 
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
@@ -32,6 +34,11 @@ public class NetworkConnection implements Callback {
     private static final String ERROR_NETWORK = "网络连接失败，请稍后再试";
     private static final String ERROR_SERVICE = "服务器异常，请稍后再试";
     private static final String ERROR_OVER_TIME = "网络连接超时，请检查您的网络";
+    private static final String STRING_CODE = "GB2312"; //中文编码
+    private static final int TAG_STRING_SUCCESS = 0x123;
+    private static final int TAG_STRING_FAIL = 0x124;
+    private static final int TAG_BYTE_SUCCESS = 0x125;
+    private static final int TAG_BYTE_FAIL = 0x126;
     //只列出一些常用的功能
     private int connectTimeOut;
     private int readTimeOut;
@@ -44,6 +51,41 @@ public class NetworkConnection implements Callback {
     //Cookie的管理
     private CookieJar cookieJar;
     private ProgressListener progressListener;
+    //下载过程
+    private ResultListener resultListener;
+    private ByteListener byteListener;
+    //下载后的返回值
+    private String strResult;
+    private byte[] bytesResult;
+    //可以在线程中进行数据更新
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TAG_STRING_SUCCESS: {
+                    if (resultListener != null)
+                        resultListener.onResultSuccess(strResult);
+                }
+                break;
+                case TAG_STRING_FAIL: {
+                    if (resultListener != null)
+                        resultListener.onResultFail(strResult);
+                }
+                break;
+                case TAG_BYTE_SUCCESS: {
+                    if (byteListener != null)
+                        byteListener.setBytesSuccess(bytesResult);
+                }
+                break;
+                case TAG_BYTE_FAIL: {
+                    if (byteListener != null)
+                        byteListener.setBytesFail(strResult);
+                }
+                break;
+            }
+        }
+    };
 
     public NetworkConnection(int connectTimeOut, int readTimeOut, boolean doInput, boolean doOutput, boolean useCaches, List<String> keys, List<String> values, CookieJar cookieJar) {
         this.connectTimeOut = connectTimeOut;
@@ -102,7 +144,7 @@ public class NetworkConnection implements Callback {
      */
     @Override
     public void get(final String url, final ResultListener resultListener) {
-
+        this.resultListener = resultListener;
         new Thread() {
             @Override
             public void run() {
@@ -116,26 +158,27 @@ public class NetworkConnection implements Callback {
                     httpURLConnection.connect();
                     Log.e(TAG, "get: getResponseCode " + httpURLConnection.getResponseCode());
                     Log.e(TAG, "get: getResponseMessage " + httpURLConnection.getResponseMessage());
-                    if (httpURLConnection.getResponseCode() == 200) {
-                        in = httpURLConnection.getInputStream();
-                        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                        String inputLine;
-                        StringBuffer sb = new StringBuffer();
-                        while ((inputLine = br.readLine()) != null) {
-                            sb.append(inputLine).append("\n");
-                        }
-                        //保存Cookie
-                        setCookie(url, httpURLConnection);
-                        resultListener.onResultSuccess(sb.toString());
-                    } else
-                        resultListener.onResultFail(httpURLConnection.getResponseCode() + ">>" + httpURLConnection.getResponseMessage());
+                    //响应
+                    in = httpURLConnection.getInputStream();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in, STRING_CODE));
+                    String inputLine;
+                    StringBuffer sb = new StringBuffer();
+                    while ((inputLine = br.readLine()) != null) {
+                        sb.append(inputLine).append("\n");
+                    }
+                    //保存Cookie
+                    setCookie(url, httpURLConnection);
+                    strResult = sb.toString();
+                    handler.sendEmptyMessage(TAG_STRING_SUCCESS);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                    resultListener.onResultFail(ERROR_EXCEPTION);
+                    strResult = ERROR_EXCEPTION;
+                    handler.sendEmptyMessage(TAG_STRING_FAIL);
                     Log.e(TAG, "throw MalformedURLException");
                 } catch (IOException e) {
                     e.printStackTrace();
-                    resultListener.onResultFail(ERROR_NETWORK);
+                    strResult = ERROR_NETWORK;
+                    handler.sendEmptyMessage(TAG_STRING_FAIL);
                     Log.e(TAG, "throw IOException");
                 } finally {
                     try {
@@ -143,6 +186,8 @@ public class NetworkConnection implements Callback {
                             in.close();
                     } catch (IOException e) {
                         e.printStackTrace();
+                        strResult = ERROR_NETWORK;
+                        handler.sendEmptyMessage(TAG_STRING_FAIL);
                     }
                     if (httpURLConnection != null)
                         httpURLConnection.disconnect();
@@ -160,7 +205,7 @@ public class NetworkConnection implements Callback {
      */
     @Override
     public void get(final String url, final ByteListener byteListener) {
-
+        this.byteListener = byteListener;
         new Thread() {
             @Override
             public void run() {
@@ -175,43 +220,42 @@ public class NetworkConnection implements Callback {
                     Log.e(TAG, "get: getResponseMessage " + httpURLConnection.getResponseMessage());
                     Log.e(TAG, "get: getConnectLenght " + httpURLConnection.getContentLength());
                     //下载成功
-                    if (httpURLConnection.getResponseCode() == 200) {
-                        in = httpURLConnection.getInputStream();
-                        ByteArrayOutputStream out = new ByteArrayOutputStream();
-                        byte[] buff = new byte[1024];
-                        int len;
-                        //初始化进度
+                    in = httpURLConnection.getInputStream();
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    byte[] buff = new byte[1024];
+                    int len;
+                    //初始化进度
+                    if (progressListener != null)
+                        progressListener.onUpdate(0, httpURLConnection.getContentLength(), false);
+                    while ((len = in.read(buff)) != -1) {
+                        out.write(buff, 0, len);
+                        //下载过程中的进度
                         if (progressListener != null)
-                            progressListener.onUpdate(0, httpURLConnection.getContentLength(), false);
-                        while ((len = in.read(buff)) != -1) {
-                            out.write(buff, 0, len);
-                            //下载过程中的进度
-                            if (progressListener != null)
-                                progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), false);
-                        }
-                        //下载完成
-                        if (progressListener != null)
-                            progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), true);
+                            progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), false);
+                    }
+                    //下载完成
+                    if (progressListener != null)
+                        progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), true);
 
-                        out.flush();
-                        out.close();
-                        //保存Cookie
-                        setCookie(url, httpURLConnection);
-                        byteListener.setBytesSuccess(out.toByteArray());
-                    } else
-                        //下载失败
-                        byteListener.setBytesFail(httpURLConnection.getResponseCode() + ">>" + httpURLConnection.getResponseMessage());
+                    out.flush();
+                    out.close();
+                    //保存Cookie
+                    setCookie(url, httpURLConnection);
+                    bytesResult = out.toByteArray();
+                    handler.sendEmptyMessage(TAG_BYTE_SUCCESS);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e(TAG, "IOException 一般是断网的情况去请求");
-                    byteListener.setBytesFail(ERROR_NETWORK);
+                    strResult = ERROR_NETWORK;
+                    handler.sendEmptyMessage(TAG_BYTE_FAIL);
                 } finally {
                     try {
                         if (in != null)
                             in.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        byteListener.setBytesFail(ERROR_EXCEPTION);
+                        strResult = ERROR_NETWORK;
+                        handler.sendEmptyMessage(TAG_BYTE_FAIL);
                     }
                     if (httpURLConnection != null)
                         httpURLConnection.disconnect();
@@ -229,7 +273,7 @@ public class NetworkConnection implements Callback {
      */
     @Override
     public void post(final String url, final PostBody postBody, final ResultListener resultListener) {
-
+        this.resultListener = resultListener;
         new Thread() {
             @Override
             public void run() {
@@ -258,33 +302,33 @@ public class NetworkConnection implements Callback {
                     setCookie(url, httpURLConnection);
                     Log.e(TAG, "post: getResponseCode " + httpURLConnection.getResponseCode());
                     Log.e(TAG, "post: getResponseMessage " + httpURLConnection.getResponseMessage());
-                    //成功响应
-                    if (httpURLConnection.getResponseCode() == 200) {
-                        in = httpURLConnection.getInputStream();
-                        BufferedReader br = new BufferedReader(new InputStreamReader(in , "GB2312"));
-                        String inputLine = "";
-                        StringBuffer sb = new StringBuffer();
-                        while ((inputLine = br.readLine()) != null) {
-                            sb.append(inputLine).append("\n");
-                        }
-                        resultListener.onResultSuccess(sb.toString());
-                    } else {
-                        resultListener.onResultFail(httpURLConnection.getContentEncoding() + ">>" + httpURLConnection.getResponseMessage());
+                    //成功响应,要根据状态码去
+                    in = httpURLConnection.getInputStream();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in, STRING_CODE));
+                    String inputLine = "";
+                    StringBuffer sb = new StringBuffer();
+                    while ((inputLine = br.readLine()) != null) {
+                        sb.append(inputLine).append("\n");
                     }
+                    strResult = sb.toString();
+                    handler.sendEmptyMessage(TAG_STRING_SUCCESS);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                    resultListener.onResultFail(ERROR_EXCEPTION);
+                    strResult = ERROR_EXCEPTION;
+                    handler.sendEmptyMessage(TAG_STRING_FAIL);
                     Log.e(TAG, "throw MalformedURLException");
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e(TAG, "IOException " );
-                    resultListener.onResultFail(ERROR_NETWORK);
+                    Log.e(TAG, "IOException ");
+                    strResult = ERROR_NETWORK;
+                    handler.sendEmptyMessage(TAG_STRING_FAIL);
                 } finally {
                     try {
                         if (in != null)
                             in.close();
                     } catch (IOException e) {
-                        resultListener.onResultFail(ERROR_EXCEPTION);
+                        strResult = ERROR_NETWORK;
+                        handler.sendEmptyMessage(TAG_STRING_FAIL);
                         e.printStackTrace();
                     }
                     if (httpURLConnection != null)
@@ -303,7 +347,7 @@ public class NetworkConnection implements Callback {
      */
     @Override
     public void post(final String url, final PostBody postBody, final ByteListener byteListener) {
-
+        this.byteListener = byteListener;
         new Thread() {
             @Override
             public void run() {
@@ -331,38 +375,39 @@ public class NetworkConnection implements Callback {
                     setCookie(url, httpURLConnection);
                     Log.e(TAG, "get: getResponseCode " + httpURLConnection.getResponseCode());
                     Log.e(TAG, "get: getResponseMessage " + httpURLConnection.getResponseMessage());
-                    if (httpURLConnection.getResponseCode() == 200) {
-                        in = httpURLConnection.getInputStream();
-                        ByteArrayOutputStream out = new ByteArrayOutputStream();
-                        byte[] buff = new byte[1024];
-                        int len;
-                        //初始化进度
+                    //响应
+                    in = httpURLConnection.getInputStream();
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    byte[] buff = new byte[1024];
+                    int len;
+                    //初始化进度
+                    if (progressListener != null)
+                        progressListener.onUpdate(0, httpURLConnection.getContentLength(), false);
+                    while ((len = in.read(buff)) != -1) {
+                        out.write(buff, 0, len);
                         if (progressListener != null)
-                            progressListener.onUpdate(0, httpURLConnection.getContentLength(), false);
-                        while ((len = in.read(buff)) != -1) {
-                            out.write(buff, 0, len);
-                            if (progressListener != null)
-                                progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), false);
-                        }
-                        if (progressListener != null)
-                            progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), true);
+                            progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), false);
+                    }
+                    if (progressListener != null)
+                        progressListener.onUpdate(out.size(), httpURLConnection.getContentLength(), true);
 
-                        out.flush();
-                        out.close();
-                        byteListener.setBytesSuccess(out.toByteArray());
-                    } else
-                        //失败
-                        byteListener.setBytesFail(httpURLConnection.getResponseCode() + ">>" + httpURLConnection.getResponseMessage());
+                    out.flush();
+                    out.close();
+
+                    bytesResult = out.toByteArray();
+                    handler.sendEmptyMessage(TAG_BYTE_SUCCESS);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    byteListener.setBytesFail(ERROR_NETWORK);
+                    strResult = ERROR_NETWORK;
+                    handler.sendEmptyMessage(TAG_BYTE_FAIL);
                 } finally {
                     try {
                         if (in != null)
                             in.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        byteListener.setBytesFail(ERROR_EXCEPTION);
+                        strResult = ERROR_NETWORK;
+                        handler.sendEmptyMessage(TAG_BYTE_FAIL);
                     }
                     if (httpURLConnection != null)
                         httpURLConnection.disconnect();

@@ -23,7 +23,7 @@ public class LoginModelImp implements LoginModel {
         try {
             //添加登陆的请求参数
             PostBody postBody = new PostBody.Builder().
-                    addParams("__VIEWSTATE", URLEncoder.encode("dDwyODE2NTM0OTg7Oz5ymfdcUjEae97aD7oAp0vekoeicw==", "GBK")).
+                    addParams("__VIEWSTATE", URLEncoder.encode("dDwyODE2NTM0OTg7Oz7QqY3yg91iEh+CrEbxxVUHRHuTxg==", "GBK")).
                     addParams("txtUserName", studentInfo.getAccount()).
                     addParams("TextBox2", studentInfo.getPassword()).
                     addParams("txtSecretCode", studentInfo.getImgCode()).
@@ -41,7 +41,7 @@ public class LoginModelImp implements LoginModel {
 
     @Override
     public void getInfo(String path, ResultListener resultListener) {
-        NetworkUtil.getInstance().get(AppConstants.URL_HOST + path, resultListener);
+        NetworkUtil.getInstance().get(AppConstants.URL_HOST_TWO + path, resultListener);
     }
 
     @Override

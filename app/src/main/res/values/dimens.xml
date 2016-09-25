@@ -4,10 +4,15 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- TestView dimen -->
-    <dimen name="mainTestSize">16sp</dimen>
-    <dimen name="secondTestSize">14sp</dimen>
+    <dimen name="mainTestSize_16sp">16sp</dimen>
+    <dimen name="secondTestSize_14sp">14sp</dimen>
 
     <!-- View margin and padding-->
-    <dimen name="viewMargin">10dp</dimen>
-    <dimen name="viewPadding">10dp</dimen>
+    <dimen name="viewMargin_10dp">10dp</dimen>
+    <dimen name="viewPadding_10dp">10dp</dimen>
+    <dimen name="viewMargin_20dp">20dp</dimen>
+    <dimen name="viewPadding_20dp">20dp</dimen>
+    <dimen name="viewMargin_5dp">5dp</dimen>
+    <dimen name="viewPadding_5dp">5dp</dimen>
+    <dimen name="viewMargin_2dp">4dp</dimen>
 </resources>

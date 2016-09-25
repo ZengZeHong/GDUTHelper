@@ -1,38 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/colorPrimary">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@mipmap/ic_launcher" />
-
-    <EditText
-        android:id="@+id/et"
-        android:layout_width="wrap_content"
+    <com.zzh.gdut.gduthelper.view.widget.LoginRelativeLayout
+        android:id="@+id/rl_login"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:hint="输入验证码" />
+        android:layout_centerInParent="true"
+        android:background="@drawable/et_shape_background"
+        android:padding="@dimen/viewPadding_20dp">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/et_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/et_account_hint"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/mainTestSize_16sp"
+            app:met_errorColor="@color/customRed"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="@string/et_account_hint"
+            app:met_floatingLabelTextSize="@dimen/secondTestSize_14sp"
+            app:met_maxCharacters="10"
+            app:met_singleLineEllipsis="true"
+            app:met_textColor="@color/primaryText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_below="@+id/et_password">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_code"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/viewMargin_10dp"
+                android:hint="@string/et_code_hint"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/mainTestSize_16sp"
+                app:met_errorColor="@color/customRed"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelText="@string/et_code_hint"
+                app:met_floatingLabelTextSize="@dimen/secondTestSize_14sp"
+                app:met_maxCharacters="4"
+                app:met_singleLineEllipsis="true"
+                app:met_textColor="@color/primaryText" />
+
+            <ImageView
+                android:id="@+id/img_code"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/code" />
+        </LinearLayout>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/et_account"
+            android:hint="@string/et_password_hint"
+            android:inputType="textPassword"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/mainTestSize_16sp"
+            app:met_errorColor="@color/customRed"
+            app:met_floatingLabel="normal"
+            app:met_floatingLabelText="@string/et_password_hint"
+            app:met_floatingLabelTextSize="@dimen/secondTestSize_14sp"
+            app:met_singleLineEllipsis="true"
+            app:met_textColor="@color/primaryText" />
+    </com.zzh.gdut.gduthelper.view.widget.LoginRelativeLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/bt_login"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:onClick="first"
-        android:text="First" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="image"
-        android:text="image" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="second"
-        android:text="second" />
-</LinearLayout>
+        android:layout_below="@+id/rl_login"
+        android:layout_centerInParent="true"
+        android:layout_alignLeft="@+id/rl_login"
+        android:layout_alignRight="@+id/rl_login"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bt_click_background"
+        android:text="@string/bt_text"
+        android:textColor="@color/colorPrimary" />
+</RelativeLayout>

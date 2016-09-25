@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GDUTHelper</string>
+    <!-- activity_login-->
+    <string name="et_account_hint">请输入学号</string>
+    <string name="et_password_hint">请输入密码</string>
+    <string name="et_code_hint">请输入验证码</string>
+    <string name="bt_text">登　陆</string>
 </resources>

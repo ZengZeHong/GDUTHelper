@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private void getImageCode() {
         URL url = null;
         try {
-            url = new URL("http://jwgl.gdut.edu.cn/CheckCode.aspx");
+            url = new URL("http://jwgldx.gdut.edu.cn/CheckCode.aspx?");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             sessionId = connection.getHeaderField("Set-Cookie");
             //截取sessionId字段
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         String resultData = "";
         try {
             Log.e(TAG, "login: 1");
-            url = new URL("http://jwgl.gdut.edu.cn/default2.aspx");
+            url = new URL("http://jwgldx.gdut.edu.cn/default2.aspx");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             Log.e(TAG, "login: 2");
             conn.setRequestMethod("POST");
@@ -102,13 +102,14 @@ public class MainActivity extends AppCompatActivity {
             conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setUseCaches(false);
+            conn.setInstanceFollowRedirects(false);
             //发送参数
             OutputStream out = conn.getOutputStream();
             Log.e(TAG, "login: 3");
             StringBuffer sbParams = new StringBuffer();
-            sbParams.append("__VIEWSTATE=").append(URLEncoder.encode("dDwyODE2NTM0OTg7Oz4I/BV0f3bU3Jxu0+rIKYuntoTTNg==", "GBK"));
+            sbParams.append("__VIEWSTATE=").append(URLEncoder.encode("dDwyODE2NTM0OTg7Oz7QqY3yg91iEh+CrEbxxVUHRHuTxg==", "GBK"));
             sbParams.append("&txtUserName=").append("3114005890");
-            sbParams.append("&TextBox2=").append("a6585086s");
+            sbParams.append("&TextBox2=").append("a6585086");
             sbParams.append("&txtSecretCode=").append(et.getText().toString());
             sbParams.append("&RadioButtonList1=").append(URLEncoder.encode("学生", "GBK"));
             sbParams.append("&Button1=").append("");
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             InputStream is = conn.getInputStream();   //获取输入流，此时才真正建立链接
             InputStreamReader isr = new InputStreamReader(is, "GBK");
             BufferedReader bufferReader = new BufferedReader(isr);
-            String inputLine = "";
+            String inputLine;
             Log.e(TAG, "login: location" + conn.getHeaderField("Location"));
             while ((inputLine = bufferReader.readLine()) != null) {
                 resultData += inputLine + "\n";
@@ -152,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
             conn.setUseCaches(false); //不使用缓冲
             conn.setRequestMethod("GET"); //使用get请求
             conn.setRequestProperty("Cookie", sessionId);
-            conn.setRequestProperty("HOST", "jwgl.gdut.edu.cn");
-            conn.setRequestProperty("Referer", "http://jwgl.gdut.edu.cn/xs_main.aspx?xh=3114005890");
+            conn.setRequestProperty("HOST", "jwgldx.gdut.edu.cn");
+            conn.setRequestProperty("Referer", "http://jwgldx.gdut.edu.cn/xs_main.aspx?xh=3114005890");
 
             is = conn.getInputStream();   //获取输入流，此时才真正建立链接
             InputStreamReader isr = new InputStreamReader(is, "GBK");
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 super.run();
-                getURLResponse("http://jwgl.gdut.edu.cn/xs_main.aspx?xh=3114005890");
+                getURLResponse("http://jwgldx.gdut.edu.cn/xs_main.aspx?xh=3114005890");
             }
         }.start();
     }

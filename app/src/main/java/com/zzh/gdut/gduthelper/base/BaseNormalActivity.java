@@ -1,10 +1,9 @@
 package com.zzh.gdut.gduthelper.base;
 
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -13,6 +12,8 @@ import android.view.View;
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.util.AppConstants;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
+
+import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by ZengZeHong on 2016/9/24.
@@ -23,11 +24,10 @@ public abstract class BaseNormalActivity extends AppCompatActivity implements Vi
     //返回时间
     private long exitTime = 0;
     //是否要按两下退出，默认否i
-    private boolean isDoubleBackDestory = false;
+    protected boolean isDoubleBackDestory = false;
     protected Toolbar toolbar;
-    protected AlertDialog.Builder mAlertDialogBuilder;
-    protected AlertDialog mAlertDialog;
-
+    protected MaterialDialog materialDialog;
+    protected ProgressDialog progressDialog;
 
     protected abstract int getLayoutId();
 
@@ -120,9 +120,18 @@ public abstract class BaseNormalActivity extends AppCompatActivity implements Vi
      * @param msg
      */
     public void showAlertDialog(String msg) {
-        mAlertDialogBuilder = new AlertDialog.Builder(this);
-        mAlertDialogBuilder.setMessage(msg);
-        mAlertDialog = mAlertDialogBuilder.show();
+        if (materialDialog == null) {
+            materialDialog = new MaterialDialog(this);
+        }
+        materialDialog.setMessage(msg);
+        materialDialog.setCanceledOnTouchOutside(true);
+        materialDialog.setPositiveButton("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDialog.dismiss();
+            }
+        });
+        materialDialog.show();
     }
 
     /**
@@ -130,34 +139,56 @@ public abstract class BaseNormalActivity extends AppCompatActivity implements Vi
      * @param isCancelable     是否可以取消
      * @param positiveListener
      */
-    public void showAlertDialog(String title, String msg, boolean isCancelable, boolean isShowNegativeButton, DialogInterface.OnClickListener positiveListener) {
-        if (mAlertDialogBuilder == null) {
-            mAlertDialogBuilder = new AlertDialog.Builder(this);
+    public void showAlertDialog(String title, String msg, boolean isCancelable, boolean isShowNegativeButton, View.OnClickListener positiveListener) {
+        if (materialDialog == null) {
+            materialDialog = new MaterialDialog(this);
         }
         //是否显示取消
         if (isShowNegativeButton) {
-            mAlertDialogBuilder.setTitle(title).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            materialDialog.setNegativeButton("取消", new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(View v) {
 
                 }
             });
         }
         if (title != null)
-            mAlertDialogBuilder.setTitle(title);
+            materialDialog.setTitle(title);
         if (msg != null)
-            mAlertDialogBuilder.setMessage(msg);
+            materialDialog.setMessage(msg);
         //设置不可以取消
-        mAlertDialogBuilder.setCancelable(isCancelable);
-        mAlertDialogBuilder.setPositiveButton("确定", positiveListener);
-        mAlertDialog = mAlertDialogBuilder.show();
+        materialDialog.setCanceledOnTouchOutside(isCancelable);
+        materialDialog.setPositiveButton("确定", positiveListener);
+        materialDialog.show();
     }
 
     public void dismissAlertDialog() {
-        if (mAlertDialog != null && mAlertDialog.isShowing())
-            mAlertDialog.dismiss();
+        if (materialDialog != null)
+            materialDialog.dismiss();
     }
 
+    /**
+     * 进度对话框
+     *
+     * @param msg
+     */
+    public void showProgressDialog(String msg) {
+        if (progressDialog == null)
+            progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(msg);
+        progressDialog.setCancelable(true);
+        progressDialog.setIndeterminate(false);
+        progressDialog.show();
+    }
+
+    /**
+     * 关闭进度对话框
+     */
+    public void dismissProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 
     /**
      * 隐藏ToolBar

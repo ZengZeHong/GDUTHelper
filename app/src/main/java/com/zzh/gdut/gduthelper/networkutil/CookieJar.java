@@ -33,7 +33,7 @@ public abstract class CookieJar extends CookieManager {
     public boolean isCookieStoreNull(String url) {
         CookieStore cookieStore = getCookieStore();
         try {
-            if (cookieStore.get(new URI(AppConstants.URL_HOST)).size() == 0)
+            if (cookieStore.get(new URI(AppConstants.URL_HOST_TWO)).size() == 0)
                 return true;
         } catch (URISyntaxException e) {
             e.printStackTrace();
