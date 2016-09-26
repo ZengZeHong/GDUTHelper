@@ -42,7 +42,7 @@
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/et_code"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
                 android:hint="@string/et_code_hint"
@@ -59,13 +59,11 @@
             <ImageView
                 android:id="@+id/img_code"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.8"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:src="@drawable/code" />
         </LinearLayout>
 

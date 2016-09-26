@@ -23,7 +23,8 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends BaseNo
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         mPresenter = createPresenter();
-        mPresenter.attachView((V) this);
+        if (mPresenter != null)
+            mPresenter.attachView((V) this);
         super.onCreate(savedInstanceState);
     }
 

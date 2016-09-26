@@ -6,7 +6,7 @@ import com.zzh.gdut.gduthelper.networkutil.NetworkUtil;
 import com.zzh.gdut.gduthelper.networkutil.PostBody;
 import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
-import com.zzh.gdut.gduthelper.util.AppConstants;
+import com.zzh.gdut.gduthelper.util.ApiUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -33,7 +33,7 @@ public class LoginModelImp implements LoginModel {
                     addParams("hidPdrs", "").
                     addParams("hidsc", "").
                     build();
-            NetworkUtil.getInstance().post(AppConstants.URL_LOGIN_FIRST, postBody, resultListener);
+            NetworkUtil.getInstance().post(ApiUtil.URL_LOGIN_FIRST, postBody, resultListener);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -41,11 +41,11 @@ public class LoginModelImp implements LoginModel {
 
     @Override
     public void getInfo(String path, ResultListener resultListener) {
-        NetworkUtil.getInstance().get(AppConstants.URL_HOST_TWO + path, resultListener);
+        NetworkUtil.getInstance().get(ApiUtil.URL_HOST_TWO + path, resultListener);
     }
 
     @Override
     public void getImageCode(ByteListener byteListener) {
-        NetworkUtil.getInstance().get(AppConstants.URL_LOGIN_IMAGE_CODE, byteListener);
+        NetworkUtil.getInstance().get(ApiUtil.URL_LOGIN_IMAGE_CODE, byteListener);
     }
 }

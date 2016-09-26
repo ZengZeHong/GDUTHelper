@@ -35,7 +35,6 @@ public class LoginRelativeLayout extends RelativeLayout {
         //根据屏幕宽度来确定自身宽度
         Log.e(TAG, "onLayout: " + DisplayUtil.getScreenWidth(context));
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) getLayoutParams();
-        Log.e(TAG, "onLayout: " + lp.width );
         lp.width = DisplayUtil.getScreenWidth(context) * 3 / 4;
         setLayoutParams(lp);
     }

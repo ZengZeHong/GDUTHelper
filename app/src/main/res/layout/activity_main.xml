@@ -6,43 +6,12 @@
 
     <include layout="@layout/toolbar" />
 
-    <LinearLayout
+    <Button
+        android:text="进入个人信息"
+        android:onClick="personInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:id="@+id/button" />
 
-        <Button
-            android:id="@+id/downloadButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="getCode"
-            android:text="获取验证码" />
-
-        <ImageView
-            android:id="@+id/img_code"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/pause_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="login"
-        android:text="登陆" />
-
-    <Button
-        android:id="@+id/continue_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="get"
-        android:text="获取信息" />
-
-    <EditText
-        android:id="@+id/et"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="验证码输入" />
 
 </LinearLayout>

@@ -12,6 +12,8 @@
     <dimen name="viewPadding_10dp">10dp</dimen>
     <dimen name="viewMargin_20dp">20dp</dimen>
     <dimen name="viewPadding_20dp">20dp</dimen>
+    <dimen name="viewMargin_15dp">15dp</dimen>
+    <dimen name="viewPadding_15dp">15dp</dimen>
     <dimen name="viewMargin_5dp">5dp</dimen>
     <dimen name="viewPadding_5dp">5dp</dimen>
     <dimen name="viewMargin_2dp">4dp</dimen>

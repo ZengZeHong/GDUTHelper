@@ -11,6 +11,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.presenter.LoginPresenter;
+import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.vinterface.LoginInterface;
 
@@ -68,6 +69,7 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
         switch (v.getId()) {
             case R.id.img_code: {
                 mPresenter.getImageCode();
+                ToastUtil.showToast(GDUTLoginActivity.this, "正在获取验证码..");
             }
             break;
             case R.id.bt_login: {
@@ -109,13 +111,28 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     public void loginSuccess(String result) {
         Log.e(TAG, "loginSuccess: " + result);
-        if (result.contains("xs_main.aspx?xh=3114005890"))
-            mPresenter.getInfo("xs_main.aspx?xh=3114005890");
+        if(result.contains("/xs_main.aspx?xh")){
+            //用户输入没有错，重定向地址
+            String parseData = JsoupUtil.getLoginHref(result);
+            Log.e(TAG, "loginSuccess: parseData " + parseData );
+            mPresenter.getInfo(parseData);
+        }
+        else{
+            //用户输入错误
+            String errorLine = JsoupUtil.getLoginError(result);
+            if(errorLine != null)
+                ToastUtil.showToast(GDUTLoginActivity.this , errorLine);
+            else
+                ToastUtil.showToast(GDUTLoginActivity.this , "教务系统奔溃");
+            mPresenter.getImageCode();
+            dismissProgressDialog();
+        }
     }
 
     @Override
     public void loginFail(String fail) {
         Log.e(TAG, "loginFail: " + fail);
+        ToastUtil.showToast(GDUTLoginActivity.this , fail);
         mPresenter.getImageCode();
         dismissProgressDialog();
     }
@@ -129,17 +146,22 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     public void getImageCodeFail(String fail) {
         Log.e(TAG, "getImageCodeFail: " + fail);
+        ToastUtil.showToast(GDUTLoginActivity.this , "获取验证码失败");
     }
 
     @Override
     public void getInfoSuccess(String result) {
         Log.e(TAG, "getInfoSuccess: " + result);
+        ToastUtil.showToast(GDUTLoginActivity.this , "登陆成功");
+        //TODO 登陆成功后的操作
         dismissProgressDialog();
     }
 
     @Override
     public void getInfoFail(String fail) {
         Log.e(TAG, "getInfoFail: " + fail);
+        ToastUtil.showToast(GDUTLoginActivity.this , "登陆失败");
+        mPresenter.getImageCode();
         dismissProgressDialog();
     }
 }
