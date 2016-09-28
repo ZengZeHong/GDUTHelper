@@ -17,4 +17,5 @@
     <dimen name="viewMargin_5dp">5dp</dimen>
     <dimen name="viewPadding_5dp">5dp</dimen>
     <dimen name="viewMargin_2dp">4dp</dimen>
+    <dimen name="linearLayoutPadding">20dp</dimen>
 </resources>

@@ -1,8 +1,10 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,8 +12,8 @@ import android.widget.LinearLayout;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
-import com.zzh.gdut.gduthelper.base.BasePresenter;
 import com.zzh.gdut.gduthelper.presenter.PersonInfoPresenter;
+import com.zzh.gdut.gduthelper.view.vinterface.PersonInfoInterface;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +23,8 @@ import butterknife.OnClick;
  * Created by ZengZeHong on 2016/9/26.
  */
 
-public class PersonInfoActivity extends BaseActivity {
+public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, PersonInfoPresenter> implements PersonInfoInterface {
+    private static final String TAG = "PersonInfoActivity";
     @BindView(R.id.ll_number)
     LinearLayout llNumber;
     @BindView(R.id.ll_nation)
@@ -50,8 +53,8 @@ public class PersonInfoActivity extends BaseActivity {
     ImageView imgHead;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return new PersonInfoPresenter();
+    protected PersonInfoPresenter createPresenter() {
+        return new PersonInfoPresenter(this);
     }
 
     @Override
@@ -62,6 +65,11 @@ public class PersonInfoActivity extends BaseActivity {
     @Override
     protected void initViews() {
         setToolbar();
+        showProgressDialog("正在获取信息中...");
+        //获取头像
+        mPresenter.getImageHead();
+        //获取个人信息
+        mPresenter.getPersonInfoData();
     }
 
     /**
@@ -125,5 +133,40 @@ public class PersonInfoActivity extends BaseActivity {
             }
             break;
         }
+    }
+
+    @Override
+    public void submitSuccess(String success) {
+
+    }
+
+    @Override
+    public void submitFail(String fail) {
+
+    }
+
+    @Override
+    public void getInfoSuccess(String success) {
+        Log.e(TAG, "getInfoSuccess: " + success);
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void getInfoFail(String fail) {
+        Log.e(TAG, "getInfoFail: " + fail);
+        dismissProgressDialog();
+    }
+
+    @Override
+    public void getImageHeadSuccess(byte[] bytes) {
+        dismissProgressDialog();
+        Log.e(TAG, "getImageHeadSuccess: " + bytes.length);
+        imgHead.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+    }
+
+    @Override
+    public void getImageHeadFail(String fail) {
+        Log.e(TAG, "getImageHeadFail:  " + fail);
+        dismissProgressDialog();
     }
 }

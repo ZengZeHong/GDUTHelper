@@ -8,4 +8,8 @@ package com.zzh.gdut.gduthelper.view.vinterface;
 public interface PersonInfoInterface {
     void submitSuccess(String success);
     void submitFail(String fail);
+    void getInfoSuccess(String success);
+    void getInfoFail(String fail);
+    void getImageHeadSuccess(byte[] bytes);
+    void getImageHeadFail(String fail);
 }

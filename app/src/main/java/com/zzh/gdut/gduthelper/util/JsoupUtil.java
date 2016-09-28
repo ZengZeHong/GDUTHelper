@@ -91,7 +91,7 @@ public class JsoupUtil {
     public static void getUserName(String result) {
         Document document = Jsoup.parse(result);
         Elements elements = document.getElementsByTag("span");
-        String data = elements.get(1).data();
+        String data = elements.get(1).text();
         if (data.contains("同学")) {
             data = data.substring(0, data.indexOf("同学"));
             Log.e(TAG, "getUserName: " + data);

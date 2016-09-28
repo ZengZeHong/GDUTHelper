@@ -34,7 +34,7 @@ public class NetworkConnection implements Callback {
     private static final String ERROR_NETWORK = "网络连接失败，请稍后再试";
     private static final String ERROR_SERVICE = "服务器异常，请稍后再试";
     private static final String ERROR_OVER_TIME = "网络连接超时，请检查您的网络";
-    private static final String STRING_CODE = "GB2312"; //中文编码
+    public static final String STRING_CODE = "GB2312"; //中文编码
     private static final int TAG_STRING_SUCCESS = 0x123;
     private static final int TAG_STRING_FAIL = 0x124;
     private static final int TAG_BYTE_SUCCESS = 0x125;

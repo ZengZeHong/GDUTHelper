@@ -5,7 +5,7 @@ import android.util.Log;
 import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
-import com.zzh.gdut.gduthelper.util.AppConstants;
+import com.zzh.gdut.gduthelper.util.ApiUtil;
 
 import java.io.IOException;
 import java.net.CookieStore;
@@ -36,7 +36,7 @@ public class NetworkUtil {
             try {
                 URI uri = new URI(new URL(url).getHost());
                 Log.e(TAG, "run: uri " + new URL(url).getHost());
-                this.put(new URI(AppConstants.URL_HOST_TWO), httpURLConnection.getHeaderFields());
+                this.put(new URI(ApiUtil.URL_HOST_TWO), httpURLConnection.getHeaderFields());
                 CookieStore cookieStore = this.getCookieStore();
                 Log.e(TAG, "run: store size " + cookieStore.getCookies().size());
                 for (HttpCookie httpCookie : cookieStore.getCookies()) {
@@ -64,7 +64,7 @@ public class NetworkUtil {
             CookieStore cookieStore = getCookieStore();
             try {
                 Log.e(TAG, "getCookies: " + new URL(url).getHost());
-                return cookieStore.get(new URI(AppConstants.URL_HOST_TWO));
+                return cookieStore.get(new URI(ApiUtil.URL_HOST_TWO));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             } catch (MalformedURLException e) {
@@ -145,7 +145,7 @@ public class NetworkUtil {
      * @param resultListener
      */
     public void get(final String url, final ResultListener resultListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).addHeader("HOST", AppConstants.URL_HOST_TWO).addHeader("Referer", AppConstants.URL_LOGIN_SECOND).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).addHeader("HOST", ApiUtil.URL_HOST_TWO).addHeader("Referer", ApiUtil.URL_LOGIN_SECOND).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();

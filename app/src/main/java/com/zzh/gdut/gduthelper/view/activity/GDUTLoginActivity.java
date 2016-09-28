@@ -11,6 +11,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.presenter.LoginPresenter;
+import com.zzh.gdut.gduthelper.util.ApiUtil;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.vinterface.LoginInterface;
@@ -111,19 +112,18 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     public void loginSuccess(String result) {
         Log.e(TAG, "loginSuccess: " + result);
-        if(result.contains("/xs_main.aspx?xh")){
+        if (result.contains("/xs_main.aspx?xh")) {
             //用户输入没有错，重定向地址
             String parseData = JsoupUtil.getLoginHref(result);
-            Log.e(TAG, "loginSuccess: parseData " + parseData );
+            Log.e(TAG, "loginSuccess: parseData " + parseData);
             mPresenter.getInfo(parseData);
-        }
-        else{
+        } else {
             //用户输入错误
             String errorLine = JsoupUtil.getLoginError(result);
-            if(errorLine != null)
-                ToastUtil.showToast(GDUTLoginActivity.this , errorLine);
+            if (errorLine != null)
+                ToastUtil.showToast(GDUTLoginActivity.this, errorLine);
             else
-                ToastUtil.showToast(GDUTLoginActivity.this , "教务系统奔溃");
+                ToastUtil.showToast(GDUTLoginActivity.this, "教务系统奔溃");
             mPresenter.getImageCode();
             dismissProgressDialog();
         }
@@ -132,7 +132,7 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     public void loginFail(String fail) {
         Log.e(TAG, "loginFail: " + fail);
-        ToastUtil.showToast(GDUTLoginActivity.this , fail);
+        ToastUtil.showToast(GDUTLoginActivity.this, fail);
         mPresenter.getImageCode();
         dismissProgressDialog();
     }
@@ -146,13 +146,17 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     public void getImageCodeFail(String fail) {
         Log.e(TAG, "getImageCodeFail: " + fail);
-        ToastUtil.showToast(GDUTLoginActivity.this , "获取验证码失败");
+        ToastUtil.showToast(GDUTLoginActivity.this, "获取验证码失败");
     }
 
     @Override
     public void getInfoSuccess(String result) {
         Log.e(TAG, "getInfoSuccess: " + result);
-        ToastUtil.showToast(GDUTLoginActivity.this , "登陆成功");
+        JsoupUtil.getUserName(result);
+        ApiUtil.USER_NUMBER = etAccount.getText().toString();
+        ToastUtil.showToast(GDUTLoginActivity.this, "登陆成功");
+        Intent intent = new Intent(GDUTLoginActivity.this, PersonInfoActivity.class);
+        startActivity(intent);
         //TODO 登陆成功后的操作
         dismissProgressDialog();
     }
@@ -160,7 +164,7 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     public void getInfoFail(String fail) {
         Log.e(TAG, "getInfoFail: " + fail);
-        ToastUtil.showToast(GDUTLoginActivity.this , "登陆失败");
+        ToastUtil.showToast(GDUTLoginActivity.this, "登陆失败");
         mPresenter.getImageCode();
         dismissProgressDialog();
     }

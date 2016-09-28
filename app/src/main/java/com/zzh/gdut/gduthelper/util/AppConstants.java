@@ -9,6 +9,4 @@ public class AppConstants {
     private static final String TAG = "AppConstants";
     public static final int OPEN_OVERPENDINGTRANSITION = 0;
     public static final int OUT_OVERPENDINGTRANSITION = 1;
-    //登陆者的学号
-    public static final String USER_NUMBER = null;
 }
