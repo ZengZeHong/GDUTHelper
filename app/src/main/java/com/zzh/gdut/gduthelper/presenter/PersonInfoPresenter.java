@@ -1,6 +1,7 @@
 package com.zzh.gdut.gduthelper.presenter;
 
 import com.zzh.gdut.gduthelper.base.BasePresenter;
+import com.zzh.gdut.gduthelper.bean.PersonInfo;
 import com.zzh.gdut.gduthelper.model.mimplement.PersonInfoModelImp;
 import com.zzh.gdut.gduthelper.model.minterface.PersonInfoModel;
 import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
@@ -36,8 +37,8 @@ public class PersonInfoPresenter extends BasePresenter<PersonInfoInterface> {
         });
     }
 
-    public void getData(String path){
-        personInfoModel.submitData(path, new ResultListener() {
+    public void submitData(PersonInfo personInfo) {
+        personInfoModel.submitData(new ResultListener() {
             @Override
             public void onResultSuccess(String success) {
                 if (personInfoInterface != null)
@@ -49,7 +50,7 @@ public class PersonInfoPresenter extends BasePresenter<PersonInfoInterface> {
                 if (personInfoInterface != null)
                     personInfoInterface.submitFail(fail);
             }
-        });
+        }, personInfo);
     }
 
     public void getImageHead() {

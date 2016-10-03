@@ -1,0 +1,19 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/et_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:met_helperText=""
+        android:layout_margin="@dimen/viewMargin_10dp"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/mainTestSize_16sp"
+        app:met_errorColor="@color/customRed"
+        app:met_floatingLabel="normal"
+        app:met_floatingLabelTextSize="@dimen/secondTestSize_14sp"
+        app:met_helperTextColor="@color/customRed"
+        app:met_textColor="@color/primaryText" />
+</RelativeLayout>

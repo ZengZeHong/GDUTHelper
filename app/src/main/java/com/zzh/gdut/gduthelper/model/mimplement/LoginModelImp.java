@@ -1,7 +1,10 @@
 package com.zzh.gdut.gduthelper.model.mimplement;
 
+import android.util.Log;
+
 import com.zzh.gdut.gduthelper.bean.StudentInfo;
 import com.zzh.gdut.gduthelper.model.minterface.LoginModel;
+import com.zzh.gdut.gduthelper.networkutil.NetworkConnection;
 import com.zzh.gdut.gduthelper.networkutil.NetworkUtil;
 import com.zzh.gdut.gduthelper.networkutil.PostBody;
 import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
@@ -17,13 +20,13 @@ import java.net.URLEncoder;
  */
 
 public class LoginModelImp implements LoginModel {
-
+    private static final String TAG = "LoginModelImp";
     @Override
     public void login(StudentInfo studentInfo, ResultListener resultListener) {
         try {
             //添加登陆的请求参数
             PostBody postBody = new PostBody.Builder().
-                    addParams("__VIEWSTATE", URLEncoder.encode("dDwyODE2NTM0OTg7Oz7QqY3yg91iEh+CrEbxxVUHRHuTxg==", "GBK")).
+                    addParams("__VIEWSTATE", URLEncoder.encode("dDwyODE2NTM0OTg7Oz7QqY3yg91iEh+CrEbxxVUHRHuTxg==", NetworkConnection.STRING_CODE)).
                     addParams("txtUserName", studentInfo.getAccount()).
                     addParams("TextBox2", studentInfo.getPassword()).
                     addParams("txtSecretCode", studentInfo.getImgCode()).
@@ -38,9 +41,9 @@ public class LoginModelImp implements LoginModel {
             e.printStackTrace();
         }
     }
-
     @Override
     public void getInfo(String path, ResultListener resultListener) {
+        Log.e(TAG, "getInfo: " + ApiUtil.URL_HOST_TWO + path );
         NetworkUtil.getInstance().get(ApiUtil.URL_HOST_TWO + path, resultListener);
     }
 

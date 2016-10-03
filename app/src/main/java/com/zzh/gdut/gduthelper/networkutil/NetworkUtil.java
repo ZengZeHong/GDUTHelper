@@ -106,6 +106,20 @@ public class NetworkUtil {
     }
 
     /**
+     * 发送请求表单
+     * @param url
+     * @param postBody
+     * @param resultListener
+     */
+    public void postMultiPart(final String url, final PostBody postBody, ResultListener resultListener) {
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().addHeader("HOST", ApiUtil.URL_HOST_TWO).addHeader("Referer", url).doInput(true).doOutput(true).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
+        if (cookieJar != null)
+            builder.cookieJar(cookieJar);
+        NetworkConnection connection = builder.build();
+        connection.postMultiPart(url, postBody, resultListener);
+    }
+
+    /**
      * 普通的Post请求
      *
      * @param url
@@ -145,7 +159,7 @@ public class NetworkUtil {
      * @param resultListener
      */
     public void get(final String url, final ResultListener resultListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).addHeader("HOST", ApiUtil.URL_HOST_TWO).addHeader("Referer", ApiUtil.URL_LOGIN_SECOND).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().addHeader("HOST", ApiUtil.URL_HOST_TWO).addHeader("Referer", ApiUtil.URL_HOST_TWO).doInput(true).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();
@@ -181,4 +195,6 @@ public class NetworkUtil {
         connection.get(url, byteListener);
         connection.setProgressListener(progressListener);
     }
+
+
 }

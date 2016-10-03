@@ -2,12 +2,16 @@ package com.zzh.gdut.gduthelper.util;
 
 import android.util.Log;
 
+import com.zzh.gdut.gduthelper.bean.PersonInfo;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ZengZeHong on 2016/9/26.
@@ -86,6 +90,7 @@ public class JsoupUtil {
 
     /**
      * 获取当前学号对应同学的名字
+     *
      * @param result
      */
     public static void getUserName(String result) {
@@ -98,5 +103,115 @@ public class JsoupUtil {
             ApiUtil.USER_NAME = data;
         }
 
+    }
+
+    /**
+     * 解析个人信息数据
+     *
+     * @param result
+     */
+    public static PersonInfo getPersonInfo(String result) {
+        PersonInfo personInfo = new PersonInfo();
+        Document document = Jsoup.parse(result);
+        //所有的表格数据
+        Elements elements = document.getElementsByTag("tr");
+        //获取学号
+        Element elementOne = elements.get(0);
+        Elements elementsOne = elementOne.getElementsByTag("span");
+        personInfo.setNumberTag(elementsOne.get(0).text());
+        personInfo.setNumber(elementsOne.get(1).text());
+        //获取手机号
+        Element elementTwo = elements.get(1);
+        Elements elementsTwo = elementTwo.getElementsByTag("span");
+        personInfo.setPhoneNumberTag(elementsTwo.get(4).text());
+        personInfo.setPhoneNumber(elementTwo.getElementById("TELNUMBER").attr("value"));
+        //专业方向
+        Element elementThree = elements.get(2);
+        Elements elementsThree = elementThree.getElementsByTag("span");
+        personInfo.setMajorTag(elementsThree.get(2).text());
+        personInfo.setMajor(elementsThree.get(3).text());
+        personInfo.setFamilyCode(elementThree.getElementById("jtyb").attr("value"));
+
+        //入学日期
+        Element elementFour = elements.get(3);
+        Elements elementsFour = elementFour.getElementsByTag("span");
+        personInfo.setDateToSchoolTag(elementsFour.get(2).text());
+        personInfo.setDateToSchool(elementsFour.get(3).text());
+        personInfo.setFamilyPhoneNumber(elementFour.getElementById("jtdh").attr("value"));
+
+        //出生和毕业
+        Element elementFive = elements.get(4);
+        Elements elementsFive = elementFive.getElementsByTag("span");
+        personInfo.setDateToBirthTag(elementsFive.get(0).text());
+        personInfo.setDateToBirth(elementsFive.get(1).text());
+        personInfo.setGraduateTag(elementsFive.get(2).text());
+        personInfo.setGradurate(elementFive.getElementById("byzx").attr("value"));
+        personInfo.setFather(elementFive.getElementById("fqxm").attr("value"));
+
+        //民族和宿舍
+        Element elementSix = elements.get(5);
+        Elements elementsSix = elementSix.getElementsByTag("span");
+        personInfo.setNationTag(elementsSix.get(0).text());
+        personInfo.setNation(elementsSix.get(1).text());
+        personInfo.setDormitoryTag(elementsSix.get(2).text());
+        personInfo.setDormitory(elementSix.getElementById("ssh").attr("value"));
+        personInfo.setFatherWork(elementSix.getElementById("fqdw").attr("value"));
+
+        //电子邮箱
+        Element elementSeven = elements.get(6);
+        Elements elementsSeven = elementSeven.getElementsByTag("span");
+        personInfo.setEmailTag(elementsSeven.get(2).text());
+        personInfo.setEmail(elementSeven.getElementById("dzyxdz").attr("value"));
+        personInfo.setNativePlace(elementSeven.getElementById("txtjg").attr("value"));
+        personInfo.setFatherWorkCode(elementSeven.getElementById("fqdwyb").attr("value"));
+
+        //政治面貌
+        Element elementEight = elements.get(7);
+        Elements elementsEight = elementEight.getElementsByTag("span");
+        personInfo.setPolityTag(elementsEight.get(0).text());
+        personInfo.setContractPhoneNumber(elementEight.getElementById("lxdh").attr("value"));
+        personInfo.setMother(elementEight.getElementById("mqxm").attr("value"));
+
+
+        Element elementNine = elements.get(8);
+        personInfo.setPostCode(elementNine.getElementById("yzbm").attr("value"));
+        personInfo.setMotherWork(elementNine.getElementById("mqdw").attr("value"));
+
+        Element elementTen = elements.get(9);
+        personInfo.setMotherWorkCode(elementTen.getElementById("mqdwyb").attr("value"));
+
+        Element elementEleven = elements.get(10);
+        personInfo.setFamilyPhoneNumber(elementEleven.getElementById("fqdwdh").attr("value"));
+
+        Element elementTwelve = elements.get(11);
+        personInfo.setHeathy(elementTwelve.getElementById("jkzk").attr("value"));
+        personInfo.setMothePhoneNumber(elementTwelve.getElementById("mqdwdh").attr("value"));
+        //List
+        Elements polityElements = elementEight.getElementsByTag("option");
+        personInfo.setPolity(polityElements.get(0).text());
+        List<String> polityList = new ArrayList<>();
+        for (Element element : polityElements) {
+            polityList.add(element.text());
+        }
+        polityList.remove(0);
+        polityList.remove(0);
+        personInfo.setPolicyList(polityList);
+        //家庭住址
+        Element elementThirteen = elements.get(12);
+        Elements elementsThirteen    = elementThirteen.getElementsByTag("span");
+        personInfo.setAddressTag(elementsThirteen.get(4).text());
+        personInfo.setAddress(elementThirteen.getElementById("jtdz").attr("value"));
+
+        //家庭所在地
+        Element elementFourteen = elements.get(13);
+        personInfo.setFamilyLocation(elementFourteen.getElementById("jtszd").attr("value"));
+
+        //家庭所在地
+        Element elementNineteen = elements.get(19);
+        personInfo.setTimeToPolity( elementNineteen.getElementById("RDSJ").attr("value"));
+        //家庭所在地
+        Element elementTwenty = elements.get(20);
+        personInfo.setStationEnd(elementTwenty.getElementById("ccqj").attr("value"));
+        return personInfo;
     }
 }

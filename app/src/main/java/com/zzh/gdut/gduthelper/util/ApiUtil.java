@@ -14,6 +14,7 @@ public class ApiUtil {
     //教务处主页
     public static final String URL_HOST_ONE = "http://jwgl.gdut.edu.cn";
     public static final String URL_HOST_TWO = "http://jwgldx.gdut.edu.cn";
+    public static final String VIEWSTATE = "dDwyODE2NTM0OTg7Oz7QqY3yg91iEh+CrEbxxVUHRHuTxg==";
     //每个功能上的附加连接地址
     //个人信息
     public static final String URL_HREF_PERSON_INFO = "xsgrxx.aspx?xh=3114005890&xm=曾泽洪&gnmkdm=N121501";
@@ -34,7 +35,7 @@ public class ApiUtil {
     //等一次录入登陆信息 post='/zdy.htm?aspxerrorpath=/default2.aspx
     public static final String URL_LOGIN_FIRST = URL_HOST_TWO + "/default2.aspx";
     //第二次登陆 get 后面加入对应的路径，由上一次登陆得来的结果录入 + 3114005890
-    public static final String URL_LOGIN_SECOND = URL_HOST_TWO + "/xs_main.aspx?xh=";
+    public static final String URL_LOGIN_SECOND = URL_HOST_TWO + "/xs_main.aspx?xh=3114005890";
     //获取个人信息 后面参数 ?xh=3114005890&xm曾泽洪&gnmkdm=N121501
     public static final String URL_GET_PERSON_INFO = URL_HOST_TWO + "/xsgrxx.aspx";
     //获取个人头像 后面参数 ?xh=3114005890 加个学号就行

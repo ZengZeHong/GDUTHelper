@@ -14,8 +14,7 @@
             android:id="@+id/ll_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
+            android:background="@drawable/et_shape_background"
             android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
@@ -39,12 +38,12 @@
             android:id="@+id/ll_nation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
+            android:background="@drawable/et_shape_background"
             android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_nation_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
@@ -52,25 +51,26 @@
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <TextView
+                android:id="@+id/tv_nation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="汉族"
-                android:textSize="@dimen/mainTestSize_16sp"
-                android:id="@+id/tv_nation" />
+                android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_dormitory"
+        <RelativeLayout
+            android:id="@+id/rl_dormitory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_click_background"
             android:clickable="true"
-            android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_dormitory_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
                 android:text="宿舍号："
                 android:textSize="@dimen/mainTestSize_16sp" />
@@ -79,22 +79,34 @@
                 android:id="@+id/tv_dormitory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_dormitory_tag"
                 android:text="西一210"
                 android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_polity"
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_polity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_click_background"
             android:clickable="true"
-            android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_polity_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
+
                 android:text="政治面貌："
                 android:textSize="@dimen/mainTestSize_16sp" />
 
@@ -102,25 +114,35 @@
                 android:id="@+id/tv_polity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_polity_tag"
                 android:text="预备党员"
                 android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/ll_date_to_school"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
+            android:background="@drawable/et_shape_background"
             android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_date_to_school_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
                 android:text="入学日期："
-                android:textSize="@dimen/mainTestSize_16sp"
-                android:id="@+id/textView" />
+                android:textSize="@dimen/mainTestSize_16sp" />
 
             <TextView
                 android:id="@+id/tv_date_to_school"
@@ -129,16 +151,17 @@
                 android:text="2014-09-01"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_date_to_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
+            android:background="@drawable/et_shape_background"
             android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_date_to_birth_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
@@ -152,41 +175,59 @@
                 android:text="1995-09-09"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_phone_number"
+
+        <RelativeLayout
+            android:id="@+id/rl_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_click_background"
             android:clickable="true"
-            android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+
+                android:id="@+id/tv_phone_number_tag"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
                 android:text="电话号码："
+
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <TextView
                 android:id="@+id/tv_phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_phone_number_tag"
+                android:inputType="number"
                 android:text="18813290300"
                 android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_email"
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_click_background"
             android:clickable="true"
-            android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_email_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
                 android:layout_marginRight="@dimen/viewMargin_10dp"
                 android:text="电子邮箱："
                 android:textSize="@dimen/mainTestSize_16sp" />
@@ -195,42 +236,65 @@
                 android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_email_tag"
                 android:text="982137637@qq.com"
                 android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_address"
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_click_background"
             android:clickable="true"
-            android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_address_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
                 android:text="家庭住址："
+
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_address_tag"
+                android:layout_marginRight="24dp"
                 android:text="广州大学城西医210"
                 android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/ll_major_direction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
+            android:background="@drawable/et_shape_background"
             android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_major_direction_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
@@ -244,19 +308,22 @@
                 android:text="移动应用开发"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_graduate"
+
+        <RelativeLayout
+            android:id="@+id/rl_graduate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_click_background"
             android:clickable="true"
-            android:orientation="horizontal"
             android:padding="@dimen/linearLayoutPadding">
 
             <TextView
+                android:id="@+id/tv_graduate_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/viewMargin_10dp"
+
                 android:text="毕业中学："
                 android:textSize="@dimen/mainTestSize_16sp" />
 
@@ -264,16 +331,27 @@
                 android:id="@+id/tv_graduate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:layout_toRightOf="@+id/tv_graduate_tag"
                 android:text="广东工业大学"
                 android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+        </RelativeLayout>
+
         <Button
             android:id="@+id/bt_commit"
-            android:layout_margin="10dp"
-            android:text="确认提交"
-            android:textColor="@color/customWhite"
-            android:background="@drawable/bt_click_blue_backgound"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/bt_click_blue_backgound"
+            android:text="确认提交"
+            android:textColor="@color/customWhite" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

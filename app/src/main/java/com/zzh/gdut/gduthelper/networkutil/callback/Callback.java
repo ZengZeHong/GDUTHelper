@@ -15,4 +15,5 @@ public interface Callback {
 
     void post(String url, PostBody postBody, ByteListener resultListener);
 
+    void postMultiPart(String url , PostBody postBody , ResultListener resultListener);
 }

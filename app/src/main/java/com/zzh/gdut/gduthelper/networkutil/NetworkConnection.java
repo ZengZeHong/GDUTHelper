@@ -8,6 +8,7 @@ import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.Callback;
 import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
+import com.zzh.gdut.gduthelper.util.ApiUtil;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -19,6 +20,7 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class NetworkConnection implements Callback {
     private static final String ERROR_SERVICE = "服务器异常，请稍后再试";
     private static final String ERROR_OVER_TIME = "网络连接超时，请检查您的网络";
     public static final String STRING_CODE = "GB2312"; //中文编码
+    private static final String BOUNDARY = "----WebKitFormBoundaryH9bPjKtU00JQHwOZ"; //分隔符
+    private static final String BLANK_LINE = "\r\n"; //换行
     private static final int TAG_STRING_SUCCESS = 0x123;
     private static final int TAG_STRING_FAIL = 0x124;
     private static final int TAG_BYTE_SUCCESS = 0x125;
@@ -417,6 +421,118 @@ public class NetworkConnection implements Callback {
     }
 
     /**
+     * 以表单的形式发送参数
+     *
+     * @param url
+     * @param postBody
+     * @param resultListener
+     */
+    @Override
+    public void postMultiPart(final String url, final PostBody postBody, ResultListener resultListener) {
+        this.resultListener = resultListener;
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                Log.e(TAG, "run: ");
+                InputStream in = null;
+                HttpURLConnection httpURLConnection = null;
+                try {
+                    httpURLConnection = createConnection(url, "POST");
+                    httpURLConnection.setChunkedStreamingMode(0);
+                    getCookie(url, httpURLConnection);
+                    //写入请求参数
+                    if (postBody.size() != 0) {
+                        OutputStream out = httpURLConnection.getOutputStream();
+                        StringBuffer sbParams = new StringBuffer();
+
+                        sbParams.append("--");
+                        sbParams.append(BOUNDARY);
+                        sbParams.append("Content-Disposition: form-data; name=\"__EVENTTARGET\"\n");
+                        sbParams.append(BLANK_LINE);
+                        sbParams.append("");
+
+                        sbParams.append("--");
+                        sbParams.append(BOUNDARY);
+                        sbParams.append("Content-Disposition: form-data; name=\"__EVENTARGUMENT\"\n");
+                        sbParams.append(BLANK_LINE);
+                        sbParams.append("");
+
+                        sbParams.append("--");
+                        sbParams.append(BOUNDARY);
+                        sbParams.append("Content-Disposition: form-data; name=\"__VIEWSTATE\"\n");
+                        sbParams.append(BLANK_LINE);
+                        sbParams.append(URLEncoder.encode(ApiUtil.VIEWSTATE, STRING_CODE));
+
+                        sbParams.append("--");
+                        sbParams.append(BOUNDARY);
+                        sbParams.append("Content-Disposition: form-data; name=\"__hidLanguage\"\n");
+                        sbParams.append(BLANK_LINE);
+                        sbParams.append("");
+                        //请求参数的表单
+                        for (int i = 0; i < postBody.size(); i++) {
+                            sbParams.append("--");
+                            sbParams.append(BOUNDARY);
+                            sbParams.append("Content-Disposition: form-data; name=\"" + postBody.getKeys().get(i) + "\"\n");
+                            sbParams.append(BLANK_LINE);
+                            sbParams.append(postBody.getValues().get(i));
+                        }
+
+                        //文件的表单
+                        sbParams.append("--");
+                        sbParams.append(BOUNDARY);
+                        sbParams.append("Content-Disposition: form-data; name=\"File1\"; filename=\"\"");
+                        sbParams.append("Content-Type: application/octet-stream");
+                        sbParams.append(BLANK_LINE);
+                        sbParams.append("");
+
+
+                        out.write(sbParams.toString().getBytes());
+                        out.flush();
+                        out.close();
+                    }
+                    //Cookie的管理
+                    setCookie(url, httpURLConnection);
+                    Log.e(TAG, "post: getResponseCode " + httpURLConnection.getResponseCode());
+                    Log.e(TAG, "post: getResponseMessage " + httpURLConnection.getResponseMessage());
+                    //成功响应,要根据状态码去
+                    in = httpURLConnection.getInputStream();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(in, STRING_CODE));
+                    String inputLine = "";
+                    StringBuffer sb = new StringBuffer();
+                    while ((inputLine = br.readLine()) != null) {
+                        sb.append(inputLine).append("\n");
+                    }
+                    strResult = sb.toString();
+                    handler.sendEmptyMessage(TAG_STRING_SUCCESS);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    strResult = ERROR_EXCEPTION;
+                    handler.sendEmptyMessage(TAG_STRING_FAIL);
+                    Log.e(TAG, "throw MalformedURLException");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "IOException ");
+                    strResult = ERROR_NETWORK;
+                    handler.sendEmptyMessage(TAG_STRING_FAIL);
+                } finally {
+                    try {
+                        if (in != null)
+                            in.close();
+                    } catch (IOException e) {
+                        strResult = ERROR_NETWORK;
+                        handler.sendEmptyMessage(TAG_STRING_FAIL);
+                        e.printStackTrace();
+                    }
+                    if (httpURLConnection != null)
+                        httpURLConnection.disconnect();
+                }
+            }
+        }.start();
+    }
+
+
+    /**
      * 添加Cookie
      *
      * @param url
@@ -444,6 +560,7 @@ public class NetworkConnection implements Callback {
             cookieJar.setCookies(url, httpURLConnection);
         }
     }
+
 
     public static final class Builder {
         //只列出一些常用的功能，默认如下
