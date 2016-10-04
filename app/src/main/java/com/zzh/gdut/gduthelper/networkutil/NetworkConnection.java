@@ -8,7 +8,6 @@ import com.zzh.gdut.gduthelper.networkutil.callback.ByteListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.Callback;
 import com.zzh.gdut.gduthelper.networkutil.callback.ProgressListener;
 import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
-import com.zzh.gdut.gduthelper.util.ApiUtil;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -20,7 +19,6 @@ import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -439,54 +437,34 @@ public class NetworkConnection implements Callback {
                 HttpURLConnection httpURLConnection = null;
                 try {
                     httpURLConnection = createConnection(url, "POST");
-                    httpURLConnection.setChunkedStreamingMode(0);
+                    httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
                     getCookie(url, httpURLConnection);
                     //写入请求参数
                     if (postBody.size() != 0) {
                         OutputStream out = httpURLConnection.getOutputStream();
                         StringBuffer sbParams = new StringBuffer();
-
-                        sbParams.append("--");
-                        sbParams.append(BOUNDARY);
-                        sbParams.append("Content-Disposition: form-data; name=\"__EVENTTARGET\"\n");
-                        sbParams.append(BLANK_LINE);
-                        sbParams.append("");
-
-                        sbParams.append("--");
-                        sbParams.append(BOUNDARY);
-                        sbParams.append("Content-Disposition: form-data; name=\"__EVENTARGUMENT\"\n");
-                        sbParams.append(BLANK_LINE);
-                        sbParams.append("");
-
-                        sbParams.append("--");
-                        sbParams.append(BOUNDARY);
-                        sbParams.append("Content-Disposition: form-data; name=\"__VIEWSTATE\"\n");
-                        sbParams.append(BLANK_LINE);
-                        sbParams.append(URLEncoder.encode(ApiUtil.VIEWSTATE, STRING_CODE));
-
-                        sbParams.append("--");
-                        sbParams.append(BOUNDARY);
-                        sbParams.append("Content-Disposition: form-data; name=\"__hidLanguage\"\n");
-                        sbParams.append(BLANK_LINE);
-                        sbParams.append("");
                         //请求参数的表单
                         for (int i = 0; i < postBody.size(); i++) {
+
                             sbParams.append("--");
                             sbParams.append(BOUNDARY);
-                            sbParams.append("Content-Disposition: form-data; name=\"" + postBody.getKeys().get(i) + "\"\n");
+                            sbParams.append(BLANK_LINE);
+                            if (postBody.getKeys().get(i).equals("File1")) {
+                                sbParams.append("Content-Disposition: form-data; name=\"File1\"; filename=\"\"\n");
+                                sbParams.append("Content-Type: application/octet-stream");
+                            } else
+                                sbParams.append("Content-Disposition: form-data; name=\"" + postBody.getKeys().get(i) + "\"");
+                            sbParams.append(BLANK_LINE);
                             sbParams.append(BLANK_LINE);
                             sbParams.append(postBody.getValues().get(i));
+                            sbParams.append(BLANK_LINE);
+
                         }
 
-                        //文件的表单
                         sbParams.append("--");
                         sbParams.append(BOUNDARY);
-                        sbParams.append("Content-Disposition: form-data; name=\"File1\"; filename=\"\"");
-                        sbParams.append("Content-Type: application/octet-stream");
+                        sbParams.append("--");
                         sbParams.append(BLANK_LINE);
-                        sbParams.append("");
-
-
                         out.write(sbParams.toString().getBytes());
                         out.flush();
                         out.close();

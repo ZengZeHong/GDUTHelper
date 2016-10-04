@@ -181,7 +181,7 @@ public class JsoupUtil {
         personInfo.setMotherWorkCode(elementTen.getElementById("mqdwyb").attr("value"));
 
         Element elementEleven = elements.get(10);
-        personInfo.setFamilyPhoneNumber(elementEleven.getElementById("fqdwdh").attr("value"));
+        personInfo.setFatherPhoneNumber(elementEleven.getElementById("fqdwdh").attr("value"));
 
         Element elementTwelve = elements.get(11);
         personInfo.setHeathy(elementTwelve.getElementById("jkzk").attr("value"));
@@ -213,5 +213,20 @@ public class JsoupUtil {
         Element elementTwenty = elements.get(20);
         personInfo.setStationEnd(elementTwenty.getElementById("ccqj").attr("value"));
         return personInfo;
+    }
+
+    /**
+     * 解析提交个人信息结果
+     * @param result
+     * @return
+     */
+    public static String parseSubmitResult(String result){
+        Document document = Jsoup.parse(result);
+        Elements elements = document.getElementsByTag("script");
+        String data = elements.get(0).text();
+        if(data.contains("成功"))
+            return "提交数据成功";
+        else
+            return "更新个人数据失败";
     }
 }

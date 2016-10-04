@@ -30,7 +30,6 @@
                 android:id="@+id/tv_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3114005890"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
 
@@ -54,7 +53,6 @@
                 android:id="@+id/tv_nation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="汉族"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
 
@@ -81,7 +79,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tv_dormitory_tag"
-                android:text="西一210"
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <ImageView
@@ -110,22 +107,23 @@
                 android:text="政治面貌："
                 android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_polity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_polity_tag"
-                android:text="预备党员"
-                android:textSize="@dimen/mainTestSize_16sp" />
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+            <TextView
+                android:id="@+id/tv_polity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="@dimen/mainTestSize_16sp"
+                android:layout_alignBaseline="@+id/tv_polity_tag"
+                android:layout_alignBottom="@+id/tv_polity_tag"
+                android:layout_toRightOf="@+id/tv_polity_tag"
+                android:layout_toEndOf="@+id/tv_polity_tag" />
         </RelativeLayout>
 
         <LinearLayout
@@ -148,7 +146,6 @@
                 android:id="@+id/tv_date_to_school"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2014-09-01"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
 
@@ -172,7 +169,6 @@
                 android:id="@+id/tv_date_to_birth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1995-09-09"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
 
@@ -202,8 +198,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tv_phone_number_tag"
-                android:inputType="number"
-                android:text="18813290300"
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <ImageView
@@ -238,7 +232,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tv_email_tag"
-                android:text="982137637@qq.com"
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <ImageView
@@ -274,7 +267,6 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/tv_address_tag"
                 android:layout_marginRight="24dp"
-                android:text="广州大学城西医210"
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <ImageView
@@ -305,7 +297,6 @@
                 android:id="@+id/tv_major_direction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="移动应用开发"
                 android:textSize="@dimen/mainTestSize_16sp" />
         </LinearLayout>
 
@@ -334,7 +325,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="24dp"
                 android:layout_toRightOf="@+id/tv_graduate_tag"
-                android:text="广东工业大学"
                 android:textSize="@dimen/mainTestSize_16sp" />
 
             <ImageView

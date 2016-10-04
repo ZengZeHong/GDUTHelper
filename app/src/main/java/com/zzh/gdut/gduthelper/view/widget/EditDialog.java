@@ -63,7 +63,7 @@ public class EditDialog implements TextWatcher {
         dialog = new MaterialDialog(context);
         View view = LayoutInflater.from(context).inflate(R.layout.dialog_edit, null);
         materialEditText = (MaterialEditText) view.findViewById(R.id.et_dialog);
-        materialEditText.setHint(hint);
+        materialEditText.setText(hint);
         materialEditText.setFloatingLabelText(floatHint);
         materialEditText.addTextChangedListener(this);
         dialog.setCanceledOnTouchOutside(true);

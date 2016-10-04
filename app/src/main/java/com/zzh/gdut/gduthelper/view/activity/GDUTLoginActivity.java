@@ -157,6 +157,7 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
         ToastUtil.showToast(GDUTLoginActivity.this, "登陆成功");
         Intent intent = new Intent(GDUTLoginActivity.this, PersonInfoActivity.class);
         startActivity(intent);
+        finish();
         //TODO 登陆成功后的操作
         dismissProgressDialog();
     }

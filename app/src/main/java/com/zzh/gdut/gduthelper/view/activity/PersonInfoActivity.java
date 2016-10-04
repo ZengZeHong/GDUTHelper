@@ -23,6 +23,7 @@ import com.zzh.gdut.gduthelper.bean.PersonInfo;
 import com.zzh.gdut.gduthelper.presenter.PersonInfoPresenter;
 import com.zzh.gdut.gduthelper.util.ApiUtil;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
+import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.vinterface.PersonInfoInterface;
 import com.zzh.gdut.gduthelper.view.widget.EditDialog;
 
@@ -227,6 +228,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
     @Override
     public void submitSuccess(String success) {
         Log.e(TAG, "submitSuccess: " + success );
+        ToastUtil.showToast(PersonInfoActivity.this , JsoupUtil.parseSubmitResult(success));
         dismissProgressDialog();
     }
 
