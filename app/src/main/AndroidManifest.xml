@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.GDUTLoginActivity"
+        <activity android:name=".view.activity.ExamSearchActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.GDUTLoginActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait"/>
         <activity

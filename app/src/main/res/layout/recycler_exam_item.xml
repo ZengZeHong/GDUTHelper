@@ -1,0 +1,146 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginLeft="@dimen/viewMargin_10dp"
+    android:layout_marginRight="@dimen/viewMargin_10dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_img"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:src="@color/dividerColor" />
+
+        <ImageView
+            android:id="@+id/img_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-18dp"
+            android:src="@drawable/ic_access_alarm_black_36dp"
+          />
+
+        <ImageView
+            android:id="@+id/img_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="-18dp"
+            android:src="@drawable/ic_access_alarm_black_36dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="18dp"
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="18dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/viewPadding_10dp"
+        android:layout_toRightOf="@+id/rl_img">
+
+        <TextView
+            android:id="@+id/tv_exam_name_tag"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="课程名称："
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp" />
+
+        <TextView
+            android:id="@+id/tv_exam_time_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/tv_exam_name"
+            android:layout_marginTop="@dimen/viewMargin_5dp"
+            android:text="考试时间："
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp" />
+
+        <TextView
+            android:id="@+id/tv_exam_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_exam_name"
+
+            android:layout_marginTop="@dimen/viewMargin_5dp"
+            android:layout_toRightOf="@+id/tv_exam_time_tag"
+            android:text="第18周周1-28)第8,9节"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp" />
+
+        <TextView
+            android:id="@+id/tv_exam_place_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_exam_time"
+
+            android:layout_marginTop="@dimen/viewMargin_5dp"
+            android:text="考试地点："
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp" />
+
+        <TextView
+            android:id="@+id/tv_exam_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/tv_exam_time"
+            android:layout_marginTop="@dimen/viewMargin_5dp"
+            android:layout_toRightOf="@+id/tv_exam_place_tag"
+            android:text="教3-209"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp" />
+
+        <TextView
+            android:id="@+id/tv_exam_seat_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_exam_place"
+
+            android:layout_marginTop="@dimen/viewMargin_5dp"
+            android:text="座位号："
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp" />
+
+        <TextView
+            android:id="@+id/tv_exam_seat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_exam_place"
+            android:layout_marginTop="@dimen/viewMargin_5dp"
+            android:layout_toRightOf="@+id/tv_exam_seat_tag"
+            android:text="5"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp" />
+
+        <TextView
+            android:id="@+id/tv_exam_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="离散数学"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/secondTestSize_14sp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/tv_exam_name_tag"
+            android:layout_toEndOf="@+id/tv_exam_name_tag" />
+
+    </RelativeLayout>
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/viewPadding_10dp"
+        android:layout_toRightOf="@+id/rl_img"
+        android:src="@color/dividerColor" />
+</RelativeLayout>
