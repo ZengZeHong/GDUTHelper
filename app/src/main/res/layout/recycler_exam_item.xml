@@ -36,7 +36,7 @@
             android:src="@drawable/ic_access_alarm_black_36dp"
             />
     </RelativeLayout>
-
+e
     <RelativeLayout
         android:layout_marginTop="18dp"
         android:id="@+id/rl_content"
