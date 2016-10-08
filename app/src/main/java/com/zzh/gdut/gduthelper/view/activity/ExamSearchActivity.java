@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 考试查询
  * Created by ZengZeHong on 2016/10/6.
  */
 
