@@ -11,12 +11,6 @@ public class ExamInfo {
     private String examPlace;
     private String examSeat;
 
-    public ExamInfo(String examName, String examTime, String examPlace, String examSeat) {
-        this.examName = examName;
-        this.examTime = examTime;
-        this.examPlace = examPlace;
-        this.examSeat = examSeat;
-    }
 
     public String getExamName() {
         return examName;

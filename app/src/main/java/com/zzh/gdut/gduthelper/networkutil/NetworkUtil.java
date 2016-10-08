@@ -170,7 +170,7 @@ public class NetworkUtil {
      * @param resultListener
      */
     public void get(final String url, final ResultListener resultListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().addHeader("HOST", ApiUtil.URL_HOST_TWO).addHeader("Referer", ApiUtil.URL_HOST_TWO).doInput(true).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().addHeader("HOST", ApiUtil.HOST).addHeader("Referer", ApiUtil.URL_HOST_TWO).doInput(true).doOutput(false).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();

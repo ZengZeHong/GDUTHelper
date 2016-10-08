@@ -13,6 +13,7 @@ public class ApiUtil {
     public static String USER_NAME = null;
     //教务处主页
     public static final String URL_HOST_ONE = "http://jwgl.gdut.edu.cn";
+    public static final String HOST = "jwgldx.gdut.edu.cn";
     public static final String URL_HOST_TWO = "http://jwgldx.gdut.edu.cn";
     public static final String VIEWSTATE = "dDwyODE2NTM0OTg7Oz7QqY3yg91iEh+CrEbxxVUHRHuTxg==";
     //每个功能上的附加连接地址
@@ -23,7 +24,7 @@ public class ApiUtil {
     //学生个人课表
     public static final String URL_HREF_PERSON_CLASS = "xskbcx.aspx?xh=3114005890&xm=曾泽洪&gnmkdm=N121603";
     //考试查询
-    public static final String URL_HREF_SEARCH_EXAM = "xskscx.aspx?xh=3114005890&xm=曾泽洪&gnmkdm=N121604";
+    public static final String URL_HREF_SEARCH_EXAM =  URL_HOST_TWO + "/xskscx.aspx";
     //成绩查询
     public static final String URL_HREF_SEARCH_SCORE = "xscj.aspx?xh=3114005890&xm=曾泽洪&gnmkdm=N121605";
     //教室查询

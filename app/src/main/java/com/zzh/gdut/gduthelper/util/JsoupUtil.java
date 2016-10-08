@@ -2,6 +2,7 @@ package com.zzh.gdut.gduthelper.util;
 
 import android.util.Log;
 
+import com.zzh.gdut.gduthelper.bean.ExamInfo;
 import com.zzh.gdut.gduthelper.bean.PersonInfo;
 
 import org.jsoup.Jsoup;
@@ -228,5 +229,26 @@ public class JsoupUtil {
             return "提交数据成功";
         else
             return "更新个人数据失败";
+    }
+
+    /**
+     * 查询考试情况
+     * @param result
+     * @return
+     */
+    public static List<ExamInfo> searchExamInfo(String result){
+        List<ExamInfo> list = new ArrayList<>();
+        Document document = Jsoup.parse(result);
+        Elements elements = document.getElementsByTag("tr");
+        for(int i = 1 ; i < elements.size() ; i++){
+            Elements elementsChild = elements.get(i).getElementsByTag("td");
+            ExamInfo examInfo = new ExamInfo();
+            examInfo.setExamName(elementsChild.get(1).text());
+            examInfo.setExamTime(elementsChild.get(3).text());
+            examInfo.setExamPlace(elementsChild.get(4).text());
+            examInfo.setExamSeat(elementsChild.get(6).text());
+            list.add(examInfo);
+        }
+        return  list;
     }
 }

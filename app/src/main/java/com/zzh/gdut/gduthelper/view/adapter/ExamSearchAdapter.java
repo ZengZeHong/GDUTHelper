@@ -31,14 +31,31 @@ public class ExamSearchAdapter extends BaseRecyclerViewAdapter<ExamInfo> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ExamSearchHolder examSearchHolder = (ExamSearchHolder) holder;
-        examSearchHolder.getTvName().setText(mList.get(position).getExamName());
-        examSearchHolder.getTvPlace().setText(mList.get(position).getExamPlace());
-        examSearchHolder.getTvTime().setText(mList.get(position).getExamTime());
-        examSearchHolder.getTvSeat().setText(mList.get(position).getExamSeat());
-        if (position  == 0) {
+        String nullString = "无";
+        if (mList.get(position).getExamName().equals(" "))
+            examSearchHolder.getTvName().setText(nullString);
+        else
+            examSearchHolder.getTvName().setText(mList.get(position).getExamName());
+
+
+        if (mList.get(position).getExamPlace().equals(" "))
+            examSearchHolder.getTvPlace().setText(nullString);
+        else
+            examSearchHolder.getTvPlace().setText(mList.get(position).getExamPlace());
+
+        if (mList.get(position).getExamTime().equals(" "))
+            examSearchHolder.getTvTime().setText(nullString);
+        else
+            examSearchHolder.getTvTime().setText(mList.get(position).getExamTime());
+
+        if (mList.get(position).getExamSeat().equals(" "))
+            examSearchHolder.getTvSeat().setText(nullString);
+        else
+            examSearchHolder.getTvSeat().setText(mList.get(position).getExamSeat());
+        if (position == 0) {
             examSearchHolder.getImgBottom().setVisibility(View.VISIBLE);
             examSearchHolder.getImgTop().setVisibility(View.GONE);
-        } else  if (position  == mList.size() - 1){
+        } else if (position == mList.size() - 1) {
             examSearchHolder.getImgBottom().setVisibility(View.GONE);
             examSearchHolder.getImgTop().setVisibility(View.VISIBLE);
         }
