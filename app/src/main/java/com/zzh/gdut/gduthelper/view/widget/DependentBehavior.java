@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -39,6 +38,10 @@ public class DependentBehavior extends CoordinatorLayout.Behavior<View> {
         child.setAlpha(rate);
         child.setScaleX(rate);
         child.setScaleY(rate);
+        if(rate == 0)
+            child.setClickable(false);
+        else
+            child.setClickable(true);
         return true;
     }
 }

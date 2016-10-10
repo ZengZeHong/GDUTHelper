@@ -43,25 +43,33 @@
                     android:layout_centerHorizontal="true"
                     android:gravity="center">
 
-                    <TextView
-                        android:id="@+id/tv_year"
+                    <RelativeLayout
+                        android:id="@+id/rl_year"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="学年："
-                        android:textColor="@color/customWhite"
-                        android:textSize="@dimen/mainTestSize_16sp" />
+                        android:layout_height="wrap_content">
 
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/tv_year" />
+                        <TextView
+                            android:id="@+id/tv_year"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="学年："
+                            android:textColor="@color/customWhite"
+                            android:textSize="@dimen/mainTestSize_16sp" />
+
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/tv_year" />
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/rl_term"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/spinner">
+                        android:layout_below="@id/rl_year">
 
                         <TextView
                             android:id="@+id/tv_term"
@@ -80,19 +88,26 @@
                             android:orientation="horizontal">
 
                             <RadioButton
+                                android:id="@+id/rb_1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1" />
+                                android:text="1"
+                                android:textSize="@dimen/mainTestSize_16sp" />
 
                             <RadioButton
+                                android:id="@+id/rb_2"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="2" />
+                                android:text="2"
+                                android:textSize="@dimen/mainTestSize_16sp" />
 
                             <RadioButton
+                                android:id="@+id/rb_3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="3" />
+                                android:text="3"
+                                android:textSize="@dimen/mainTestSize_16sp" />
                         </RadioGroup>
                     </RelativeLayout>
 
@@ -133,14 +148,18 @@
                         android:text="学年查询："
                         android:textColor="@color/customWhite"
                         android:textSize="@dimen/mainTestSize_16sp" />
+
                     <CheckBox
                         android:id="@+id/cb_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/viewMargin_10dp"
+
                         android:layout_below="@+id/cb_year"
                         android:layout_toRightOf="@+id/tv_all_search" />
 
                     <TextView
+                        android:layout_marginBottom="@dimen/viewMargin_10dp"
                         android:id="@+id/tv_all_search"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
