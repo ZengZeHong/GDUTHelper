@@ -23,7 +23,7 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+                app:layout_scrollFlags="scroll|enterAlways">
 
                 <TextView
                     android:id="@+id/tv_time_tag"
@@ -153,13 +153,12 @@
                         android:id="@+id/cb_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/viewMargin_10dp"
-
                         android:layout_below="@+id/cb_year"
+
+                        android:layout_marginBottom="@dimen/viewMargin_10dp"
                         android:layout_toRightOf="@+id/tv_all_search" />
 
                     <TextView
-                        android:layout_marginBottom="@dimen/viewMargin_10dp"
                         android:id="@+id/tv_all_search"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -167,67 +166,31 @@
                         android:layout_alignBottom="@+id/cb_all"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:text="全部查询："
+                        android:layout_marginBottom="@dimen/viewMargin_10dp"
+                        android:text="在校查询："
                         android:textColor="@color/customWhite"
                         android:textSize="@dimen/mainTestSize_16sp" />
                 </RelativeLayout>
             </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
-            android:id="@+id/scrollView"
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="@dimen/viewMargin_10dp"
+            android:text="暂无数据"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/mainTestSize_16sp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:text="带我去兜风去" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_search"

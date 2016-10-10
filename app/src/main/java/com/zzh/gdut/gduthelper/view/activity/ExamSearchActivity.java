@@ -11,6 +11,7 @@ import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.bean.ExamInfo;
 import com.zzh.gdut.gduthelper.presenter.ExamPresenter;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
+import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.adapter.ExamSearchAdapter;
 import com.zzh.gdut.gduthelper.view.vinterface.ExamInterface;
 
@@ -18,6 +19,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.zzh.gdut.gduthelper.util.AppConstants.SERVICE_BUSY;
 
 /**
  * 考试查询
@@ -65,11 +68,14 @@ public class ExamSearchActivity extends BaseActivity<ExamInterface , ExamPresent
     @Override
     public void searchSuccess(String success) {
         dismissProgressDialog();
-        lists = JsoupUtil.searchExamInfo(success);
-        adapter = new ExamSearchAdapter(this);
-        adapter.setListData(lists);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        if (!success.contains(SERVICE_BUSY)) {
+            lists = JsoupUtil.searchExamInfo(success);
+            adapter = new ExamSearchAdapter(this);
+            adapter.setListData(lists);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(adapter);
+        }else
+            ToastUtil.showToast(ExamSearchActivity.this , "获取数据失败");
         Log.e(TAG, "searchSuccess: "+ success );
     }
 

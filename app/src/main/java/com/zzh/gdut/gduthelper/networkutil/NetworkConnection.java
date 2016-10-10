@@ -307,7 +307,7 @@ public class NetworkConnection implements Callback {
                     //成功响应,要根据状态码去
                     in = httpURLConnection.getInputStream();
                     BufferedReader br = new BufferedReader(new InputStreamReader(in, STRING_CODE));
-                    String inputLine = "";
+                    String inputLine;
                     StringBuffer sb = new StringBuffer();
                     while ((inputLine = br.readLine()) != null) {
                         sb.append(inputLine).append("\n");

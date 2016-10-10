@@ -26,7 +26,7 @@ public class ApiUtil {
     //考试查询
     public static final String URL_HREF_SEARCH_EXAM =  URL_HOST_TWO + "/xskscx.aspx";
     //成绩查询
-    public static final String URL_HREF_SEARCH_SCORE = "xscj.aspx?xh=3114005890&xm=曾泽洪&gnmkdm=N121605";
+    public static final String URL_HREF_SEARCH_SCORE = URL_HOST_TWO + "/xscj.aspx";
     //教室查询
     public static final String URL_HREF_SEARCH_CLASS = "xxjsjy.aspx?xh=3114005890&xm=曾泽洪&gnmkdm=N121611";
     //教学评价 #a

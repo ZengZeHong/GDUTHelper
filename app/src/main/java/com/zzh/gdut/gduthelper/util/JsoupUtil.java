@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.zzh.gdut.gduthelper.bean.ExamInfo;
 import com.zzh.gdut.gduthelper.bean.PersonInfo;
+import com.zzh.gdut.gduthelper.bean.ScoreInfo;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -199,7 +200,7 @@ public class JsoupUtil {
         personInfo.setPolicyList(polityList);
         //家庭住址
         Element elementThirteen = elements.get(12);
-        Elements elementsThirteen    = elementThirteen.getElementsByTag("span");
+        Elements elementsThirteen = elementThirteen.getElementsByTag("span");
         personInfo.setAddressTag(elementsThirteen.get(4).text());
         personInfo.setAddress(elementThirteen.getElementById("jtdz").attr("value"));
 
@@ -209,7 +210,7 @@ public class JsoupUtil {
 
         //家庭所在地
         Element elementNineteen = elements.get(19);
-        personInfo.setTimeToPolity( elementNineteen.getElementById("RDSJ").attr("value"));
+        personInfo.setTimeToPolity(elementNineteen.getElementById("RDSJ").attr("value"));
         //家庭所在地
         Element elementTwenty = elements.get(20);
         personInfo.setStationEnd(elementTwenty.getElementById("ccqj").attr("value"));
@@ -218,14 +219,15 @@ public class JsoupUtil {
 
     /**
      * 解析提交个人信息结果
+     *
      * @param result
      * @return
      */
-    public static String parseSubmitResult(String result){
+    public static String parseSubmitResult(String result) {
         Document document = Jsoup.parse(result);
         Elements elements = document.getElementsByTag("script");
         String data = elements.get(0).text();
-        if(data.contains("成功"))
+        if (data.contains("成功"))
             return "提交数据成功";
         else
             return "更新个人数据失败";
@@ -233,14 +235,15 @@ public class JsoupUtil {
 
     /**
      * 查询考试情况
+     *
      * @param result
      * @return
      */
-    public static List<ExamInfo> searchExamInfo(String result){
+    public static List<ExamInfo> searchExamInfo(String result) {
         List<ExamInfo> list = new ArrayList<>();
         Document document = Jsoup.parse(result);
         Elements elements = document.getElementsByTag("tr");
-        for(int i = 1 ; i < elements.size() ; i++){
+        for (int i = 1; i < elements.size(); i++) {
             Elements elementsChild = elements.get(i).getElementsByTag("td");
             ExamInfo examInfo = new ExamInfo();
             examInfo.setExamName(elementsChild.get(1).text());
@@ -249,6 +252,31 @@ public class JsoupUtil {
             examInfo.setExamSeat(elementsChild.get(6).text());
             list.add(examInfo);
         }
-        return  list;
+        return list;
+    }
+
+    /**
+     * 解析成绩
+     * @param result
+     * @return
+     */
+    public static List<ScoreInfo> getScoreInfo(String result) {
+        List<ScoreInfo> list = new ArrayList<>();
+        Document document = Jsoup.parse(result);
+        Elements elements = document.getElementsByTag("table");
+        Element elementTable = elements.get(1);
+        Elements elementsScore = elementTable.getElementsByTag("tr");
+        for (int i = 1; i < elementsScore.size(); i++) {
+            ScoreInfo scoreInfo = new ScoreInfo();
+            Element element = elementsScore.get(i);
+            Elements elementsData = element.getElementsByTag("td");
+            scoreInfo.setClassName(elementsData.get(1).text());
+            scoreInfo.setClassAttr(elementsData.get(2).text());
+            scoreInfo.setClassScore(elementsData.get(3).text());
+            scoreInfo.setClassCredit(elementsData.get(7).text());
+            Log.e(TAG, "getScoreInfo: " + scoreInfo.getClassName()+ ">" + scoreInfo.getClassScore() );
+            list.add(scoreInfo);
+        }
+        return list;
     }
 }

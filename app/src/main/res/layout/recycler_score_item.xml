@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="@dimen/viewMargin_10dp"
+        android:layout_marginRight="@dimen/viewMargin_10dp"
+        android:layout_marginTop="@dimen/viewMargin_10dp">
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="良好"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/mainTestSize_16sp" />
+        <TextView
+            android:id="@+id/tv_score_name"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_score"
+            android:text="中国近代史"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/mainTestSize_16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/viewMargin_10dp"
+
+        android:layout_marginRight="@dimen/viewMargin_10dp"
+        android:layout_marginTop="@dimen/viewMargin_5dp">
+
+        <TextView
+            android:id="@+id/tv_score_credit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="2.0"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/mainTestSize_16sp" />
+        <TextView
+            android:layout_toLeftOf="@+id/tv_score_credit"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/tv_score_attr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公共基础课"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/mainTestSize_16sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/viewMargin_10dp"
+        android:background="@color/dividerColor" />
+</LinearLayout>

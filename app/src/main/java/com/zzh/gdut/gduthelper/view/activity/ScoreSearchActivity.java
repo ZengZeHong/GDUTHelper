@@ -1,35 +1,46 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
+import com.zzh.gdut.gduthelper.bean.ScoreInfo;
 import com.zzh.gdut.gduthelper.model.mimplement.ScoreModelImp;
 import com.zzh.gdut.gduthelper.presenter.ScorePresenter;
+import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
+import com.zzh.gdut.gduthelper.view.adapter.ScoreInfoAdapter;
 import com.zzh.gdut.gduthelper.view.vinterface.ScoreInfoInterface;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.zzh.gdut.gduthelper.R.id.cb_term;
+import static com.zzh.gdut.gduthelper.util.AppConstants.SERVICE_BUSY;
 
 /**
  * 成绩查询
  * Created by ZengZeHong on 2016/10/8.
  */
 
-public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScorePresenter> implements AdapterView.OnItemSelectedListener {
+public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScorePresenter> implements ScoreInfoInterface, AdapterView.OnItemSelectedListener {
     private static final String TAG = "ScoreSearchActivity";
     @BindView(R.id.spinner)
     Spinner spinner;
@@ -47,15 +58,36 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
     CheckBox cbAll;
     @BindView(R.id.fab_search)
     FloatingActionButton fabSearch;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.tv_tag)
+    TextView tvTAG;
     private String[] strings;
     private int currentYear;
-    private String selectYear;
-    private String selectTerm;
-    private String searchWay;
+    private String selectYear = null;
+    private String selectTerm = null;
+    private String searchWay = null;
+    private String errorLine = null;
+    private List<ScoreInfo> list;
+    private ScoreInfoAdapter adapter;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 0x123) {
+                adapter.setListData(list);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setVisibility(View.VISIBLE);
+                tvTAG.setVisibility(View.GONE);
+                //更新UI
+                dismissProgressDialog();
+            }
+        }
+    };
 
     @Override
     protected ScorePresenter createPresenter() {
-        return new ScorePresenter();
+        return new ScorePresenter(this);
     }
 
     @Override
@@ -65,11 +97,13 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
 
     @Override
     protected void initViews() {
+        adapter = new ScoreInfoAdapter(ScoreSearchActivity.this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(ScoreSearchActivity.this));
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_item, strings);
         arrayAdapter.setDropDownViewResource(R.layout.spinner_drop_down_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(this);
-
     }
 
     @Override
@@ -79,7 +113,7 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
         currentYear = Calendar.getInstance().get(Calendar.YEAR);
         strings = new String[currentYear - 2010];
         for (int i = 0; i <= currentYear - 2011; i++)
-            strings[i] = (2011 + i) + "-" + (2011 + i + 1);
+            strings[i] = (2016 - i) + "-" + (2016 - i + 1);
 
     }
 
@@ -122,10 +156,33 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
             }
             break;
             case R.id.fab_search: {
-                ToastUtil.showToast(this , searchWay + ">>" + selectTerm + ">>" + selectYear);
+                if (isError())
+                    ToastUtil.showToast(this, errorLine);
+                else {
+                    showProgressDialog("正在获取中");
+                    mPresenter.searchScore(selectYear, selectTerm, searchWay);
+                }
             }
             break;
         }
+    }
+
+    /**
+     * 检测输入是否错误
+     *
+     * @return
+     */
+    private boolean isError() {
+        errorLine = null;
+        if (selectYear == null)
+            errorLine = "请选择学年";
+        if (selectTerm == null)
+            errorLine = "请选择学期";
+        if (searchWay == null)
+            errorLine = "请选择查询方式";
+        if (errorLine == null)
+            return false;
+        return true;
     }
 
     @Override
@@ -136,5 +193,29 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void getScoreSuccess(final String success) {
+        if (!success.contains(SERVICE_BUSY)) {
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    list = JsoupUtil.getScoreInfo(success);
+                    handler.sendEmptyMessage(0x123);
+                }
+            }.start();
+        } else {
+            ToastUtil.showToast(ScoreSearchActivity.this, "查询失败");
+            dismissProgressDialog();
+        }
+        Log.e(TAG, "getScoreSuccess: " + success);
+    }
+
+    @Override
+    public void getScoreFail(String fail) {
+        dismissProgressDialog();
+        Log.e(TAG, "getScoreFail: " + fail);
     }
 }

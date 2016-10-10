@@ -32,6 +32,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.drakeet.materialdialog.MaterialDialog;
 
+import static com.zzh.gdut.gduthelper.util.AppConstants.SERVICE_BUSY;
+
 /**
  * 个人信息
  * Created by ZengZeHong on 2016/9/26.
@@ -197,9 +199,9 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
     private void showListDialog() {
         final MaterialDialog dialog = new MaterialDialog(PersonInfoActivity.this);
         dialog.setCanceledOnTouchOutside(true);
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_listview , null);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_listview, null);
         ListView listView = (ListView) view.findViewById(R.id.listView);
-        listView.setAdapter(new ArrayAdapter<>(this, R.layout.dialog_listview_item,personInfo.getPolicyList()));
+        listView.setAdapter(new ArrayAdapter<>(this, R.layout.dialog_listview_item, personInfo.getPolicyList()));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -228,15 +230,19 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
 
     @Override
     public void submitSuccess(String success) {
-        Log.e(TAG, "submitSuccess: " + success );
-        ToastUtil.showToast(PersonInfoActivity.this , JsoupUtil.parseSubmitResult(success));
+        Log.e(TAG, "submitSuccess: " + success);
+        if (!success.contains(SERVICE_BUSY)) {
+            ToastUtil.showToast(PersonInfoActivity.this, JsoupUtil.parseSubmitResult(success));
+        } else
+            ToastUtil.showToast(PersonInfoActivity.this, "提交数据失败");
+
         dismissProgressDialog();
     }
 
     @Override
     public void submitFail(String fail) {
         dismissProgressDialog();
-        Log.e(TAG, "submitFail: " + fail );
+        Log.e(TAG, "submitFail: " + fail);
     }
 
     @Override

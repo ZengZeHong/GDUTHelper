@@ -98,7 +98,7 @@ public class NetworkUtil {
      * @param resultListener
      */
     public void post(final String url, final PostBody postBody, final ResultListener resultListener) {
-        NetworkConnection.Builder builder = new NetworkConnection.Builder().doInput(true).doOutput(true).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
+        NetworkConnection.Builder builder = new NetworkConnection.Builder().addHeader("HOST", ApiUtil.HOST).addHeader("Referer", url).doInput(true).doOutput(true).useCaches(false).connectTimeOut(10000).readTimeOut(10000);
         if (cookieJar != null)
             builder.cookieJar(cookieJar);
         NetworkConnection connection = builder.build();
@@ -116,7 +116,7 @@ public class NetworkUtil {
         NetworkConnection.Builder builder = new NetworkConnection.Builder().
                 addHeader("Accept-Charset", NetworkConnection.STRING_CODE).
                 addHeader("Accept-Language", "zh-CN,zh;q=0.8,en-US;q=0.6,en;q=0.4").
-                addHeader("HOST", ApiUtil.URL_HOST_TWO).
+                addHeader("HOST", ApiUtil.HOST).
                 addHeader("Origin", ApiUtil.URL_HOST_TWO).
                 addHeader("Referer", url).
                 doInput(true).

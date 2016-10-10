@@ -155,7 +155,7 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
         JsoupUtil.getUserName(result);
         ApiUtil.USER_NUMBER = etAccount.getText().toString();
         ToastUtil.showToast(GDUTLoginActivity.this, "登陆成功");
-        Intent intent = new Intent(GDUTLoginActivity.this, ExamSearchActivity.class);
+        Intent intent = new Intent(GDUTLoginActivity.this, ScoreSearchActivity.class);
         startActivity(intent);
         finish();
         //TODO 登陆成功后的操作
