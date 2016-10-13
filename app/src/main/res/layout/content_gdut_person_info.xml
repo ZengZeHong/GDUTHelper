@@ -2,7 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/customWhite"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
@@ -10,336 +9,357 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_number"
-            android:layout_width="match_parent"
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_info"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/et_shape_background"
-            android:orientation="horizontal"
-            android:padding="@dimen/linearLayoutPadding">
-
-            <TextView
-                android:id="@+id/tv_number_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="学号："
-                android:textSize="@dimen/mainTestSize_16sp" />
-
-            <TextView
-                android:id="@+id/tv_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_nation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/et_shape_background"
-            android:orientation="horizontal"
-            android:padding="@dimen/linearLayoutPadding">
-
-            <TextView
-                android:id="@+id/tv_nation_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="民族："
-                android:textSize="@dimen/mainTestSize_16sp" />
-
-            <TextView
-                android:id="@+id/tv_nation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_dormitory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
+            android:layout_margin="10dp"
             android:clickable="true"
-            android:padding="@dimen/linearLayoutPadding">
+            app:cardCornerRadius="5dp">
 
-            <TextView
-                android:id="@+id/tv_dormitory_tag"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="宿舍号："
-                android:textSize="@dimen/mainTestSize_16sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_dormitory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_dormitory_tag"
-                android:textSize="@dimen/mainTestSize_16sp" />
+                <LinearLayout
+                    android:id="@+id/ll_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_shape_background"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/linearLayoutPadding">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_number_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="学号："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-        <RelativeLayout
-            android:id="@+id/rl_polity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
-            android:padding="@dimen/linearLayoutPadding">
+                    <TextView
+                        android:id="@+id/tv_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_polity_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
+                <LinearLayout
+                    android:id="@+id/ll_nation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_shape_background"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/linearLayoutPadding">
 
-                android:text="政治面貌："
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <TextView
+                        android:id="@+id/tv_nation_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="民族："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                    <TextView
+                        android:id="@+id/tv_nation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_polity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_major_direction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_shape_background"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/linearLayoutPadding">
 
-                android:textSize="@dimen/mainTestSize_16sp"
-                android:layout_alignBaseline="@+id/tv_polity_tag"
-                android:layout_alignBottom="@+id/tv_polity_tag"
-                android:layout_toRightOf="@+id/tv_polity_tag"
-                android:layout_toEndOf="@+id/tv_polity_tag" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_major_direction_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="专业方向："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-        <LinearLayout
-            android:id="@+id/ll_date_to_school"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/et_shape_background"
-            android:orientation="horizontal"
-            android:padding="@dimen/linearLayoutPadding">
+                    <TextView
+                        android:id="@+id/tv_major_direction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_date_to_school_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="入学日期："
-                android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_date_to_school"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_date_to_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_shape_background"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/linearLayoutPadding">
 
-        <LinearLayout
-            android:id="@+id/ll_date_to_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/et_shape_background"
-            android:orientation="horizontal"
-            android:padding="@dimen/linearLayoutPadding">
+                    <TextView
+                        android:id="@+id/tv_date_to_school_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="入学日期："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_date_to_birth_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="出生日期："
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <TextView
+                        android:id="@+id/tv_date_to_school"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_date_to_birth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_date_to_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/et_shape_background"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/linearLayoutPadding">
 
-        <RelativeLayout
-            android:id="@+id/rl_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
-            android:padding="@dimen/linearLayoutPadding">
+                    <TextView
+                        android:id="@+id/tv_date_to_birth_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="出生日期："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
+                    <TextView
+                        android:id="@+id/tv_date_to_birth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+                </LinearLayout>
 
-                android:id="@+id/tv_phone_number_tag"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="电话号码："
+                <RelativeLayout
+                    android:id="@+id/rl_dormitory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_click_background"
+                    android:clickable="true"
+                    android:padding="@dimen/linearLayoutPadding">
 
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <TextView
+                        android:id="@+id/tv_dormitory_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="宿舍号："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_phone_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_phone_number_tag"
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <TextView
+                        android:id="@+id/tv_dormitory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_dormitory_tag"
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-        </RelativeLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
-            android:padding="@dimen/linearLayoutPadding">
+                <RelativeLayout
+                    android:id="@+id/rl_polity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_click_background"
+                    android:clickable="true"
+                    android:padding="@dimen/linearLayoutPadding">
 
-            <TextView
-                android:id="@+id/tv_email_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                    <TextView
+                        android:id="@+id/tv_polity_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
 
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="电子邮箱："
-                android:textSize="@dimen/mainTestSize_16sp" />
+                        android:text="政治面貌："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_email_tag"
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_polity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 
-        <RelativeLayout
-            android:id="@+id/rl_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
-            android:padding="@dimen/linearLayoutPadding">
+                        android:layout_alignBaseline="@+id/tv_polity_tag"
+                        android:layout_alignBottom="@+id/tv_polity_tag"
+                        android:layout_toEndOf="@+id/tv_polity_tag"
+                        android:layout_toRightOf="@+id/tv_polity_tag"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+                </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_address_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="家庭住址："
+                <RelativeLayout
+                    android:id="@+id/rl_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_click_background"
+                    android:clickable="true"
+                    android:padding="@dimen/linearLayoutPadding">
 
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <TextView
 
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tv_address_tag"
-                android:layout_marginRight="24dp"
-                android:textSize="@dimen/mainTestSize_16sp" />
+                        android:id="@+id/tv_phone_number_tag"
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-        </RelativeLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="电话号码："
 
-        <LinearLayout
-            android:id="@+id/ll_major_direction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/et_shape_background"
-            android:orientation="horizontal"
-            android:padding="@dimen/linearLayoutPadding">
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_major_direction_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
-                android:text="专业方向："
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <TextView
+                        android:id="@+id/tv_phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_phone_number_tag"
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_major_direction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/mainTestSize_16sp" />
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_graduate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bt_click_background"
-            android:clickable="true"
-            android:padding="@dimen/linearLayoutPadding">
+                <RelativeLayout
+                    android:id="@+id/rl_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_click_background"
+                    android:clickable="true"
+                    android:padding="@dimen/linearLayoutPadding">
 
-            <TextView
-                android:id="@+id/tv_graduate_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/viewMargin_10dp"
+                    <TextView
+                        android:id="@+id/tv_email_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
 
-                android:text="毕业中学："
-                android:textSize="@dimen/mainTestSize_16sp" />
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="电子邮箱："
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <TextView
-                android:id="@+id/tv_graduate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="24dp"
-                android:layout_toRightOf="@+id/tv_graduate_tag"
-                android:textSize="@dimen/mainTestSize_16sp" />
+                    <TextView
+                        android:id="@+id/tv_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_email_tag"
+                        android:textSize="@dimen/mainTestSize_16sp" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
-        </RelativeLayout>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_click_background"
+                    android:clickable="true"
+                    android:padding="@dimen/linearLayoutPadding">
+
+                    <TextView
+                        android:id="@+id/tv_address_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+                        android:text="家庭住址："
+
+                        android:textSize="@dimen/mainTestSize_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="24dp"
+                        android:layout_toRightOf="@+id/tv_address_tag"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_graduate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bt_click_background"
+                    android:clickable="true"
+                    android:padding="@dimen/linearLayoutPadding">
+
+                    <TextView
+                        android:id="@+id/tv_graduate_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/viewMargin_10dp"
+
+                        android:text="毕业中学："
+                        android:textSize="@dimen/mainTestSize_16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_graduate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="24dp"
+                        android:layout_toRightOf="@+id/tv_graduate_tag"
+                        android:textSize="@dimen/mainTestSize_16sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_keyboard_arrow_right_black_24dp" />
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/bt_commit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="@dimen/viewMargin_20dp"
+            android:layout_marginLeft="@dimen/viewMargin_10dp"
+            android:layout_marginRight="@dimen/viewMargin_10dp"
+            android:layout_marginTop="@dimen/viewMargin_10dp"
             android:background="@drawable/bt_click_blue_backgound"
             android:text="确认提交"
             android:textColor="@color/customWhite" />

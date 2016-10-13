@@ -139,7 +139,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
      * 设置Toolbar字体颜色
      */
     private void setToolbar() {
-        showToolbarAndShowNavigation(ApiUtil.USER_NAME);
+        showToolbarAndShowNavigation(ApiUtil.USER_NAME , true);
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
@@ -266,7 +266,6 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
 
     @Override
     public void getImageHeadSuccess(byte[] bytes) {
-        dismissProgressDialog();
         Log.e(TAG, "getImageHeadSuccess: " + bytes.length);
         imgHead.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
     }
@@ -274,7 +273,6 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
     @Override
     public void getImageHeadFail(String fail) {
         Log.e(TAG, "getImageHeadFail:  " + fail);
-        dismissProgressDialog();
     }
 
     /**

@@ -13,4 +13,5 @@
     <color name="customWhite">#FFFFFF</color>
     <color name="customBlack">#333333</color>
     <color name="customRed">#FFF52C2C</color>
+    <color name="customGreen">#4CAF50</color>
 </resources>

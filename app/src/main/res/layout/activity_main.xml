@@ -1,27 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <include layout="@layout/toolbar" />
 
-    <View
-        android:id="@+id/view_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/toolbar"
-        android:background="@color/customWhite" />
 
-    <android.support.v7.widget.CardView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_centerInParent="true">
 
-        <TextView
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="成绩查询" />
-    </android.support.v7.widget.CardView>
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#f5d805"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:text="我的信息"
+                android:textColor="@color/customWhite"
+                android:textSize="@dimen/mainTestSize_16sp"
+                android:id="@+id/textView2" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/cardView_30dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@+id/cv_info"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#6379f7"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:text="成绩查询"
+                android:textColor="@color/customWhite"
+                android:textSize="@dimen/mainTestSize_16sp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_info"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="@dimen/cardView_30dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#fe6c6c"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:text="个人课表"
+                android:textColor="@color/customWhite"
+                android:textSize="@dimen/mainTestSize_16sp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_exam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_score"
+            android:layout_marginLeft="@dimen/cardView_30dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="@dimen/cardView_30dp"
+            android:layout_toRightOf="@+id/cv_class"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#47d04d"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:text="考试查询"
+                android:textColor="@color/customWhite"
+                android:textSize="@dimen/mainTestSize_16sp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_class"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="@dimen/cardView_30dp"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#0eb9c8"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:text="教学评价"
+                android:textColor="@color/customWhite"
+                android:textSize="@dimen/mainTestSize_16sp" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cv_exam"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="@dimen/cardView_30dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginTop="@dimen/cardView_30dp"
+            android:layout_toRightOf="@+id/cv_class"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#ad39eb"
+            app:cardCornerRadius="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="40dp"
+                android:text="密码修改"
+                android:textColor="@color/customWhite"
+                android:textSize="@dimen/mainTestSize_16sp" />
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
 </RelativeLayout>

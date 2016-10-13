@@ -52,13 +52,6 @@ public class ExamSearchAdapter extends BaseRecyclerViewAdapter<ExamInfo> {
             examSearchHolder.getTvSeat().setText(nullString);
         else
             examSearchHolder.getTvSeat().setText(mList.get(position).getExamSeat());
-        if (position == 0) {
-            examSearchHolder.getImgBottom().setVisibility(View.VISIBLE);
-            examSearchHolder.getImgTop().setVisibility(View.GONE);
-        } else if (position == mList.size() - 1) {
-            examSearchHolder.getImgBottom().setVisibility(View.GONE);
-            examSearchHolder.getImgTop().setVisibility(View.VISIBLE);
-        }
     }
 
     @Override

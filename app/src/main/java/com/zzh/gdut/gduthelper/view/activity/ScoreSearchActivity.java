@@ -79,6 +79,8 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
                 recyclerView.setAdapter(adapter);
                 recyclerView.setVisibility(View.VISIBLE);
                 tvTAG.setVisibility(View.GONE);
+                if(list.size() == 0)
+                    ToastUtil.showToast(ScoreSearchActivity.this , "当前时间没有成绩");
                 //更新UI
                 dismissProgressDialog();
             }
@@ -109,7 +111,7 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
     @Override
     protected void initAttributes() {
         ButterKnife.bind(ScoreSearchActivity.this);
-        showToolbarAndShowNavigation("成绩查询");
+        showToolbarAndShowNavigation("成绩查询" , true);
         currentYear = Calendar.getInstance().get(Calendar.YEAR);
         strings = new String[currentYear - 2010];
         for (int i = 0; i <= currentYear - 2011; i++)
@@ -216,6 +218,7 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
     @Override
     public void getScoreFail(String fail) {
         dismissProgressDialog();
+        ToastUtil.showToast(ScoreSearchActivity.this, fail);
         Log.e(TAG, "getScoreFail: " + fail);
     }
 }

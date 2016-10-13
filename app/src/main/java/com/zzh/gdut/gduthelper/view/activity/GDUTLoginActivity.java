@@ -49,7 +49,7 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
 
     @Override
     protected void initViews() {
-        showToolbarAndShowNavigation("教务系统");
+        showToolbarAndShowNavigation("教务系统" , true);
         //一开始就获取验证码
         mPresenter.getImageCode();
         ToastUtil.showToast(GDUTLoginActivity.this, "正在获取验证码..");
@@ -155,7 +155,7 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
         JsoupUtil.getUserName(result);
         ApiUtil.USER_NUMBER = etAccount.getText().toString();
         ToastUtil.showToast(GDUTLoginActivity.this, "登陆成功");
-        Intent intent = new Intent(GDUTLoginActivity.this, ScoreSearchActivity.class);
+        Intent intent = new Intent(GDUTLoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
         //TODO 登陆成功后的操作

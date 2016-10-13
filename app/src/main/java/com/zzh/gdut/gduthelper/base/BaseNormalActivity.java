@@ -244,11 +244,11 @@ public abstract class BaseNormalActivity extends AppCompatActivity implements Vi
     /**
      * @param title 直接显示返回箭头的toolbar
      */
-    public void showToolbarAndShowNavigation(String title) {
+    public void showToolbarAndShowNavigation(String title , boolean isShowNavigation) {
         initToolBar();
         setToolbarTitle(title);
         showToolBar();
-        showOrHideToolBarNavigation(true);
+        showOrHideToolBarNavigation(isShowNavigation);
     }
 
     //退出动画

@@ -18,4 +18,6 @@
     <dimen name="viewPadding_5dp">5dp</dimen>
     <dimen name="viewMargin_2dp">4dp</dimen>
     <dimen name="linearLayoutPadding">20dp</dimen>
+
+    <dimen name="cardView_30dp">20dp</dimen>
 </resources>

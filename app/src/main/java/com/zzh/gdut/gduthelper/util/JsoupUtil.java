@@ -74,9 +74,6 @@ public class JsoupUtil {
         Document document = Jsoup.parse(result);
         Elements elements = document.getElementsByTag("script");
         Log.e(TAG, "getLoginError: elements " + elements.size());
-        for (Element element : elements) {
-            Log.e(TAG, "getLoginError: data " + element.data());
-        }
         if (elements.get(1) != null) {
             Element element = elements.get(1);
             String data = element.data();
@@ -278,5 +275,17 @@ public class JsoupUtil {
             list.add(scoreInfo);
         }
         return list;
+    }
+
+    /**
+     * 解析密码修改结果
+     * @param result
+     * @return
+     */
+    public static String parseSubmitPassword(String result) {
+        Document document = Jsoup.parse(result);
+        Elements elements = document.getElementsByTag("script");
+        String data = elements.get(0).data();
+        return data.substring(data.indexOf("'") + 1, data.lastIndexOf("'"));
     }
 }

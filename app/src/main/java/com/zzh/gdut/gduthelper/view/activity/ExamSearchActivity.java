@@ -1,8 +1,8 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 
@@ -27,12 +27,13 @@ import static com.zzh.gdut.gduthelper.util.AppConstants.SERVICE_BUSY;
  * Created by ZengZeHong on 2016/10/6.
  */
 
-public class ExamSearchActivity extends BaseActivity<ExamInterface , ExamPresenter> implements ExamInterface{
+public class ExamSearchActivity extends BaseActivity<ExamInterface, ExamPresenter> implements ExamInterface {
     private static final String TAG = "ExamSearchActivity";
     private ExamSearchAdapter adapter;
     private List<ExamInfo> lists;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_exam_search;
@@ -47,7 +48,7 @@ public class ExamSearchActivity extends BaseActivity<ExamInterface , ExamPresent
     @Override
     protected void initAttributes() {
         ButterKnife.bind(ExamSearchActivity.this);
-        showToolbarAndShowNavigation("考试查询");
+        showToolbarAndShowNavigation("考试查询", true);
     }
 
     @Override
@@ -72,16 +73,18 @@ public class ExamSearchActivity extends BaseActivity<ExamInterface , ExamPresent
             lists = JsoupUtil.searchExamInfo(success);
             adapter = new ExamSearchAdapter(this);
             adapter.setListData(lists);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
-        }else
-            ToastUtil.showToast(ExamSearchActivity.this , "获取数据失败");
-        Log.e(TAG, "searchSuccess: "+ success );
+        } else
+            ToastUtil.showToast(ExamSearchActivity.this, "获取数据失败");
+        Log.e(TAG, "searchSuccess: " + success);
     }
 
     @Override
     public void searchFail(String fail) {
         dismissProgressDialog();
-        Log.e(TAG, "searchFail: " + fail );
+        ToastUtil.showToast(ExamSearchActivity.this, fail);
+
+        Log.e(TAG, "searchFail: " + fail);
     }
 }
