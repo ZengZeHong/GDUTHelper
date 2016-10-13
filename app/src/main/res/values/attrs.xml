@@ -1,0 +1,9 @@
+<resources>
+    <declare-styleable name="Schedule">
+        <!-- 横线的一些信息 -->
+        <attr name="lineColor" format="color" />
+        <attr name="lineWidth" format="dimension" />
+        <attr name="lineTextColor" format="color" />
+        <attr name="lineTextSize" format="dimension" />
+    </declare-styleable>
+</resources>
