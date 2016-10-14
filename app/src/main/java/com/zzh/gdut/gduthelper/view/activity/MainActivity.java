@@ -58,6 +58,7 @@ public class MainActivity extends BaseNormalActivity {
             }
             break;
             case R.id.cv_class: {
+                cls = ScheduleActivity.class;
             }
             break;
             case R.id.cv_exam: {

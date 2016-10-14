@@ -1,11 +1,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-    <com.zzh.gdut.gduthelper.view.widget.Schedule
-        android:layout_width="match_parent"
-        app:lineColor="@color/colorPrimaryDark"
-        android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+    <include layout="@layout/toolbar" />
+
+    <com.zzh.gdut.gduthelper.view.widget.SchduleTop
+        android:id="@+id/schedule"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:circleCorner="@dimen/viewMargin_2dp"
+        app:lineColor="@color/colorPrimaryDark"
+        app:lineTextColor="@color/colorPrimary"
+        app:lineTextSize="12sp" />
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.zzh.gdut.gduthelper.view.widget.Schedule
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:addIconColor="@color/dividerColor"
+            app:circleCorner="@dimen/viewMargin_2dp"
+            app:lineColor="@color/colorPrimaryDark"
+            app:lineTextColor="@color/colorPrimary"
+            app:lineTextSize="12sp" />
+    </ScrollView>
 </LinearLayout>

@@ -5,5 +5,9 @@
         <attr name="lineWidth" format="dimension" />
         <attr name="lineTextColor" format="color" />
         <attr name="lineTextSize" format="dimension" />
+        <!-- +号的颜色 -->
+        <attr name="addIconColor" format="color" />
+        <!-- 圆角-->
+        <attr name="circleCorner" format="dimension" />
     </declare-styleable>
 </resources>

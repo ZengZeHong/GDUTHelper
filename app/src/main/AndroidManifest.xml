@@ -28,6 +28,9 @@
             android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.GDUTLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.ChangePwActivity"
             android:screenOrientation="portrait" />
         <activity
