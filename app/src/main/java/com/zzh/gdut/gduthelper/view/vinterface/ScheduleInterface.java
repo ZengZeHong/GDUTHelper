@@ -5,5 +5,7 @@ package com.zzh.gdut.gduthelper.view.vinterface;
  */
 
 public interface ScheduleInterface {
-    void onDateChange(String week);
+    void getScheduleSuccess(String success);
+
+    void getScheduleFai(String fail);
 }

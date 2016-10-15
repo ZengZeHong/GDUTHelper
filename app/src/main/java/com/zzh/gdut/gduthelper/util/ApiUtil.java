@@ -22,9 +22,9 @@ public class ApiUtil {
     //修改密码
     public static final String URL_HREF_MODIFY_PASSWORD = "mmxg.aspx?xh=3114005890&gnmkdm=N121502";
     //学生个人课表
-    public static final String URL_HREF_PERSON_CLASS = "xskbcx.aspx?xh=3114005890&xm=曾泽洪&gnmkdm=N121603";
+    public static final String URL_HREF_PERSON_CLASS = URL_HOST_TWO + "/xskbcx.aspx";
     //考试查询
-    public static final String URL_HREF_SEARCH_EXAM =  URL_HOST_TWO + "/xskscx.aspx";
+    public static final String URL_HREF_SEARCH_EXAM = URL_HOST_TWO + "/xskscx.aspx";
     //成绩查询
     public static final String URL_HREF_SEARCH_SCORE = URL_HOST_TWO + "/xscj.aspx";
     //密码修改

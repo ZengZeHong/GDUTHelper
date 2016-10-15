@@ -15,18 +15,19 @@
         app:lineTextColor="@color/colorPrimary"
         app:lineTextSize="12sp" />
 
-    <ScrollView
+    <com.zzh.gdut.gduthelper.view.widget.SCSrollView
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.zzh.gdut.gduthelper.view.widget.Schedule
             android:layout_width="match_parent"
+
             android:layout_height="match_parent"
             app:addIconColor="@color/dividerColor"
             app:circleCorner="@dimen/viewMargin_2dp"
             app:lineColor="@color/colorPrimaryDark"
             app:lineTextColor="@color/colorPrimary"
             app:lineTextSize="12sp" />
-    </ScrollView>
+    </com.zzh.gdut.gduthelper.view.widget.SCSrollView>
 </LinearLayout>

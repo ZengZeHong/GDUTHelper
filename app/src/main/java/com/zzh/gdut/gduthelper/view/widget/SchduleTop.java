@@ -182,6 +182,7 @@ public class SchduleTop extends View {
             drawText(new String[]{stringWeek[i] + "", getWeek(i)}, rectRow, canvas, lineTextColor);
             canvas.restore();
         }
+        canvas.drawLine(getPaddingLeft() + lineWidth, getPaddingTop() + rowHeight, getPaddingLeft() + lineWidth + 7 * rowHeight, getPaddingTop() + rowHeight, mPaint);
 
     }
 
