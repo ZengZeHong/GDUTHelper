@@ -30,7 +30,7 @@ public class SchedulePresenter extends BasePresenter<ScheduleInterface> {
             @Override
             public void onResultFail(String fail) {
                 if (scheduleInterface != null)
-                    scheduleInterface.getScheduleFai(fail);
+                    scheduleInterface.getScheduleFail(fail);
             }
         });
     }
@@ -46,7 +46,7 @@ public class SchedulePresenter extends BasePresenter<ScheduleInterface> {
             @Override
             public void onResultFail(String fail) {
                 if (scheduleInterface != null)
-                    scheduleInterface.getScheduleFai(fail);
+                    scheduleInterface.getScheduleFail(fail);
             }
         });
     }

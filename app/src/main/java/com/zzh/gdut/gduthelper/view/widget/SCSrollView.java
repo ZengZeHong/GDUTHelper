@@ -2,7 +2,6 @@ package com.zzh.gdut.gduthelper.view.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.widget.ScrollView;
 
 /**
@@ -11,6 +10,7 @@ import android.widget.ScrollView;
 
 public class SCSrollView extends ScrollView {
     private static final String TAG = "SCSrollView";
+
     public SCSrollView(Context context) {
         super(context);
     }
@@ -23,9 +23,23 @@ public class SCSrollView extends ScrollView {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
+/*    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev);
-    }
-
+        super.onInterceptTouchEvent(ev);
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                Log.e(TAG, "onInterceptTouchEvent: ACTION_DOWN" );
+            }
+            break;
+            case MotionEvent.ACTION_MOVE: {
+                Log.e(TAG, "onInterceptTouchEvent: ACTION_MOVE" );
+                return true;
+            }
+            case MotionEvent.ACTION_UP: {
+                Log.e(TAG, "onInterceptTouchEvent: DOWN" );
+            }
+            break;
+        }
+        return false;
+    }*/
 }

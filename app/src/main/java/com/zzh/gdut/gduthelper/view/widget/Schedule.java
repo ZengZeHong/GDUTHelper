@@ -5,8 +5,12 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,7 +21,10 @@ import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
 import com.zzh.gdut.gduthelper.util.DisplayUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ZengZeHong on 2016/10/13.
@@ -52,6 +59,7 @@ public class Schedule extends View {
     private int lineColor;
     private int lineTextColor;
     private int addIconColor;
+    private int itemColor;
     private float circleCorner;
     private float lineTextSize;
 
@@ -63,7 +71,11 @@ public class Schedule extends View {
     private boolean isMove = false;
     private boolean isSchedule = false;
     //数据源
-    private List<ScheduleInfo> listData;
+    private List<Map<String, List<ScheduleInfo>>> listData = new ArrayList<>();
+    //课程对应颜色
+    private Map<String, Integer> mapColor = new HashMap<>();
+    private int[] colors = new int[]{R.color.scheduleBlue, R.color.scheduleDeepGreen,
+            R.color.schedulePink, R.color.schedulePurple, R.color.scheduleYellow};
     //设置点击监听
     private OnItemClickListener onItemClickListener;
 
@@ -104,33 +116,35 @@ public class Schedule extends View {
         //设置文字居中显示
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setStyle(Paint.Style.STROKE);
-        listData = new ArrayList<>();
-
-        ScheduleInfo scheduleInfo = new ScheduleInfo();
-        scheduleInfo.setScheduleName("教务处理系统");
-        scheduleInfo.setSchedulePlace("@教4-210");
-        scheduleInfo.setLocation(0, 0);
-
-        ScheduleInfo scheduleInfo1 = new ScheduleInfo();
-        scheduleInfo1.setScheduleName("计算机系统结构");
-        scheduleInfo1.setSchedulePlace("@教4-210");
-        scheduleInfo1.setLocation(2, 2);
-
-        ScheduleInfo scheduleInfo2 = new ScheduleInfo();
-        scheduleInfo2.setScheduleName("软件工程");
-        scheduleInfo2.setSchedulePlace("@教4-210");
-        scheduleInfo2.setLocation(1, 5);
-
-        ScheduleInfo scheduleInfo3 = new ScheduleInfo();
-        scheduleInfo3.setScheduleName("操作系统");
-        scheduleInfo3.setSchedulePlace("@教4-210");
-        scheduleInfo3.setLocation(0, 9);
-        listData.add(scheduleInfo);
-        listData.add(scheduleInfo1);
-        listData.add(scheduleInfo2);
-        listData.add(scheduleInfo3);
     }
 
+    /**
+     * 设置数据
+     *
+     * @param list
+     */
+    public void setListData(List<Map<String, List<ScheduleInfo>>> list) {
+        if (listData != null && list != null) {
+            listData = list;
+            setColor();
+            invalidate();
+        }
+    }
+
+    private void setColor() {
+        int k = 0;
+        for (Map<String, List<ScheduleInfo>> map : listData) {
+            for (Map.Entry<String, List<ScheduleInfo>> entry : map.entrySet()) {
+                for (ScheduleInfo scheduleInfo : entry.getValue()) {
+                    Log.e(TAG, "setColor: " +  scheduleInfo.getScheduleName() + ">>" + colors[k]);
+                    mapColor.put(scheduleInfo.getScheduleName(), new Integer(colors[k]));
+                    k++;
+                    if (k >= colors.length)
+                        k = 0;
+                }
+            }
+        }
+    }
 
     private void initAttrs(Context context, AttributeSet attrs) {
         //通过这个方法，将你在attra.xml定义的declare-styleable的所有属性的值存到TypedArray中
@@ -139,6 +153,7 @@ public class Schedule extends View {
         lineTextColor = ta.getColor(R.styleable.Schedule_lineTextColor, Color.GRAY);
         lineTextSize = ta.getDimension(R.styleable.Schedule_lineTextSize, 40);
         addIconColor = ta.getColor(R.styleable.Schedule_addIconColor, Color.GRAY);
+        itemColor = ta.getColor(R.styleable.Schedule_itemColor, Color.GRAY);
         circleCorner = ta.getDimension(R.styleable.Schedule_circleCorner, 20);
     }
 
@@ -169,10 +184,33 @@ public class Schedule extends View {
         drawScheduleLine(canvas);
         //画出每个单元显示的+号
         drawSmallAdd(canvas);
+        Log.e(TAG, "onDraw: data " + listData.size());
         //画出课表
-        for (ScheduleInfo scheduleInfo : listData) {
-            scheduleInfo.setData();
-            drawTextData(scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), Color.parseColor("#FFF67E7E"), Color.WHITE, canvas);
+        for (Map<String, List<ScheduleInfo>> map : listData) {
+            for (Map.Entry<String, List<ScheduleInfo>> entry : map.entrySet()) {
+                if (entry.getValue().size() > 1) {
+                    //如果当前节课下有多门课程，则要判断显示
+                    ScheduleInfo scheduleInfo = selectSchedule(entry.getValue(), 7);
+                    boolean isFode = !isFode(entry.getValue());
+                    if (scheduleInfo != null) {
+                        drawTextData(isFode, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())), Color.WHITE, canvas);
+                    } else {
+                        scheduleInfo = entry.getValue().get(0);
+                        drawTextData(isFode, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), addIconColor, Color.GRAY, canvas);
+                    }
+                } else {
+                    if (entry.getValue().size() == 1) {
+                        //只有一个条目的话
+                        ScheduleInfo scheduleInfo = entry.getValue().get(0);
+                        if (isCurrentWeek(scheduleInfo, 7))
+                            //如果是当前周
+                            drawTextData(false, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())), Color.WHITE, canvas);
+                        else
+                            drawTextData(false, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), addIconColor, Color.GRAY, canvas);
+
+                    }
+                }
+            }
         }
         //画出点击效果
         if (currentClickX != -1 && currentClickY != -1) {
@@ -181,6 +219,53 @@ public class Schedule extends View {
         }
     }
 
+
+    /**
+     * 根据指定周排序同个节数下的课程
+     *
+     * @param week
+     */
+    private ScheduleInfo selectSchedule(List<ScheduleInfo> list, int week) {
+        Collections.sort(list);
+        for (ScheduleInfo scheduleInfo : list) {
+            if (isCurrentWeek(scheduleInfo, week))
+                return scheduleInfo;
+        }
+        return null;
+    }
+
+    /**
+     * 判断当前课程是不是在当前周
+     *
+     * @param scheduleInfo
+     * @param week
+     * @return
+     */
+    private boolean isCurrentWeek(ScheduleInfo scheduleInfo, int week) {
+        String time = scheduleInfo.getScheduleTime();
+        String timeWeek = time.substring(time.indexOf("{") + 1, time.indexOf("}"));
+        String[] range = timeWeek.substring(timeWeek.indexOf("第") + 1, timeWeek.indexOf("周")).split("-");
+        if (week >= Integer.parseInt(range[0]) && week <= Integer.parseInt(range[1])) {
+            //把满足指定周的课程添加到需要显示的List中去
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判断当前课表是否出现重复
+     *
+     * @param list
+     * @return true表示重复
+     */
+    private boolean isFode(List<ScheduleInfo> list) {
+        if (list.size() == 2)
+            return list.get(0).getScheduleName().equals(list.get(1).getScheduleName());
+        else {
+            // 大于两门课程必定有2种
+            return false;
+        }
+    }
 
     /**
      * 画出点击效果
@@ -292,17 +377,41 @@ public class Schedule extends View {
      * @param textColor       字体颜色
      * @param canvas
      */
-    private void drawTextData(int x, int y, int span, String[] text, int backgroundColor, int textColor, Canvas canvas) {
+    private void drawTextData(boolean isFode, int x, int y, int span, String text, int backgroundColor, int textColor, Canvas canvas) {
         //边框间距
         int offest = 3;
         RectF rectF = new RectF(getPaddingLeft() + lineWidth + offest + rowWidth * x, getPaddingTop() + offest + lineHeight * y, getPaddingLeft() + lineWidth + rowWidth * (x + 1) - offest, getPaddingTop() + lineHeight * (y + span) - offest);
-        Rect rect = new Rect(getPaddingLeft() + lineWidth + offest + rowWidth * x, getPaddingTop() + offest + lineHeight * y, getPaddingLeft() + lineWidth + rowWidth * (x + 1) - offest, getPaddingTop() + lineHeight * (y + span) - offest);
         //背景
         mPaint.setColor(backgroundColor);
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawRoundRect(rectF, circleCorner, circleCorner, mPaint);
+        int offestSmall = rowWidth / 4;
+        float rate = (offestSmall * circleCorner) / rowWidth;
+        //TODO 如果当前节下有多个课程，则设置折叠效果,要加判断
+        if (isFode) {
+            //绘制背景层
+            if (backgroundColor == addIconColor)
+                mPaint.setColor(Color.WHITE);
+            else
+                mPaint.setColor(addIconColor);
+            RectF rectBg = new RectF(getPaddingLeft() + lineWidth + offest + rowWidth * x + rowWidth - offestSmall, getPaddingTop() + offest + lineHeight * y, getPaddingLeft() + lineWidth + rowWidth * (x + 1) - offest, getPaddingTop() + offest + lineHeight * y + offestSmall);
+            canvas.drawRoundRect(rectBg, rate, rate, mPaint);
+            //绘制折叠层
+            if (backgroundColor == addIconColor)
+                mPaint.setColor(itemColor);
+            else
+                mPaint.setColor(backgroundColor);
+            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setAlpha(200);
+            Path path = new Path();
+            path.moveTo(rectBg.left, rectBg.top);
+            path.lineTo(rectBg.right, rectBg.bottom);
+            path.lineTo(rectBg.left, rectBg.bottom);
+            canvas.drawPath(path, mPaint);
+            mPaint.setAlpha(255);
+        }
+        //点击背景
         if (currentClickX == x && currentClickY >= y && currentClickY < y + span) {
-            //点击背景
             mPaint.setColor(Color.BLACK);
             mPaint.setAlpha(30);
             canvas.drawRoundRect(rectF, circleCorner, circleCorner, mPaint);
@@ -311,8 +420,17 @@ public class Schedule extends View {
             isSchedule = true;
         }
         mPaint.setStyle(Paint.Style.STROKE);
-        //绘制文本
-        drawText(text, rect, canvas, textColor);
+        //绘制自动换行文本
+        TextPaint textPaint = new TextPaint();
+        textPaint.setAntiAlias(true);
+        textPaint.setStyle(Paint.Style.STROKE);
+        textPaint.setColor(textColor);
+        textPaint.setTextSize(mPaint.getTextSize());
+        StaticLayout layout = new StaticLayout(text, textPaint, (3 * rowWidth) / 4, Layout.Alignment.ALIGN_CENTER, 1.0F, 0.0F, true);
+        canvas.save();
+        canvas.translate(rectF.left + rowWidth / 8, rectF.top + rowWidth / 8);
+        layout.draw(canvas);
+        canvas.restore();
     }
 
     @Override
@@ -406,9 +524,13 @@ public class Schedule extends View {
      * @return
      */
     private boolean isSchedule() {
-        for (ScheduleInfo scheduleInfo : listData) {
-            if (currentClickX == scheduleInfo.getX() && currentClickY >= scheduleInfo.getY() && currentClickY < scheduleInfo.getY() + scheduleInfo.getSpan())
-                return true;
+        for (Map<String, List<ScheduleInfo>> map : listData) {
+            for (Map.Entry<String, List<ScheduleInfo>> entry : map.entrySet()) {
+                for (ScheduleInfo scheduleInfo : entry.getValue()) {
+                    if (currentClickX == scheduleInfo.getX() && currentClickY >= scheduleInfo.getY() && currentClickY < scheduleInfo.getY() + scheduleInfo.getSpan())
+                        return true;
+                }
+            }
         }
         return false;
     }

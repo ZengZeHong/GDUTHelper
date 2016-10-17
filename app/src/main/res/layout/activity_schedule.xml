@@ -7,7 +7,7 @@
     <include layout="@layout/toolbar" />
 
     <com.zzh.gdut.gduthelper.view.widget.SchduleTop
-        android:id="@+id/schedule"
+        android:id="@+id/schedule_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:circleCorner="@dimen/viewMargin_2dp"
@@ -21,10 +21,11 @@
         android:layout_height="wrap_content">
 
         <com.zzh.gdut.gduthelper.view.widget.Schedule
+            android:id="@+id/schedule"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
             app:addIconColor="@color/dividerColor"
+            app:itemColor="@color/colorWhiteBg"
             app:circleCorner="@dimen/viewMargin_2dp"
             app:lineColor="@color/colorPrimaryDark"
             app:lineTextColor="@color/colorPrimary"

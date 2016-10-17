@@ -8,10 +8,19 @@
     <color name="primaryText">#212121</color>
     <color name="secondaryText">#757575</color>
     <color name="dividerColor">#DBDBDB</color>
-
     <!-- Custom Color-->
     <color name="customWhite">#FFFFFF</color>
     <color name="customBlack">#333333</color>
     <color name="customRed">#FFF52C2C</color>
     <color name="customGreen">#4CAF50</color>
+
+    <!-- White -->
+    <color name="colorWhiteBg">#f1f0f0</color>
+
+    <!-- schedule backgound -->
+    <color name="scheduleBlue">#1dabf2</color>
+    <color name="scheduleYellow">#efb013</color>
+    <color name="schedulePink">#e967ba</color>
+    <color name="scheduleDeepGreen">#0ec232</color>
+    <color name="schedulePurple">#a56ef2</color>
 </resources>

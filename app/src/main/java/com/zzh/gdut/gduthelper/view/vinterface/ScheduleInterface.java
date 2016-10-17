@@ -7,5 +7,5 @@ package com.zzh.gdut.gduthelper.view.vinterface;
 public interface ScheduleInterface {
     void getScheduleSuccess(String success);
 
-    void getScheduleFai(String fail);
+    void getScheduleFail(String fail);
 }

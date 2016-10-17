@@ -5,10 +5,11 @@ package com.zzh.gdut.gduthelper.bean;
  * 课程实体类
  */
 
-public class ScheduleInfo {
+public class ScheduleInfo implements Comparable {
     //显示的坐标轴位置
     private int x;
     private int y;
+    private int span = 2;
     //课程名字
     private String scheduleName;
     //地点
@@ -19,9 +20,6 @@ public class ScheduleInfo {
     private String scheduleTime;
     //周数
     private String scheduleWeek;
-
-    private int span = 2;
-    private String strings[] = new String[]{"", "", "", "", ""};
 
     public int getX() {
         return x;
@@ -84,16 +82,10 @@ public class ScheduleInfo {
         this.scheduleWeek = scheduleWeek;
     }
 
-    public void setData() {
-        String data = scheduleName + schedulePlace;
-        strings[0] = data.substring(0, 2);
-        strings[1] = data.substring(3, 5);
-        span = 2;
-        if (y == 9)
-            span = 3;
-    }
 
     public int getSpan() {
+        if(y == 9)
+            span = 3;
         return span;
     }
 
@@ -101,8 +93,29 @@ public class ScheduleInfo {
         this.span = span;
     }
 
-    public String[] getString() {
-        return strings;
+    public String getString() {
+        return scheduleName + "@" + schedulePlace;
     }
 
+
+    @Override
+    public String toString() {
+        String data = scheduleName + " " + schedulePlace + " " + scheduleTeacher + " " + scheduleTime + ">>" + x + ">>" + y;
+        return data;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        String timeWeek = scheduleTime.substring(scheduleTime.indexOf("{") + 1, scheduleTime.indexOf("}"));
+        String[] range = timeWeek.substring(timeWeek.indexOf("第") + 1, timeWeek.indexOf("周")).split("-");
+        if (another instanceof ScheduleInfo) {
+            ScheduleInfo scheduleInfo = (ScheduleInfo) another;
+            String timeWeekAn = scheduleInfo.getScheduleTime().substring(scheduleInfo.getScheduleTime().indexOf("{") + 1, scheduleInfo.getScheduleTime().indexOf("}"));
+            String[] rangeAn = timeWeekAn.substring(timeWeekAn.indexOf("第") + 1, timeWeekAn.indexOf("周")).split("-");
+            if (Integer.parseInt(range[1]) > Integer.parseInt(rangeAn[0]))
+                return 1; //按低到高排序
+            else return -1;
+        }
+        return 0;
+    }
 }

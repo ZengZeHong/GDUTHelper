@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.zzh.gdut.gduthelper.bean.ExamInfo;
 import com.zzh.gdut.gduthelper.bean.PersonInfo;
+import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
 import com.zzh.gdut.gduthelper.bean.ScoreInfo;
 
 import org.jsoup.Jsoup;
@@ -13,7 +14,9 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ZengZeHong on 2016/9/26.
@@ -254,6 +257,7 @@ public class JsoupUtil {
 
     /**
      * 解析成绩
+     *
      * @param result
      * @return
      */
@@ -271,7 +275,7 @@ public class JsoupUtil {
             scoreInfo.setClassAttr(elementsData.get(2).text());
             scoreInfo.setClassScore(elementsData.get(3).text());
             scoreInfo.setClassCredit(elementsData.get(7).text());
-            Log.e(TAG, "getScoreInfo: " + scoreInfo.getClassName()+ ">" + scoreInfo.getClassScore() );
+            Log.e(TAG, "getScoreInfo: " + scoreInfo.getClassName() + ">" + scoreInfo.getClassScore());
             list.add(scoreInfo);
         }
         return list;
@@ -279,6 +283,7 @@ public class JsoupUtil {
 
     /**
      * 解析密码修改结果
+     *
      * @param result
      * @return
      */
@@ -288,4 +293,83 @@ public class JsoupUtil {
         String data = elements.get(0).data();
         return data.substring(data.indexOf("'") + 1, data.lastIndexOf("'"));
     }
+
+    /**
+     * 获取课程信息
+     *
+     * @param result
+     * @return
+     */
+    public static List<Map<String, List<ScheduleInfo>>> getSchedule(String result) {
+        Map<String, List<ScheduleInfo>> mapOne = new HashMap<>();
+        Map<String, List<ScheduleInfo>> mapThree = new HashMap<>();
+        Map<String, List<ScheduleInfo>> mapSix = new HashMap<>();
+        Map<String, List<ScheduleInfo>> mapEight = new HashMap<>();
+        Map<String, List<ScheduleInfo>> mapTen = new HashMap<>();
+        List<Map<String, List<ScheduleInfo>>> list = new ArrayList<>();
+
+        Document document = Jsoup.parse(result);
+        Elements elementsClass = document.getElementsByTag("tr");
+        //从4开始第一节
+        Element elementOne = elementsClass.get(4);
+        Elements elementsOne = elementOne.getElementsByTag("td");
+        //第一二节的数据
+        for (int i = 2; i <= 8; i++) {
+            Element element = elementsOne.get(i);
+            mapOne.put((i - 2) + "", getScheduleInfo(i, 2, 0, element));
+        }
+        //3-4
+        Element elementThree = elementsClass.get(6);
+        Elements elementsThree = elementThree.getElementsByTag("td");
+        for (int i = 1; i <= 7; i++) {
+            Element element = elementsThree.get(i);
+            mapThree.put((i - 1) + "", getScheduleInfo(i, 1, 2, element));
+        }
+
+        //6-7
+        Element elementSix = elementsClass.get(9);
+        Elements elementsSix = elementSix.getElementsByTag("td");
+        for (int i = 1; i <= 7; i++) {
+            Element element = elementsSix.get(i);
+            mapSix.put((i - 1) + "", getScheduleInfo(i, 1, 5, element));
+        }
+        //8-9
+        Element elementEight = elementsClass.get(11);
+        Elements elementsEight = elementEight.getElementsByTag("td");
+        for (int i = 1; i <= 7; i++) {
+            Element element = elementsEight.get(i);
+            mapEight.put((i - 1) + "", getScheduleInfo(i, 1, 7, element));
+        }
+        //10-12
+        Element elementTen = elementsClass.get(13);
+        Elements elementsTen = elementTen.getElementsByTag("td");
+        for (int i = 2; i <= 8; i++) {
+            Element element = elementsTen.get(i);
+            mapTen.put((i - 2) + "", getScheduleInfo(i, 2, 9, element));
+        }
+        list.add(mapOne);
+        list.add(mapThree);
+        list.add(mapSix);
+        list.add(mapEight);
+        list.add(mapTen);
+        return list;
+    }
+
+    private static List<ScheduleInfo> getScheduleInfo(int i, int span, int line, Element element) {
+        List<ScheduleInfo> list = new ArrayList<>();
+        if (!element.text().equals(" ")) {
+            String[] data = element.text().split(" ");
+            for (int j = 0; j < data.length; j = j + 4) {
+                ScheduleInfo scheduleInfo = new ScheduleInfo();
+                scheduleInfo.setScheduleName(data[j + 0]);
+                scheduleInfo.setScheduleTime(data[j + 1]);
+                scheduleInfo.setScheduleTeacher(data[j + 2]);
+                scheduleInfo.setSchedulePlace(data[j + 3]);
+                scheduleInfo.setLocation(i - span, line);
+                list.add(scheduleInfo);
+            }
+        }
+        return list;
+    }
+
 }
