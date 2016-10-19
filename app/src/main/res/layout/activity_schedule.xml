@@ -1,34 +1,69 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar" />
-
-    <com.zzh.gdut.gduthelper.view.widget.SchduleTop
-        android:id="@+id/schedule_top"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:circleCorner="@dimen/viewMargin_2dp"
-        app:lineColor="@color/colorPrimaryDark"
-        app:lineTextColor="@color/colorPrimary"
-        app:lineTextSize="12sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
-    <com.zzh.gdut.gduthelper.view.widget.SCSrollView
-        android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <include layout="@layout/toolbar" />
 
-        <com.zzh.gdut.gduthelper.view.widget.Schedule
-            android:id="@+id/schedule"
+        <com.zzh.gdut.gduthelper.view.widget.SchduleTop
+            android:id="@+id/schedule_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:addIconColor="@color/dividerColor"
-            app:itemColor="@color/colorWhiteBg"
             app:circleCorner="@dimen/viewMargin_2dp"
             app:lineColor="@color/colorPrimaryDark"
             app:lineTextColor="@color/colorPrimary"
             app:lineTextSize="12sp" />
-    </com.zzh.gdut.gduthelper.view.widget.SCSrollView>
-</LinearLayout>
+
+        <com.zzh.gdut.gduthelper.view.widget.SCSrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <com.zzh.gdut.gduthelper.view.widget.Schedule
+                android:id="@+id/schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:addIconColor="@color/dividerColor"
+                app:circleCorner="@dimen/viewMargin_2dp"
+                app:itemColor="@color/colorWhiteBg"
+                app:lineColor="@color/colorPrimaryDark"
+                app:lineTextColor="@color/colorPrimary"
+                app:lineTextSize="12sp" />
+        </com.zzh.gdut.gduthelper.view.widget.SCSrollView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/view_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#30000000"
+        android:gravity="center"
+        android:layerType="software">
+
+        <HorizontalScrollView
+            android:id="@+id/viewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.zzh.gdut.gduthelper.view.widget.ScrollSchedule
+                android:id="@+id/ll_sv"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/viewpager_item" />
+
+
+
+            </com.zzh.gdut.gduthelper.view.widget.ScrollSchedule>
+        </HorizontalScrollView>
+    </RelativeLayout>
+</RelativeLayout>

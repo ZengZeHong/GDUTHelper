@@ -20,4 +20,6 @@
     <dimen name="linearLayoutPadding">20dp</dimen>
 
     <dimen name="cardView_30dp">20dp</dimen>
+
+    <dimen name="viewPager_margin">100dp</dimen>
 </resources>

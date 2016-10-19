@@ -18,9 +18,17 @@
     <color name="colorWhiteBg">#f1f0f0</color>
 
     <!-- schedule backgound -->
-    <color name="scheduleBlue">#1dabf2</color>
-    <color name="scheduleYellow">#efb013</color>
-    <color name="schedulePink">#e967ba</color>
-    <color name="scheduleDeepGreen">#0ec232</color>
-    <color name="schedulePurple">#a56ef2</color>
+    <color name="scheduleBlue">#5ec0e5</color>
+    <color name="scheduleYellow">#eec971</color>
+    <color name="schedulePink">#eaa0a1</color>
+    <color name="scheduleGreen">#d396d261</color>
+    <color name="schedulePurple">#9e9edc</color>
+
+
+    <color name="scheduleDeepGreen">#73c1ab</color>
+    <color name="scheduleDeepBlue">#92a9df</color>
+    <color name="scheduleDeepPink">#de98b4</color>
+
+    <color name="scheduleOrg">#f79f84</color>
+    <color name="scheduleDeepOrg">#db9beb</color>
 </resources>

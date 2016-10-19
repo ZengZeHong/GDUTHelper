@@ -74,13 +74,18 @@ public class Schedule extends View {
     private List<Map<String, List<ScheduleInfo>>> listData = new ArrayList<>();
     //课程对应颜色
     private Map<String, Integer> mapColor = new HashMap<>();
-    private int[] colors = new int[]{R.color.scheduleBlue, R.color.scheduleDeepGreen,
-            R.color.schedulePink, R.color.schedulePurple, R.color.scheduleYellow};
+    //配色数组
+    private int[] colors = new int[]{
+            R.color.scheduleBlue, R.color.schedulePink,
+            R.color.scheduleGreen, R.color.scheduleDeepOrg,
+            R.color.scheduleDeepGreen, R.color.schedulePurple,
+            R.color.scheduleYellow, R.color.scheduleDeepBlue,
+            R.color.scheduleDeepPink, R.color.scheduleOrg};
     //设置点击监听
     private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick();
+        void onItemClick(List<ScheduleInfo> list);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -131,18 +136,24 @@ public class Schedule extends View {
         }
     }
 
+    /**
+     * 给每一门课程分配随机一种配色
+     */
     private void setColor() {
         int k = 0;
         for (Map<String, List<ScheduleInfo>> map : listData) {
             for (Map.Entry<String, List<ScheduleInfo>> entry : map.entrySet()) {
                 for (ScheduleInfo scheduleInfo : entry.getValue()) {
-                    Log.e(TAG, "setColor: " +  scheduleInfo.getScheduleName() + ">>" + colors[k]);
-                    mapColor.put(scheduleInfo.getScheduleName(), new Integer(colors[k]));
-                    k++;
-                    if (k >= colors.length)
-                        k = 0;
+                    mapColor.put(scheduleInfo.getScheduleName(), new Integer(0));
                 }
             }
+        }
+        Log.e(TAG, "setColor: size " + mapColor.size());
+        for (Map.Entry<String, Integer> entry : mapColor.entrySet()) {
+            entry.setValue(new Integer(colors[k]));
+            k++;
+            if (k >= colors.length)
+                k = 0;
         }
     }
 
@@ -155,6 +166,7 @@ public class Schedule extends View {
         addIconColor = ta.getColor(R.styleable.Schedule_addIconColor, Color.GRAY);
         itemColor = ta.getColor(R.styleable.Schedule_itemColor, Color.GRAY);
         circleCorner = ta.getDimension(R.styleable.Schedule_circleCorner, 20);
+        ta.recycle();
     }
 
     @Override
@@ -184,8 +196,21 @@ public class Schedule extends View {
         drawScheduleLine(canvas);
         //画出每个单元显示的+号
         drawSmallAdd(canvas);
-        Log.e(TAG, "onDraw: data " + listData.size());
         //画出课表
+        drawSchedule(canvas);
+        //画出点击效果
+        if (currentClickX != -1 && currentClickY != -1) {
+            if (!isSchedule)
+                drawClickArea(canvas);
+        }
+    }
+
+    /**
+     * 画出课表
+     *
+     * @param canvas
+     */
+    private void drawSchedule(Canvas canvas) {
         for (Map<String, List<ScheduleInfo>> map : listData) {
             for (Map.Entry<String, List<ScheduleInfo>> entry : map.entrySet()) {
                 if (entry.getValue().size() > 1) {
@@ -211,11 +236,6 @@ public class Schedule extends View {
                     }
                 }
             }
-        }
-        //画出点击效果
-        if (currentClickX != -1 && currentClickY != -1) {
-            if (!isSchedule)
-                drawClickArea(canvas);
         }
     }
 
@@ -258,7 +278,7 @@ public class Schedule extends View {
      * @param list
      * @return true表示重复
      */
-    private boolean isFode(List<ScheduleInfo> list) {
+    public boolean isFode(List<ScheduleInfo> list) {
         if (list.size() == 2)
             return list.get(0).getScheduleName().equals(list.get(1).getScheduleName());
         else {
@@ -402,7 +422,7 @@ public class Schedule extends View {
             else
                 mPaint.setColor(backgroundColor);
             mPaint.setStyle(Paint.Style.FILL);
-            mPaint.setAlpha(200);
+            mPaint.setAlpha(180);
             Path path = new Path();
             path.moveTo(rectBg.left, rectBg.top);
             path.lineTo(rectBg.right, rectBg.bottom);
@@ -457,9 +477,42 @@ public class Schedule extends View {
                 if (lastX == currentClickX && lastY == currentClickY) {
                     if (location != currentClickY * 7 + currentClickX) {
                         if (isSchedule) {
-                            initClick();
                             //TODO 点击课程的回调
-                            Log.e(TAG, "onTouchEvent: Item clasxs");
+                            Log.e(TAG, "onTouchEvent: Item clasxs " + currentClickX + ">>" + currentClickY);
+                            Map<String, List<ScheduleInfo>> map = null;
+                            switch (currentClickY) {
+                                case 0:
+                                case 1: {
+                                    map = listData.get(0);
+                                }
+                                break;
+                                case 2:
+                                case 3: {
+                                    map = listData.get(1);
+                                }
+                                break;
+                                case 5:
+                                case 6: {
+                                    map = listData.get(2);
+                                }
+                                break;
+                                case 7:
+                                case 8: {
+                                    map = listData.get(3);
+                                }
+                                break;
+                                case 9:
+                                case 10:
+                                case 11: {
+                                    map = listData.get(4);
+                                }
+                                break;
+                            }
+                            //触发课程回调
+                            if (onItemClickListener != null && map != null) {
+                                onItemClickListener.onItemClick(map.get((currentClickX + "")));
+                            }
+                            initClick();
                         } else
                             Log.e(TAG, "onTouchEvent: Item normal");
 
@@ -468,8 +521,6 @@ public class Schedule extends View {
                     } else {
                         Log.e(TAG, "onTouchEvent: Item normal click");
                         //TODO 普通监听的回调
-                        if (onItemClickListener != null)
-                            onItemClickListener.onItemClick();
                     }
                 }
                 isMove = false;

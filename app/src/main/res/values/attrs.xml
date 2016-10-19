@@ -11,4 +11,9 @@
         <!-- 圆角-->
         <attr name="circleCorner" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="ScrollSchedule">
+        <!-- 横线的一些信息 -->
+        <attr name="itemOffest" format="dimension" />
+    </declare-styleable>
 </resources>

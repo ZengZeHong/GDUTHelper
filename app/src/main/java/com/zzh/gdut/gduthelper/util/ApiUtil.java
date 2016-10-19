@@ -7,6 +7,7 @@ package com.zzh.gdut.gduthelper.util;
 public class ApiUtil {
     //登陆后类似token的令牌信息 eg :
     public static String LOGIN_TOKEN = null;
+    //TODO 要存进数据库读取，不然内存回收会crash，所有静态变量会被重置
     //登陆成功的学号
     public static String USER_NUMBER = null;
     //用户名字eg:曾泽洪

@@ -63,12 +63,13 @@ public class SchduleTop extends View {
         initData(context);
     }
 
-    private void initAttrs(Context context, AttributeSet attrs) {
+    private void initAttrs(Context context, AttributeSet attrs)     {
         //通过这个方法，将你在attra.xml定义的declare-styleable的所有属性的值存到TypedArray中
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.Schedule);
         lineColor = ta.getColor(R.styleable.Schedule_lineColor, Color.GRAY);
         lineTextColor = ta.getColor(R.styleable.Schedule_lineTextColor, Color.GRAY);
         lineTextSize = ta.getDimension(R.styleable.Schedule_lineTextSize, 40);
+        ta.recycle();
     }
 
     @Override

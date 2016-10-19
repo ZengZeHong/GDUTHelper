@@ -23,14 +23,13 @@ import butterknife.ButterKnife;
  * Created by ZengZeHong on 2016/10/13.
  */
 
-public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePresenter> implements ScheduleInterface {
+public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePresenter> implements ScheduleInterface, Schedule.OnItemClickListener {
     private static final String TAG = "ScheduleActivity";
     private List<Map<String, List<ScheduleInfo>>> list;
     @BindView(R.id.schedule)
     Schedule schedule;
     @BindView(R.id.schedule_top)
     SchduleTop schduleTop;
-
     @Override
     protected SchedulePresenter createPresenter() {
         return new SchedulePresenter(this);
@@ -43,10 +42,11 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
 
     @Override
     protected void initViews() {
-        showProgressDialog("正在获取中...");
-        mPresenter.getSchedule();
+        showToolbarAndShowNavigation("测试", false);
+        //  showProgressDialog("正在获取中...");
+        //   mPresenter.getSchedule();
+        //   schedule.setOnItemClickListener(this);
     }
-
     @Override
     protected void initAttributes() {
         ButterKnife.bind(ScheduleActivity.this);
@@ -71,34 +71,17 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
         Log.e(TAG, "getScheduleSuccess: " + success);
     }
 
-  /*
 
-    /**
-     * 筛选对应周下的日期
-     *
-     * @param week
-     *//*
-    private List<ScheduleInfo> getSelectSchedule(int week) {
-        for (ScheduleInfo scheduleInfo : listAll) {
-            String[] times = scheduleInfo.getScheduleTime().split("@");
-            for (String time : times) {
-                String timeWeek = time.substring(time.indexOf("{") + 1, time.indexOf("}"));
-                String[] range = timeWeek.substring(timeWeek.indexOf("第") + 1, timeWeek.indexOf("周")).split("-");
-                Log.e(TAG, "getSelectSchedule: " + scheduleInfo.getScheduleName() + ">>"+ range[0] + ">>" + range[1] + ">>" + time + ">>" + timeWeek );
-                if (week >= Integer.parseInt(range[0]) && week <= Integer.parseInt(range[1])) {
-                    //把满足指定周的课程添加到需要显示的List中去
-                    //   listSelect.add(scheduleInfo);
-                    scheduleInfo.setCurrentWeek(true);
-                }
-            }
-        }
-        return listAll;
-    }
-*/
     @Override
     public void getScheduleFail(String fail) {
         dismissProgressDialog();
         Log.e(TAG, "getScheduleFai: " + fail);
 
     }
+
+    @Override
+    public void onItemClick(List<ScheduleInfo> list) {
+        Log.e(TAG, "onItemClick: " + list.toString());
+    }
+
 }
