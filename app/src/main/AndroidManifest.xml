@@ -15,7 +15,7 @@
 
 
         <activity
-            android:name=".view.activity.ScheduleShowActivity"
+            android:name=".view.activity.GDUTLoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

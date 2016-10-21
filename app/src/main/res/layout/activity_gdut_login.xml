@@ -24,6 +24,7 @@
             android:hint="@string/et_account_hint"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/mainTestSize_16sp"
+            android:text="3114006257"
             app:met_errorColor="@color/customRed"
             app:met_floatingLabel="normal"
             app:met_floatingLabelText="@string/et_account_hint"
@@ -70,6 +71,7 @@
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
+            android:text="www.android.com"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

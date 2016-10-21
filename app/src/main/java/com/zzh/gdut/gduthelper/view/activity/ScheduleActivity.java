@@ -1,15 +1,23 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.RelativeLayout;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
 import com.zzh.gdut.gduthelper.presenter.SchedulePresenter;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
+import com.zzh.gdut.gduthelper.util.ToastUtil;
+import com.zzh.gdut.gduthelper.view.adapter.GalleryAdapter;
 import com.zzh.gdut.gduthelper.view.vinterface.ScheduleInterface;
+import com.zzh.gdut.gduthelper.view.widget.SCGallery;
 import com.zzh.gdut.gduthelper.view.widget.SchduleTop;
 import com.zzh.gdut.gduthelper.view.widget.Schedule;
 
@@ -18,6 +26,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by ZengZeHong on 2016/10/13.
@@ -26,10 +35,16 @@ import butterknife.ButterKnife;
 public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePresenter> implements ScheduleInterface, Schedule.OnItemClickListener {
     private static final String TAG = "ScheduleActivity";
     private List<Map<String, List<ScheduleInfo>>> list;
+    private GalleryAdapter adapter;
     @BindView(R.id.schedule)
     Schedule schedule;
     @BindView(R.id.schedule_top)
     SchduleTop schduleTop;
+    @BindView(R.id.gallery)
+    SCGallery gallery;
+    @BindView(R.id.rl_shadow)
+    RelativeLayout rlShadow;
+
     @Override
     protected SchedulePresenter createPresenter() {
         return new SchedulePresenter(this);
@@ -43,10 +58,11 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
     @Override
     protected void initViews() {
         showToolbarAndShowNavigation("测试", false);
-        //  showProgressDialog("正在获取中...");
-        //   mPresenter.getSchedule();
-        //   schedule.setOnItemClickListener(this);
+        showProgressDialog("正在获取中...");
+        mPresenter.getSchedule();
+        schedule.setOnItemClickListener(this);
     }
+
     @Override
     protected void initAttributes() {
         ButterKnife.bind(ScheduleActivity.this);
@@ -57,9 +73,11 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
 
     }
 
-    @Override
+    @OnClick({R.id.rl_shadow})
     public void onClick(View v) {
-
+        if (v.getId() == R.id.rl_shadow) {
+            rlShadow.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -82,6 +100,38 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
     @Override
     public void onItemClick(List<ScheduleInfo> list) {
         Log.e(TAG, "onItemClick: " + list.toString());
+        //如果有多门课程存在的情况
+        if (schedule.isFode(list)) {
+            rlShadow.setVisibility(View.VISIBLE);
+            adapter = new GalleryAdapter(this, list);
+            gallery.setAdapter(adapter);
+            gallery.setSelection(getPosition(list));
+            Animator anim = AnimatorInflater.loadAnimator(this, R.animator.gallery_anim);
+            anim.setTarget(gallery);
+            anim.start();
+            gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ToastUtil.showToast(ScheduleActivity.this, "点击" + position);
+                }
+            });
+        }else {
+            //普通点击
+        }
+    }
+
+    /**
+     * 获取显示位置
+     * @param list
+     * @return
+     */
+    private int getPosition(List<ScheduleInfo> list){
+        for(int i = 0 ; i < list.size() ; i++){
+            ScheduleInfo scheduleInfo = list.get(i);
+            if(scheduleInfo.getTextColor() == Color.WHITE)
+                return i;
+        }
+        return 0;
     }
 
 }

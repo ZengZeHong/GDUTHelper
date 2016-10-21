@@ -36,6 +36,8 @@ public class Schedule extends View {
     //点击类型
     private static final int TAG_CLASS = 0;
     private static final int TAG_ITEM = 1;
+    //分割时间符
+    private static final String TIME_SEPARATOR = "@";
     //每一个子列的高度
     private int lineHeight;
     //每一列的宽度
@@ -145,10 +147,15 @@ public class Schedule extends View {
             for (Map.Entry<String, List<ScheduleInfo>> entry : map.entrySet()) {
                 for (ScheduleInfo scheduleInfo : entry.getValue()) {
                     mapColor.put(scheduleInfo.getScheduleName(), new Integer(0));
+                    //初始化颜色
+                    scheduleInfo.setBackgroundColor(addIconColor);
+                    scheduleInfo.setTextColor(Color.GRAY);
                 }
+                //移除重复项
+                removeRepeat(entry.getValue());
             }
         }
-        Log.e(TAG, "setColor: size " + mapColor.size());
+        //二次筛选颜色
         for (Map.Entry<String, Integer> entry : mapColor.entrySet()) {
             entry.setValue(new Integer(colors[k]));
             k++;
@@ -183,7 +190,7 @@ public class Schedule extends View {
         //7.5是分配出来的
         rowWidth = ((int) (viewWidth / 7.7));
         rowHeight = rowWidth;
-        lineHeight = rowHeight + 4;
+        lineHeight = (screenHeight - rowHeight) / 10;
         lineWidth = Math.round((float) (rowWidth * 0.7));
         classHeight = lineHeight * 2;
         viewHeight = lineHeight * 13 - getPaddingBottom() - getPaddingTop();
@@ -215,24 +222,32 @@ public class Schedule extends View {
             for (Map.Entry<String, List<ScheduleInfo>> entry : map.entrySet()) {
                 if (entry.getValue().size() > 1) {
                     //如果当前节课下有多门课程，则要判断显示
-                    ScheduleInfo scheduleInfo = selectSchedule(entry.getValue(), 7);
-                    boolean isFode = !isFode(entry.getValue());
+                    //TODO 选择指定周下的课程
+                    ScheduleInfo scheduleInfo = selectSchedule(entry.getValue(), 11);
                     if (scheduleInfo != null) {
-                        drawTextData(isFode, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())), Color.WHITE, canvas);
+                        scheduleInfo.setBackgroundColor(getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())));
+                        scheduleInfo.setTextColor(Color.WHITE);
+                        drawTextData(true, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), scheduleInfo.getBackgroundColor(), Color.WHITE, canvas);
                     } else {
                         scheduleInfo = entry.getValue().get(0);
-                        drawTextData(isFode, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), addIconColor, Color.GRAY, canvas);
+                        scheduleInfo.setBackgroundColor(addIconColor);
+                        scheduleInfo.setTextColor(Color.GRAY);
+                        drawTextData(true, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), addIconColor, Color.GRAY, canvas);
                     }
                 } else {
                     if (entry.getValue().size() == 1) {
                         //只有一个条目的话
                         ScheduleInfo scheduleInfo = entry.getValue().get(0);
-                        if (isCurrentWeek(scheduleInfo, 7))
+                        if (isCurrentWeek(scheduleInfo, 7)) {
                             //如果是当前周
-                            drawTextData(false, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())), Color.WHITE, canvas);
-                        else
+                            scheduleInfo.setBackgroundColor(getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())));
+                            scheduleInfo.setTextColor(Color.WHITE);
+                            drawTextData(false, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), scheduleInfo.getBackgroundColor(), Color.WHITE, canvas);
+                        } else {
+                            scheduleInfo.setBackgroundColor(addIconColor);
+                            scheduleInfo.setTextColor(Color.GRAY);
                             drawTextData(false, scheduleInfo.getX(), scheduleInfo.getY(), scheduleInfo.getSpan(), scheduleInfo.getString(), addIconColor, Color.GRAY, canvas);
-
+                        }
                     }
                 }
             }
@@ -262,14 +277,49 @@ public class Schedule extends View {
      * @return
      */
     private boolean isCurrentWeek(ScheduleInfo scheduleInfo, int week) {
-        String time = scheduleInfo.getScheduleTime();
-        String timeWeek = time.substring(time.indexOf("{") + 1, time.indexOf("}"));
-        String[] range = timeWeek.substring(timeWeek.indexOf("第") + 1, timeWeek.indexOf("周")).split("-");
-        if (week >= Integer.parseInt(range[0]) && week <= Integer.parseInt(range[1])) {
-            //把满足指定周的课程添加到需要显示的List中去
-            return true;
+        String scheduleTime = scheduleInfo.getScheduleTime();
+        String[] times;
+        if (scheduleTime.contains(TIME_SEPARATOR)) {
+            times = scheduleTime.split(TIME_SEPARATOR);
+        } else
+            times = new String[]{scheduleTime};
+
+        for (int i = 0; i < times.length; i++) {
+            String time = times[i];
+            String timeWeek = time.substring(time.indexOf("{") + 1, time.indexOf("}"));
+            String[] range = timeWeek.substring(timeWeek.indexOf("第") + 1, timeWeek.indexOf("周")).split("-");
+            if (week >= Integer.parseInt(range[0]) && week <= Integer.parseInt(range[1])) {
+                //把满足指定周的课程添加到需要显示的List中去
+                return true;
+            }
         }
         return false;
+    }
+
+    /**
+     * 移除掉重复项
+     *
+     * @param list
+     */
+    private void removeRepeat(List<ScheduleInfo> list) {
+        Log.e(TAG, "isFode: before " + list.size());
+        List<ScheduleInfo> listTag = new ArrayList<>();
+        if (list.size() >= 2) {
+            for (int i = 0; i < list.size(); i = i + 2) {
+                ScheduleInfo scheduleInfoOne = list.get(i + 0);
+                if (i+1 < list.size()) {
+                    ScheduleInfo scheduleInfoTwo = list.get(i + 1);
+                    if (scheduleInfoOne.getScheduleName().equals(scheduleInfoTwo.getScheduleName())) {
+                        //加个分隔符来分割
+                        scheduleInfoOne.setScheduleTime(scheduleInfoOne.getScheduleTime() + TIME_SEPARATOR + scheduleInfoTwo.getScheduleTime());
+                        //记录对象，最后统一移除
+                        listTag.add(scheduleInfoTwo);
+                    }
+                }
+            }
+        }
+        list.removeAll(listTag);
+        Log.e(TAG, "isFode: after " + list.size());
     }
 
     /**
@@ -279,10 +329,11 @@ public class Schedule extends View {
      * @return true表示重复
      */
     public boolean isFode(List<ScheduleInfo> list) {
-        if (list.size() == 2)
-            return list.get(0).getScheduleName().equals(list.get(1).getScheduleName());
+        //>2则需要判断移除重复项，合并时间
+        Log.e(TAG, "isFode: after" + list.size());
+        if (list.size() > 1)
+            return true;
         else {
-            // 大于两门课程必定有2种
             return false;
         }
     }
@@ -445,10 +496,10 @@ public class Schedule extends View {
         textPaint.setAntiAlias(true);
         textPaint.setStyle(Paint.Style.STROKE);
         textPaint.setColor(textColor);
-        textPaint.setTextSize(mPaint.getTextSize());
-        StaticLayout layout = new StaticLayout(text, textPaint, (3 * rowWidth) / 4, Layout.Alignment.ALIGN_CENTER, 1.0F, 0.0F, true);
+        textPaint.setTextSize(lineTextSize);
+        StaticLayout layout = new StaticLayout(text, textPaint, (7 * rowWidth) / 8, Layout.Alignment.ALIGN_CENTER, 1.0F, 0.0F, true);
         canvas.save();
-        canvas.translate(rectF.left + rowWidth / 8, rectF.top + rowWidth / 8);
+        canvas.translate(rectF.left + rowWidth / 16, rectF.top + rowWidth / 16 + 10);
         layout.draw(canvas);
         canvas.restore();
     }
@@ -510,6 +561,7 @@ public class Schedule extends View {
                             }
                             //触发课程回调
                             if (onItemClickListener != null && map != null) {
+
                                 onItemClickListener.onItemClick(map.get((currentClickX + "")));
                             }
                             initClick();

@@ -1,14 +1,12 @@
 <com.zzh.gdut.gduthelper.view.widget.ScheduleRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
     android:id="@+id/rl_schedule"
+    android:layout_marginTop="100dp"
+    android:layout_marginLeft="100dp"
     android:layout_height="150dp"
- >
+    android:background="@drawable/bt_click_blue_backgound"
+    >
 
-    <com.zzh.gdut.gduthelper.view.widget.ClickBackgoundView
-        android:id="@+id/click_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true" />
 
     <TextView
         android:id="@+id/tv_schedule"

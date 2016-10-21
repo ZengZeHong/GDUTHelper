@@ -14,7 +14,7 @@ import com.zzh.gdut.gduthelper.util.DisplayUtil;
 public class ScheduleRelativeLayout extends RelativeLayout {
     private static final String TAG = "LoginRelativeLayout";
     private Context context;
-    private int offest = 0;
+
     public ScheduleRelativeLayout(Context context) {
         super(context);
         this.context = context;
@@ -35,7 +35,7 @@ public class ScheduleRelativeLayout extends RelativeLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         ViewGroup.LayoutParams params = getLayoutParams();
-        params.width =  DisplayUtil.getScreenWidth(context) * 4 / 11 + offest;
+        params.width = DisplayUtil.getScreenWidth(context) * 4 / 10;
         params.height = params.width;
         setLayoutParams(params);
     }

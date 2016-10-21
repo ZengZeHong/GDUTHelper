@@ -23,21 +23,9 @@ public class ClickBackgoundView extends View {
     private int viewHeight;
     private Paint mPaint;
     //圆角
-    private int circleCorner = 10;
+    private int circleCorner = 20;
     private boolean isClick = false;
-    private int currentClickX = -1;
-    private int currentClickY = -1;
-    private int clickX , clickY;
     private int colorId = Color.GREEN;
-    private OnItemClick onItemClick;
-
-    public interface OnItemClick {
-        void onClick();
-    }
-
-    public void setOnItemClick(OnItemClick onItemClick) {
-        this.onItemClick = onItemClick;
-    }
 
     public ClickBackgoundView(Context context) {
         super(context);
@@ -58,8 +46,8 @@ public class ClickBackgoundView extends View {
     private void initData(Context context) {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        viewWidth = DisplayUtil.getScreenWidth(context) * 4 / 11 + circleCorner;
-        viewHeight = viewWidth ;
+        viewWidth = DisplayUtil.getScreenWidth(context) * 4 / 10 + 10;
+        viewHeight = viewWidth;
     }
 
     @Override
@@ -92,6 +80,7 @@ public class ClickBackgoundView extends View {
             mPaint.setColor(colorId);
         final RectF rectF = new RectF(0, 0, viewWidth - circleCorner, viewHeight - circleCorner);
         canvas.drawRoundRect(rectF, circleCorner, circleCorner, mPaint);
+        //设置点击背景
         if (isClick) {
             mPaint.setColor(Color.BLACK);
             mPaint.setAlpha(30);
@@ -103,53 +92,19 @@ public class ClickBackgoundView extends View {
 
 
     public void setBackground(int color) {
-        colorId = getResources().getColor(color);
+        colorId = color;
         invalidate();
     }
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                getParent().requestDisallowInterceptTouchEvent(true);
-                clickX = (int) event.getX();
-                clickY = (int) event.getY();
                 isClick = true;
                 invalidate();
+                Log.e(TAG, "onTouchEvent: down");
             }
-            break;
-            case MotionEvent.ACTION_MOVE: {
-                currentClickX = (int) event.getX();
-                currentClickY = (int) event.getY();
-                if(clickX != currentClickX && clickY != currentClickY){
-                    isClick = false;
-                    invalidate();
-                    getParent().requestDisallowInterceptTouchEvent(false);
-                }
-            /*    if (currentClickX < 0 || currentClickX > viewWidth || currentClickY < 0 || currentClickY > viewHeight) {
-                    isClick = false;
-                    invalidate();
-                }*/
-                Log.e(TAG, "onTouchEvent: " + currentClickX + ">>" + currentClickY);
-            }
-            break;
-            case MotionEvent.ACTION_UP: {
-                if(clickX == currentClickX && clickY == currentClickY){
-                    Log.e(TAG, "onTouchEvent: click ");
-                    if (onItemClick != null)
-                        onItemClick.onClick();
-                    isClick = false;
-                    invalidate();
-                }
-            }
-            case MotionEvent.ACTION_CANCEL:{
-                Log.e(TAG, "onTouchEvent: cancel" );
-                isClick = false;
-                invalidate();
-            }
-            break;
         }
-        return super.onTouchEvent(event);
+        return false;
     }
 }

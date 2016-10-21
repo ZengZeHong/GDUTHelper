@@ -1,13 +1,14 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
 import android.content.Intent;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.view.View;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseNormalActivity;
-import com.zzh.gdut.gduthelper.view.widget.ClickBackgoundView;
+import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.widget.ScheduleRelativeLayout;
 
 import butterknife.BindView;
@@ -21,13 +22,14 @@ public class ScheduleShowActivity extends BaseNormalActivity {
     private static final String TAG = "ScheduleShowActivity";
     @BindView(R.id.rl_schedule)
     ScheduleRelativeLayout rlSchedule;
-    @BindView(R.id.click_view)
+  /*  @BindView(R.id.click_view)
     ClickBackgoundView clickBackgoundView;
 
     @BindView(R.id.rl_schedule1)
     ScheduleRelativeLayout rlSchedule1;
     @BindView(R.id.click_view1)
-    ClickBackgoundView clickBackgoundView1;
+    ClickBackgoundView clickBackgoundView1;*/
+
     int k = 0;
     float scale = 0;
     private int x, y, lastX, lastY;
@@ -40,7 +42,25 @@ public class ScheduleShowActivity extends BaseNormalActivity {
 
     @Override
     protected void initViews() {
-        clickBackgoundView.setBackground(R.color.schedulePurple);
+        StateListDrawable drawable = new StateListDrawable();
+        //Non focused states
+        // rectangle
+        GradientDrawable gd = new GradientDrawable();//创建drawable
+        gd.setColor( Color.parseColor("#DFDFE0"));
+        gd.setCornerRadius(15);
+
+        drawable.addState(new int[]{ -android.R.attr.state_pressed},
+                getResources().getDrawable(R.color.customWhite));
+        drawable.addState(new int[]{ android.R.attr.state_pressed},
+                gd);
+        rlSchedule.setBackgroundDrawable(drawable);
+        rlSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.showToast(ScheduleShowActivity.this , "Click");
+            }
+        });
+      /*  clickBackgoundView.setBackground(R.color.schedulePurple);
         clickBackgoundView1.setBackground(R.color.schedulePurple);
         float rate = (float) 0.8;
         rlSchedule1.setRotationY(30);
@@ -59,8 +79,9 @@ public class ScheduleShowActivity extends BaseNormalActivity {
                 }
             }
         });
-
+*/
     }
+/*
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -105,6 +126,7 @@ public class ScheduleShowActivity extends BaseNormalActivity {
         }
         return super.onTouchEvent(event);
     }
+*/
 
     @Override
     protected void initAttributes() {

@@ -359,14 +359,22 @@ public class JsoupUtil {
         List<ScheduleInfo> list = new ArrayList<>();
         if (!element.text().equals(" ")) {
             String[] data = element.text().split(" ");
-            for (int j = 0; j < data.length; j = j + 4) {
+            int offest;
+            if (data.length % 6 == 0 && line < 9)
+                offest = 6;
+            else offest = 4;
+            for (int j = 0; j < data.length; j = j + offest) {
                 ScheduleInfo scheduleInfo = new ScheduleInfo();
-                scheduleInfo.setScheduleName(data[j + 0]);
-                scheduleInfo.setScheduleTime(data[j + 1]);
-                scheduleInfo.setScheduleTeacher(data[j + 2]);
-                scheduleInfo.setSchedulePlace(data[j + 3]);
-                scheduleInfo.setLocation(i - span, line);
-                list.add(scheduleInfo);
+                if (j + offest <= data.length) {
+                    scheduleInfo.setScheduleName(data[j + 0]);
+                    scheduleInfo.setScheduleTime(data[j + 1]);
+                    Log.e(TAG, "getScheduleInfo: name " + data[j + 0]);
+                    Log.e(TAG, "getScheduleInfo: time " + data[j + 1]);
+                    scheduleInfo.setScheduleTeacher(data[j + 2]);
+                    scheduleInfo.setSchedulePlace(data[j + 3]);
+                    scheduleInfo.setLocation(i - span, line);
+                    list.add(scheduleInfo);
+                }
             }
         }
         return list;

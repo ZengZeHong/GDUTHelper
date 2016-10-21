@@ -41,29 +41,20 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/view_shadow"
+        android:id="@+id/rl_shadow"
         android:layout_width="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
         android:layout_height="match_parent"
-        android:background="#30000000"
-        android:gravity="center"
+        android:background="#77000000"
         android:layerType="software">
 
-        <HorizontalScrollView
-            android:id="@+id/viewPager"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <com.zzh.gdut.gduthelper.view.widget.ScrollSchedule
-                android:id="@+id/ll_sv"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <include layout="@layout/viewpager_item" />
-
-
-
-            </com.zzh.gdut.gduthelper.view.widget.ScrollSchedule>
-        </HorizontalScrollView>
+        <com.zzh.gdut.gduthelper.view.widget.SCGallery
+            android:id="@+id/gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:spacing="-20dp"
+           ></com.zzh.gdut.gduthelper.view.widget.SCGallery>
     </RelativeLayout>
 </RelativeLayout>

@@ -20,6 +20,24 @@ public class ScheduleInfo implements Comparable {
     private String scheduleTime;
     //周数
     private String scheduleWeek;
+    private int backgroundColor ;
+    private int textColor;
+
+    public int getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(int textColor) {
+        this.textColor = textColor;
+    }
+
+    public int getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(int backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
     public int getX() {
         return x;
