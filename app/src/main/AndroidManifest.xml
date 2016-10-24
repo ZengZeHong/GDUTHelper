@@ -35,6 +35,13 @@
         <activity
             android:name=".view.activity.ScheduleActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:theme="@style/Translucent"
+            android:name=".view.activity.ScheduleShowActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".view.activity.ChangePwActivity"
             android:screenOrientation="portrait" />

@@ -1,132 +1,64 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.RelativeLayout;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseNormalActivity;
+import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
-import com.zzh.gdut.gduthelper.view.widget.ScheduleRelativeLayout;
+import com.zzh.gdut.gduthelper.view.adapter.GalleryAdapter;
+import com.zzh.gdut.gduthelper.view.widget.SCGallery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * Created by ZengZeHong on 2016/10/19.
+ * Created by ZengZeHong on 2016/10/23.
  */
 
 public class ScheduleShowActivity extends BaseNormalActivity {
+    public static final String LIST_TAG = "list";
     private static final String TAG = "ScheduleShowActivity";
-    @BindView(R.id.rl_schedule)
-    ScheduleRelativeLayout rlSchedule;
-  /*  @BindView(R.id.click_view)
-    ClickBackgoundView clickBackgoundView;
-
-    @BindView(R.id.rl_schedule1)
-    ScheduleRelativeLayout rlSchedule1;
-    @BindView(R.id.click_view1)
-    ClickBackgoundView clickBackgoundView1;*/
-
-    int k = 0;
-    float scale = 0;
-    private int x, y, lastX, lastY;
-    float width = 394;
+    private GalleryAdapter adapter;
+    private List<ScheduleInfo> list = new ArrayList<>();
+    @BindView(R.id.rl_shadow)
+    RelativeLayout rlShadow;
+    @BindView(R.id.gallery)
+    SCGallery gallery;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_schedule_show;
+        return R.layout.activity_show;
     }
 
     @Override
     protected void initViews() {
-        StateListDrawable drawable = new StateListDrawable();
-        //Non focused states
-        // rectangle
-        GradientDrawable gd = new GradientDrawable();//创建drawable
-        gd.setColor( Color.parseColor("#DFDFE0"));
-        gd.setCornerRadius(15);
-
-        drawable.addState(new int[]{ -android.R.attr.state_pressed},
-                getResources().getDrawable(R.color.customWhite));
-        drawable.addState(new int[]{ android.R.attr.state_pressed},
-                gd);
-        rlSchedule.setBackgroundDrawable(drawable);
-        rlSchedule.setOnClickListener(new View.OnClickListener() {
+        adapter = new GalleryAdapter(ScheduleShowActivity.this, list);
+        gallery = (SCGallery) findViewById(R.id.gallery);
+        gallery.setAdapter(adapter);
+        gallery.setSelection(getPosition(list));
+        Animator anim = AnimatorInflater.loadAnimator(this, R.animator.gallery_anim);
+        anim.setTarget(gallery);
+        anim.start();
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                ToastUtil.showToast(ScheduleShowActivity.this , "Click");
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastUtil.showToast(ScheduleShowActivity.this, "点击" + position);
             }
         });
-      /*  clickBackgoundView.setBackground(R.color.schedulePurple);
-        clickBackgoundView1.setBackground(R.color.schedulePurple);
-        float rate = (float) 0.8;
-        rlSchedule1.setRotationY(30);
-        rlSchedule1.setScaleX(rate);
-        rlSchedule1.setScaleY(rate);
-        clickBackgoundView.setOnItemClick(new ClickBackgoundView.OnItemClick() {
-            @Override
-            public void onClick() {
-                if (k != 30) {
-                    k = k + 5;
-                    scale += 0.033;
-                    rlSchedule1.setRotationY(k);
-                    Log.e(TAG, "onClick: " + (1 - scale));
-                    rlSchedule1.setScaleX(1 - scale);
-                    rlSchedule1.setScaleY(1 - scale);
-                }
-            }
-        });
-*/
     }
-/*
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                x = (int) event.getX();
-            }
-            break;
-            case MotionEvent.ACTION_MOVE: {
-                lastX = (int) event.getX();
-                int offestX = lastX - x;
-                if (offestX > 0) {
-                    //右滑动时-30
-                    float rate = Math.abs(offestX) / width;
-                    Log.e(TAG, "onTouchEvent: rate " + rate);
-                    Log.e(TAG, "onTouchEvent: setRotationY " + (rate * 30));
-                    if (rate <= 1) {
-                        //显示缩放操作
-                        rlSchedule1.setRotationY(-(rate * 30));
-                        rlSchedule1.setScaleX((float) (1 - (rate * 0.2)));
-                        rlSchedule1.setScaleY((float) (1 - (rate * 0.2)));
-                        rlSchedule1.setAlpha((float) (1 - (rate) * 0.5));
-                    }
-                } else {
-                    //右滑动时-30
-                    float rate = Math.abs(offestX) / width;
-                    Log.e(TAG, "onTouchEvent: rate " + rate);
-                    Log.e(TAG, "onTouchEvent: setRotationY " + (rate * 30));
-                    if (rate <= 1) {
-                        //显示缩放操作
-                        rlSchedule1.setRotationY((rate * 30) - 30);
-                        rlSchedule1.setScaleX((float) (0.8 + (rate * 0.2)));
-                        rlSchedule1.setScaleY((float) (0.8 + (rate * 0.2)));
-                        rlSchedule1.setAlpha((float) (0.8 + (rate) * 0.2));
-                    }
-                }
-            }
-            break;
-            case MotionEvent.ACTION_UP: {
-            }
-            break;
-        }
-        return super.onTouchEvent(event);
-    }
-*/
 
     @Override
     protected void initAttributes() {
@@ -135,12 +67,47 @@ public class ScheduleShowActivity extends BaseNormalActivity {
 
     @Override
     protected void getIntentData(Intent intent) {
+        list = intent.getParcelableArrayListExtra(LIST_TAG);
+        Log.e(TAG, "getIntentData: " + list.size());
+    }
 
+    @OnClick({R.id.rl_shadow})
+    public void onClick(View v) {
+        if (v.getId() == R.id.rl_shadow) {
+            backAnimation();
+        }
+    }
+
+
+    /**
+     * 获取显示位置
+     *
+     * @param list
+     * @return
+     */
+    private int getPosition(List<ScheduleInfo> list) {
+        for (int i = 0; i < list.size(); i++) {
+            ScheduleInfo scheduleInfo = list.get(i);
+            if (scheduleInfo.getTextColor() == Color.WHITE)
+                return i;
+        }
+        return 0;
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //按下的是返回键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //返回动画
+            backAnimation();
+        }
+        return true;
     }
 
     @Override
-    public void onClick(View v) {
-
+    protected void backAnimation() {
+        finish();
+        overridePendingTransition(R.anim.translate_not_move, R.anim.alpha_out);
     }
-
 }

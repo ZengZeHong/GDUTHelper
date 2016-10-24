@@ -46,8 +46,8 @@ public class ClickBackgoundView extends View {
     private void initData(Context context) {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        viewWidth = DisplayUtil.getScreenWidth(context) * 4 / 10 + 10;
-        viewHeight = viewWidth;
+        viewWidth = DisplayUtil.getScreenWidth(context) * 4 / 10 ;
+        viewHeight = DisplayUtil.getScreenWidth(context) * 4 / 10 - 10 ;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ClickBackgoundView extends View {
         super.onDraw(canvas);
         if (colorId != -1)
             mPaint.setColor(colorId);
-        final RectF rectF = new RectF(0, 0, viewWidth - circleCorner, viewHeight - circleCorner);
+        final RectF rectF = new RectF(0, 5, viewWidth , viewHeight - 5);
         canvas.drawRoundRect(rectF, circleCorner, circleCorner, mPaint);
         //设置点击背景
         if (isClick) {

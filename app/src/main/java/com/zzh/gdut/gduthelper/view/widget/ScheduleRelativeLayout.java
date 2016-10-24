@@ -36,7 +36,7 @@ public class ScheduleRelativeLayout extends RelativeLayout {
         super.onLayout(changed, l, t, r, b);
         ViewGroup.LayoutParams params = getLayoutParams();
         params.width = DisplayUtil.getScreenWidth(context) * 4 / 10;
-        params.height = params.width;
+        params.height = DisplayUtil.getScreenWidth(context) * 4 / 10;
         setLayoutParams(params);
     }
 }

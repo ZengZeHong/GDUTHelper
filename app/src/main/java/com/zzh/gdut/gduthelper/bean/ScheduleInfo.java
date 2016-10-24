@@ -1,11 +1,14 @@
 package com.zzh.gdut.gduthelper.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by ZengZeHong on 2016/10/13.
  * 课程实体类
  */
 
-public class ScheduleInfo implements Comparable {
+public class ScheduleInfo implements Comparable, Parcelable {
     //显示的坐标轴位置
     private int x;
     private int y;
@@ -136,4 +139,51 @@ public class ScheduleInfo implements Comparable {
         }
         return 0;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.x);
+        dest.writeInt(this.y);
+        dest.writeInt(this.span);
+        dest.writeString(this.scheduleName);
+        dest.writeString(this.schedulePlace);
+        dest.writeString(this.scheduleTeacher);
+        dest.writeString(this.scheduleTime);
+        dest.writeString(this.scheduleWeek);
+        dest.writeInt(this.backgroundColor);
+        dest.writeInt(this.textColor);
+    }
+
+    public ScheduleInfo() {
+    }
+
+    protected ScheduleInfo(Parcel in) {
+        this.x = in.readInt();
+        this.y = in.readInt();
+        this.span = in.readInt();
+        this.scheduleName = in.readString();
+        this.schedulePlace = in.readString();
+        this.scheduleTeacher = in.readString();
+        this.scheduleTime = in.readString();
+        this.scheduleWeek = in.readString();
+        this.backgroundColor = in.readInt();
+        this.textColor = in.readInt();
+    }
+
+    public static final Parcelable.Creator<ScheduleInfo> CREATOR = new Parcelable.Creator<ScheduleInfo>() {
+        @Override
+        public ScheduleInfo createFromParcel(Parcel source) {
+            return new ScheduleInfo(source);
+        }
+
+        @Override
+        public ScheduleInfo[] newArray(int size) {
+            return new ScheduleInfo[size];
+        }
+    };
 }

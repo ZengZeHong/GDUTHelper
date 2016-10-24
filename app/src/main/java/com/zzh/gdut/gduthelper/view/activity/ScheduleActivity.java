@@ -1,12 +1,9 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 
 import com.zzh.gdut.gduthelper.R;
@@ -14,13 +11,13 @@ import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
 import com.zzh.gdut.gduthelper.presenter.SchedulePresenter;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
-import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.adapter.GalleryAdapter;
 import com.zzh.gdut.gduthelper.view.vinterface.ScheduleInterface;
 import com.zzh.gdut.gduthelper.view.widget.SCGallery;
 import com.zzh.gdut.gduthelper.view.widget.SchduleTop;
 import com.zzh.gdut.gduthelper.view.widget.Schedule;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +99,11 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
         Log.e(TAG, "onItemClick: " + list.toString());
         //如果有多门课程存在的情况
         if (schedule.isFode(list)) {
-            rlShadow.setVisibility(View.VISIBLE);
+            Intent intent = new Intent(ScheduleActivity.this, ScheduleShowActivity.class);
+            intent.putParcelableArrayListExtra(ScheduleShowActivity.LIST_TAG, (ArrayList<? extends Parcelable>) list);
+            startActivity(intent);
+            overridePendingTransition(R.anim.alpha_in, R.anim.translate_not_move);
+        /*    rlShadow.setVisibility(View.VISIBLE);
             adapter = new GalleryAdapter(this, list);
             gallery.setAdapter(adapter);
             gallery.setSelection(getPosition(list));
@@ -114,24 +115,10 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ToastUtil.showToast(ScheduleActivity.this, "点击" + position);
                 }
-            });
-        }else {
+            });*/
+        } else {
             //普通点击
         }
-    }
-
-    /**
-     * 获取显示位置
-     * @param list
-     * @return
-     */
-    private int getPosition(List<ScheduleInfo> list){
-        for(int i = 0 ; i < list.size() ; i++){
-            ScheduleInfo scheduleInfo = list.get(i);
-            if(scheduleInfo.getTextColor() == Color.WHITE)
-                return i;
-        }
-        return 0;
     }
 
 }

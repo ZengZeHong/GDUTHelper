@@ -31,4 +31,7 @@
 
     <color name="scheduleOrg">#f79f84</color>
     <color name="scheduleDeepOrg">#db9beb</color>
+
+    <color name="translucent_background">#60000000</color>
+
 </resources>

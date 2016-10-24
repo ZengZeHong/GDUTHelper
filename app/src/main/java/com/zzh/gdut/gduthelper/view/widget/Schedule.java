@@ -190,7 +190,7 @@ public class Schedule extends View {
         //7.5是分配出来的
         rowWidth = ((int) (viewWidth / 7.7));
         rowHeight = rowWidth;
-        lineHeight = (screenHeight - rowHeight) / 10;
+        lineHeight =rowHeight;
         lineWidth = Math.round((float) (rowWidth * 0.7));
         classHeight = lineHeight * 2;
         viewHeight = lineHeight * 13 - getPaddingBottom() - getPaddingTop();

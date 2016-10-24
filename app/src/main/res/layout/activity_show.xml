@@ -1,0 +1,14 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_shadow"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#77000000"
+    android:clickable="true">
+
+    <com.zzh.gdut.gduthelper.view.widget.SCGallery
+        android:id="@+id/gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:spacing="-20dp"></com.zzh.gdut.gduthelper.view.widget.SCGallery>
+</RelativeLayout>
