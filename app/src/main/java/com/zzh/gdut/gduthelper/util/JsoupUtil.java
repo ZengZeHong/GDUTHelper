@@ -77,6 +77,7 @@ public class JsoupUtil {
         Document document = Jsoup.parse(result);
         Elements elements = document.getElementsByTag("script");
         Log.e(TAG, "getLoginError: elements " + elements.size());
+        if(elements.size() != 0)
         if (elements.get(1) != null) {
             Element element = elements.get(1);
             String data = element.data();

@@ -54,7 +54,7 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
 
     @Override
     protected void initViews() {
-        showToolbarAndShowNavigation("测试", false);
+        showToolbarAndShowNavigation("课表信息", true);
         showProgressDialog("正在获取中...");
         mPresenter.getSchedule();
         schedule.setOnItemClickListener(this);

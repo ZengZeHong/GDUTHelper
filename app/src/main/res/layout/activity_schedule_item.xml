@@ -1,0 +1,182 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/viewMargin_20dp"
+        android:layout_marginRight="@dimen/viewMargin_20dp"
+        android:layout_marginTop="@dimen/viewMargin_20dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_class"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_class_black_24dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_class_tag"
+            android:layout_toRightOf="@id/img_class"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:text="课程："
+            android:textColor="@color/primaryText"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_class"
+            android:layout_toRightOf="@id/tv_class_tag"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:textColor="@color/secondaryText"
+            android:text="操作系统"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/viewMargin_20dp"
+        android:layout_marginRight="@dimen/viewMargin_20dp"
+        android:layout_marginTop="@dimen/viewMargin_30dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_place"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_location_on_black_24dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_place_tag"
+            android:textColor="@color/primaryText"
+            android:layout_toRightOf="@id/img_place"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:text="教室："
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_place"
+            android:textColor="@color/secondaryText"
+            android:layout_toRightOf="@id/tv_place_tag"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:text="教3-201"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/viewMargin_20dp"
+        android:layout_marginRight="@dimen/viewMargin_20dp"
+        android:layout_marginTop="@dimen/viewMargin_30dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_teacher"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_person_black_24dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+        android:id="@+id/tv_teacher_tag"
+        android:layout_toRightOf="@id/img_teacher"
+        android:layout_centerVertical="true"
+        android:textSize="@dimen/mainTestSize_16sp"
+        android:layout_marginLeft="@dimen/viewMargin_20dp"
+        android:layout_width="wrap_content"
+        android:text="老师："
+        android:textColor="@color/primaryText"
+        android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_teacher"
+            android:layout_toRightOf="@id/tv_teacher_tag"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:text="曾泽洪"
+            android:textColor="@color/secondaryText"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/viewMargin_20dp"
+        android:layout_marginRight="@dimen/viewMargin_20dp"
+        android:layout_marginTop="@dimen/viewMargin_30dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_time"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_access_time_black_24dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+        android:id="@+id/tv_time_tag"
+        android:layout_toRightOf="@id/img_time"
+        android:layout_centerVertical="true"
+        android:textSize="@dimen/mainTestSize_16sp"
+        android:layout_marginLeft="@dimen/viewMargin_20dp"
+        android:layout_width="wrap_content"
+        android:text="节数："
+        android:textColor="@color/primaryText"
+        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_toRightOf="@id/tv_time_tag"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:text="周四1-2节"
+            android:textColor="@color/secondaryText"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/viewMargin_20dp"
+        android:layout_marginRight="@dimen/viewMargin_20dp"
+        android:layout_marginTop="@dimen/viewMargin_30dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_week"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_view_week_black_24dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_week_tag"
+            android:layout_toRightOf="@id/img_week"
+            android:layout_centerVertical="true"
+            android:textColor="@color/primaryText"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:text="周数："
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_week"
+            android:layout_toRightOf="@id/tv_week_tag"
+            android:layout_centerVertical="true"
+            android:textColor="@color/secondaryText"
+            android:textSize="@dimen/mainTestSize_16sp"
+            android:layout_marginLeft="@dimen/viewMargin_20dp"
+            android:layout_width="wrap_content"
+            android:text="1-15周"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</LinearLayout>

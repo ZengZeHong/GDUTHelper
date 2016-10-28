@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.RelativeLayout;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseNormalActivity;
@@ -33,14 +32,12 @@ public class ScheduleShowActivity extends BaseNormalActivity {
     private static final String TAG = "ScheduleShowActivity";
     private GalleryAdapter adapter;
     private List<ScheduleInfo> list = new ArrayList<>();
-    @BindView(R.id.rl_shadow)
-    RelativeLayout rlShadow;
     @BindView(R.id.gallery)
     SCGallery gallery;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_show;
+        return R.layout.activity_schedule_show;
     }
 
     @Override
