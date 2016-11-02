@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseNormalActivity;
 import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
-import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.adapter.GalleryAdapter;
 import com.zzh.gdut.gduthelper.view.widget.SCGallery;
 
@@ -52,7 +51,11 @@ public class ScheduleShowActivity extends BaseNormalActivity {
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtil.showToast(ScheduleShowActivity.this, "点击" + position);
+                //普通点击
+                Intent intent = new Intent(ScheduleShowActivity.this , ScheduleItemActivity.class);
+                intent.putExtra(ScheduleItemActivity.TAG_ITEM , list.get(position));
+                startActivity(intent);
+                finish();
             }
         });
     }

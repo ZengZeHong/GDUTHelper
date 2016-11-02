@@ -15,7 +15,7 @@
 
 
         <activity
-            android:name=".view.activity.ScheduleItemActivity"
+            android:name=".view.activity.GDUTLoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,9 @@
         <activity
             android:name=".view.activity.ScheduleActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name=".view.activity.ScheduleItemActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:theme="@style/Translucent"
             android:name=".view.activity.ScheduleShowActivity"

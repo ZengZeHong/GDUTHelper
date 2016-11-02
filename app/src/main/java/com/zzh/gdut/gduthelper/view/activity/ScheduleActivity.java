@@ -103,21 +103,11 @@ public class ScheduleActivity extends BaseActivity<ScheduleInterface, SchedulePr
             intent.putParcelableArrayListExtra(ScheduleShowActivity.LIST_TAG, (ArrayList<? extends Parcelable>) list);
             startActivity(intent);
             overridePendingTransition(R.anim.alpha_in, R.anim.translate_not_move);
-        /*    rlShadow.setVisibility(View.VISIBLE);
-            adapter = new GalleryAdapter(this, list);
-            gallery.setAdapter(adapter);
-            gallery.setSelection(getPosition(list));
-            Animator anim = AnimatorInflater.loadAnimator(this, R.animator.gallery_anim);
-            anim.setTarget(gallery);
-            anim.start();
-            gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ToastUtil.showToast(ScheduleActivity.this, "点击" + position);
-                }
-            });*/
         } else {
             //普通点击
+            Intent intent = new Intent(ScheduleActivity.this , ScheduleItemActivity.class);
+            intent.putExtra(ScheduleItemActivity.TAG_ITEM , list.get(0));
+            startActivity(intent);
         }
     }
 

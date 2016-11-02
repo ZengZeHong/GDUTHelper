@@ -37,7 +37,7 @@ public class Schedule extends View {
     private static final int TAG_CLASS = 0;
     private static final int TAG_ITEM = 1;
     //分割时间符
-    private static final String TIME_SEPARATOR = "@";
+    public static final String TIME_SEPARATOR = "@";
     //每一个子列的高度
     private int lineHeight;
     //每一列的宽度
