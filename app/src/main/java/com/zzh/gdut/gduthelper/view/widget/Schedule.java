@@ -70,6 +70,7 @@ public class Schedule extends View {
     private int lastX = -1;
     private int lastY = -1;
     private int location = 0;
+    private int currentWeek = 1;
     private boolean isMove = false;
     private boolean isSchedule = false;
     //数据源
@@ -223,7 +224,7 @@ public class Schedule extends View {
                 if (entry.getValue().size() > 1) {
                     //如果当前节课下有多门课程，则要判断显示
                     //TODO 选择指定周下的课程
-                    ScheduleInfo scheduleInfo = selectSchedule(entry.getValue(), 11);
+                    ScheduleInfo scheduleInfo = selectSchedule(entry.getValue(), currentWeek);
                     if (scheduleInfo != null) {
                         scheduleInfo.setBackgroundColor(getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())));
                         scheduleInfo.setTextColor(Color.WHITE);
@@ -238,7 +239,7 @@ public class Schedule extends View {
                     if (entry.getValue().size() == 1) {
                         //只有一个条目的话
                         ScheduleInfo scheduleInfo = entry.getValue().get(0);
-                        if (isCurrentWeek(scheduleInfo, 7)) {
+                        if (isCurrentWeek(scheduleInfo, currentWeek)) {
                             //如果是当前周
                             scheduleInfo.setBackgroundColor(getResources().getColor(mapColor.get(scheduleInfo.getScheduleName())));
                             scheduleInfo.setTextColor(Color.WHITE);
@@ -269,6 +270,14 @@ public class Schedule extends View {
         return null;
     }
 
+    /**
+     * 设置当前的周是第几周
+     * @param currentWeek
+     */
+    public void setCurrentWeek(int currentWeek){
+        this.currentWeek = currentWeek;
+        invalidate();
+    }
     /**
      * 判断当前课程是不是在当前周
      *

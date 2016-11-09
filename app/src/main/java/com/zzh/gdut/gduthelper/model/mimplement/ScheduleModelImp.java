@@ -20,12 +20,12 @@ public class ScheduleModelImp implements ScheduleModel {
     }
 
     @Override
-    public void getSchedule(ResultListener resultListener) {
+    public void getSchedule(ResultListener resultListener ,  String userName , String userNumber) {
         String url;
         try {
             url = ApiUtil.URL_HREF_PERSON_CLASS +
-                    "?xh=" + ApiUtil.USER_NUMBER +
-                    "&xm=" + URLEncoder.encode(ApiUtil.USER_NAME, NetworkConnection.STRING_CODE) +
+                    "?xh=" + userNumber +
+                    "&xm=" + URLEncoder.encode(userName, NetworkConnection.STRING_CODE) +
                     "&gnmkdm=N121603";
             NetworkUtil.getInstance().get(url, resultListener);
         } catch (UnsupportedEncodingException e) {

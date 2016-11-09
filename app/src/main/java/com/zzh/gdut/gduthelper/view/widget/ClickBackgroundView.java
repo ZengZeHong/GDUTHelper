@@ -17,7 +17,7 @@ import com.zzh.gdut.gduthelper.util.DisplayUtil;
  * 圆角背景View，动态颜色点击
  */
 
-public class ClickBackgoundView extends View {
+public class ClickBackgroundView extends View {
     private static final String TAG = "ClickBackgoundView";
     private int viewWidth;
     private int viewHeight;
@@ -27,17 +27,17 @@ public class ClickBackgoundView extends View {
     private boolean isClick = false;
     private int colorId = Color.GREEN;
 
-    public ClickBackgoundView(Context context) {
+    public ClickBackgroundView(Context context) {
         super(context);
         initData(context);
     }
 
-    public ClickBackgoundView(Context context, AttributeSet attrs) {
+    public ClickBackgroundView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initData(context);
     }
 
-    public ClickBackgoundView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ClickBackgroundView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context);
     }
@@ -91,6 +91,20 @@ public class ClickBackgoundView extends View {
     }
 
 
+    /**
+     * 设置点击背景改变
+     * @param isClick
+     */
+    public void setClick(boolean isClick){
+        this.isClick = isClick;
+        invalidate();
+    }
+
+
+    /**
+     * 设置背景颜色
+     * @param color
+     */
     public void setBackground(int color) {
         colorId = color;
         invalidate();
@@ -103,7 +117,7 @@ public class ClickBackgoundView extends View {
                 isClick = true;
                 invalidate();
                 Log.e(TAG, "onTouchEvent: down");
-            }
+            }break;
         }
         return false;
     }

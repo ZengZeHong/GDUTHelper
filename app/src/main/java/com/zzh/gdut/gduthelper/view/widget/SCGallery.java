@@ -79,7 +79,10 @@ public class SCGallery extends Gallery {
         float offset = (cCenter - pCenter) / (pCenter * 1.0f);
         offset = Math.min(offset, 1.0f);
         offset = Math.max(offset, -1.0f);
-
+        //取消选中背景
+        ScheduleRelativeLayout mScheduleRelativeLayout = (ScheduleRelativeLayout) view;
+        ClickBackgroundView mClickBackgroundView = (ClickBackgroundView) mScheduleRelativeLayout.getChildAt(0);
+        mClickBackgroundView.setClick(false);
         return offset;
     }
 

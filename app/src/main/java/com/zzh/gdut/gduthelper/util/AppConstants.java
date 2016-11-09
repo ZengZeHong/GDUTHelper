@@ -11,4 +11,7 @@ public class AppConstants {
     public static final int OUT_OVERPENDINGTRANSITION = 1;
     public static final String SERVICE_BUSY = "Object moved to ";
     public static final String SERVICE_BUSY_TAG = "服务器异常";
+
+    public static final String TAG_USER_NUMBER = "userNumber";
+    public static final String TAG_USER_NAME = "userName";
 }

@@ -10,6 +10,7 @@ import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.bean.ExamInfo;
 import com.zzh.gdut.gduthelper.presenter.ExamPresenter;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.adapter.ExamSearchAdapter;
@@ -31,6 +32,8 @@ public class ExamSearchActivity extends BaseActivity<ExamInterface, ExamPresente
     private static final String TAG = "ExamSearchActivity";
     private ExamSearchAdapter adapter;
     private List<ExamInfo> lists;
+    private String userName;
+    private String userNumber;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -42,6 +45,7 @@ public class ExamSearchActivity extends BaseActivity<ExamInterface, ExamPresente
     @Override
     protected void initViews() {
         showProgressDialog("正在获取中...");
+        mPresenter.initData(userName , userNumber);
         mPresenter.searchExam();
     }
 
@@ -53,7 +57,8 @@ public class ExamSearchActivity extends BaseActivity<ExamInterface, ExamPresente
 
     @Override
     protected void getIntentData(Intent intent) {
-
+        userName = intent.getStringExtra(AppConstants.TAG_USER_NAME);
+        userNumber = intent.getStringExtra(AppConstants.TAG_USER_NUMBER);
     }
 
     @Override

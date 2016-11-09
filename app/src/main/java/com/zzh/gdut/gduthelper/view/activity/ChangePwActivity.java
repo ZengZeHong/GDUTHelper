@@ -11,6 +11,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.presenter.ChangePwPresenter;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.vinterface.ChangePwInterface;
@@ -25,6 +26,8 @@ import butterknife.OnClick;
 
 public class ChangePwActivity extends BaseActivity<ChangePwInterface, ChangePwPresenter> implements ChangePwInterface {
     private static final String TAG = "ChangePwActivity";
+    private String userName;
+    private String userNumber;
     @BindView(R.id.et_password_before)
     MaterialEditText etBefore;
     @BindView(R.id.et_password_new)
@@ -46,6 +49,7 @@ public class ChangePwActivity extends BaseActivity<ChangePwInterface, ChangePwPr
 
     @Override
     protected void initViews() {
+        mPresenter.initData(userName , userNumber);
     }
 
     private void addOnTextChangeListener(MaterialEditText et) {
@@ -76,7 +80,8 @@ public class ChangePwActivity extends BaseActivity<ChangePwInterface, ChangePwPr
 
     @Override
     protected void getIntentData(Intent intent) {
-
+        userName = intent.getStringExtra(AppConstants.TAG_USER_NAME);
+        userNumber = intent.getStringExtra(AppConstants.TAG_USER_NUMBER);
     }
 
     @OnClick({R.id.bt_confirm})

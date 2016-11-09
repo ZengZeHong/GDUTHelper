@@ -20,6 +20,7 @@ import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.bean.ScoreInfo;
 import com.zzh.gdut.gduthelper.model.mimplement.ScoreModelImp;
 import com.zzh.gdut.gduthelper.presenter.ScorePresenter;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.adapter.ScoreInfoAdapter;
@@ -42,6 +43,8 @@ import static com.zzh.gdut.gduthelper.util.AppConstants.SERVICE_BUSY;
 
 public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScorePresenter> implements ScoreInfoInterface, AdapterView.OnItemSelectedListener {
     private static final String TAG = "ScoreSearchActivity";
+    private String userName;
+    private String userNumber;
     @BindView(R.id.spinner)
     Spinner spinner;
     @BindView(R.id.rb_1)
@@ -106,6 +109,8 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
         arrayAdapter.setDropDownViewResource(R.layout.spinner_drop_down_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(this);
+
+        mPresenter.initData(userName , userNumber);
     }
 
     @Override
@@ -121,7 +126,8 @@ public class ScoreSearchActivity extends BaseActivity<ScoreInfoInterface, ScoreP
 
     @Override
     protected void getIntentData(Intent intent) {
-
+        userName = intent.getStringExtra(AppConstants.TAG_USER_NAME);
+        userNumber = intent.getStringExtra(AppConstants.TAG_USER_NUMBER);
     }
 
     @OnClick({R.id.rb_1, R.id.rb_2, R.id.rb_3, cb_term, R.id.cb_year, R.id.cb_all, R.id.fab_search})

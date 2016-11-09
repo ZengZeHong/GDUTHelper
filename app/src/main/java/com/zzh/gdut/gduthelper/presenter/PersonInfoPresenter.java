@@ -14,13 +14,19 @@ import com.zzh.gdut.gduthelper.view.vinterface.PersonInfoInterface;
 
 public class PersonInfoPresenter extends BasePresenter<PersonInfoInterface> {
     private PersonInfoModel personInfoModel;
+    private String userName;
+    private String userNumber;
     public PersonInfoInterface personInfoInterface;
 
-    public PersonInfoPresenter(PersonInfoInterface personInfoInterface) {
+    public PersonInfoPresenter(PersonInfoInterface personInfoInterface){
         this.personInfoInterface = personInfoInterface;
         personInfoModel = new PersonInfoModelImp();
     }
 
+    public void initData(String userName , String userNumber) {
+        this.userName = userName;
+        this.userNumber = userNumber;
+    }
     public void getPersonInfoData() {
         personInfoModel.getPersonInfoData(new ResultListener() {
             @Override
@@ -34,7 +40,7 @@ public class PersonInfoPresenter extends BasePresenter<PersonInfoInterface> {
                 if (personInfoInterface != null)
                     personInfoInterface.getInfoFail(fail);
             }
-        });
+        } , userName , userNumber);
     }
 
     public void submitData(PersonInfo personInfo) {
@@ -50,7 +56,7 @@ public class PersonInfoPresenter extends BasePresenter<PersonInfoInterface> {
                 if (personInfoInterface != null)
                     personInfoInterface.submitFail(fail);
             }
-        }, personInfo);
+        }, personInfo , userName , userNumber);
     }
 
     public void getImageHead() {
@@ -66,6 +72,6 @@ public class PersonInfoPresenter extends BasePresenter<PersonInfoInterface> {
                 if (personInfoInterface != null)
                     personInfoInterface.getImageHeadFail(fail);
             }
-        });
+        }, userNumber);
     }
 }

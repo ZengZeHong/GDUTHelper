@@ -30,7 +30,7 @@
             android:name=".view.activity.ScoreSearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.activity.GDUTMainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ScheduleActivity"

@@ -13,12 +13,16 @@ import com.zzh.gdut.gduthelper.view.vinterface.ScoreInfoInterface;
 public class ScorePresenter extends BasePresenter<ScoreInfoInterface> {
     private ScoreModel scoreModel;
     private ScoreInfoInterface scoreInfoInterface;
-
+    private String userName;
+    private String userNumber;
     public ScorePresenter(ScoreInfoInterface scoreInfoInterface) {
         this.scoreInfoInterface = scoreInfoInterface;
         scoreModel = new ScoreModelImp();
     }
-
+    public void initData(String userName , String userNumber){
+        this.userName = userName;
+        this.userNumber = userNumber;
+    }
     /**
      * 成绩查询
      * @param year
@@ -36,6 +40,6 @@ public class ScorePresenter extends BasePresenter<ScoreInfoInterface> {
             public void onResultFail(String fail) {
                 scoreInfoInterface.getScoreFail(fail);
             }
-        });
+        } , userName , userNumber);
     }
 }

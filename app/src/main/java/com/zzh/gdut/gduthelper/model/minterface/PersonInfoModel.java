@@ -9,9 +9,9 @@ import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
  */
 
 public interface PersonInfoModel {
-    void submitData(ResultListener resultListener , PersonInfo personInfo);
+    void submitData(ResultListener resultListener , PersonInfo personInfo,String userName , String userNumber);
 
-    void getPersonInfoData(ResultListener resultListener);
+    void getPersonInfoData(ResultListener resultListener,String userName , String userNumber);
 
-    void getUserImageHead(ByteListener byteListener);
+    void getUserImageHead(ByteListener byteListener, String userNumber);
 }

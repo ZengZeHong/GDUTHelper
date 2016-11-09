@@ -21,7 +21,7 @@ import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.bean.PersonInfo;
 import com.zzh.gdut.gduthelper.presenter.PersonInfoPresenter;
-import com.zzh.gdut.gduthelper.util.ApiUtil;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.vinterface.PersonInfoInterface;
@@ -42,6 +42,8 @@ import static com.zzh.gdut.gduthelper.util.AppConstants.SERVICE_BUSY;
 public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, PersonInfoPresenter> implements PersonInfoInterface {
     private static final String TAG = "PersonInfoActivity";
     private PersonInfo personInfo;
+    private String userName;
+    private String userNumber;
     @BindView(R.id.rl_dormitory)
     RelativeLayout rlDormitory;
     @BindView(R.id.rl_polity)
@@ -129,6 +131,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
     protected void initViews() {
         setToolbar();
         showProgressDialog("正在获取信息中...");
+        mPresenter.initData(userName , userNumber);
         //获取头像
         mPresenter.getImageHead();
         //获取个人信息
@@ -139,7 +142,7 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
      * 设置Toolbar字体颜色
      */
     private void setToolbar() {
-        showToolbarAndShowNavigation(ApiUtil.USER_NAME , true);
+        showToolbarAndShowNavigation(userName, true);
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
@@ -152,7 +155,8 @@ public class PersonInfoActivity extends BaseActivity<PersonInfoInterface, Person
     }
 
     protected void getIntentData(Intent intent) {
-
+        userName = intent.getStringExtra(AppConstants.TAG_USER_NAME);
+        userNumber = intent.getStringExtra(AppConstants.TAG_USER_NUMBER);
     }
 
     @OnClick({R.id.rl_dormitory, R.id.rl_polity, R.id.rl_phone_number, R.id.rl_email, R.id.rl_address, R.id.rl_graduate, R.id.bt_commit})

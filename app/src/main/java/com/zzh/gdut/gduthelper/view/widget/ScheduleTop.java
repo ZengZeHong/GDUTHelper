@@ -18,7 +18,7 @@ import com.zzh.gdut.gduthelper.util.DisplayUtil;
  * Created by ZengZeHong on 2016/10/14.
  */
 
-public class SchduleTop extends View {
+public class ScheduleTop extends View {
     private static final String TAG = "SchduleTop";
     private static final int ROW_LINE = 7;
     private int rowHeight;
@@ -47,18 +47,18 @@ public class SchduleTop extends View {
     private int showWeek;
     private boolean isNextYear = false;
 
-    public SchduleTop(Context context) {
+    public ScheduleTop(Context context) {
         super(context);
         initData(context);
     }
 
-    public SchduleTop(Context context, AttributeSet attrs) {
+    public ScheduleTop(Context context, AttributeSet attrs) {
         super(context, attrs);
         initData(context);
         initAttrs(context, attrs);
     }
 
-    public SchduleTop(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ScheduleTop(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context);
     }
@@ -113,6 +113,7 @@ public class SchduleTop extends View {
             currentYear--;
             isNextYear = false;
         }
+        invalidate();
     }
 
 

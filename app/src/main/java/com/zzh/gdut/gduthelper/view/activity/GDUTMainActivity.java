@@ -6,13 +6,16 @@ import android.view.View;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseNormalActivity;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseNormalActivity {
-    private static final String TAG = "MainActivity";
+public class GDUTMainActivity extends BaseNormalActivity {
+    private static final String TAG = "GDUTMainActivity";
+    private String userName;
+    private String userNumber;
     @BindView(R.id.cv_info)
     CardView cvInfo;
     @BindView(R.id.cv_score)
@@ -28,7 +31,7 @@ public class MainActivity extends BaseNormalActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_gdut_main;
     }
 
     @Override
@@ -37,12 +40,13 @@ public class MainActivity extends BaseNormalActivity {
 
     @Override
     protected void initAttributes() {
-        ButterKnife.bind(MainActivity.this);
+        ButterKnife.bind(GDUTMainActivity.this);
     }
 
     @Override
     protected void getIntentData(Intent intent) {
-
+        userName = intent.getStringExtra(AppConstants.TAG_USER_NAME);
+        userNumber = intent.getStringExtra(AppConstants.TAG_USER_NUMBER);
     }
 
     @OnClick({R.id.cv_info, R.id.cv_exam, R.id.cv_class, R.id.cv_evaluate, R.id.cv_score, R.id.cv_password})
@@ -74,8 +78,12 @@ public class MainActivity extends BaseNormalActivity {
             break;
         }
         if (cls != null) {
-            Intent intent = new Intent(MainActivity.this, cls);
+            Intent intent = new Intent(GDUTMainActivity.this, cls);
+            intent.putExtra(AppConstants.TAG_USER_NUMBER, userNumber);
+            intent.putExtra(AppConstants.TAG_USER_NAME, userName );
             startActivity(intent);
+            setPendingTransition(AppConstants.OPEN_OVERPENDINGTRANSITION);
+
         }
     }
 }

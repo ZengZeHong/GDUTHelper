@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
-import com.zzh.gdut.gduthelper.view.widget.ClickBackgoundView;
+import com.zzh.gdut.gduthelper.view.widget.ClickBackgroundView;
 
 import java.util.List;
 
@@ -47,22 +47,22 @@ public class GalleryAdapter extends BaseAdapter {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.viewpager_item, parent, false);
-            holder.clickBackgoundView = (ClickBackgoundView) convertView.findViewById(R.id.click_view);
+            convertView = LayoutInflater.from(context).inflate(R.layout.gallery_item, parent, false);
+            holder.clickBackgroundView = (ClickBackgroundView) convertView.findViewById(R.id.click_view);
             holder.tvSchedule = (TextView) convertView.findViewById(R.id.tv_schedule);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         ScheduleInfo scheduleInfo = list.get(position);
-        holder.clickBackgoundView.setBackground(scheduleInfo.getBackgroundColor());
+        holder.clickBackgroundView.setBackground(scheduleInfo.getBackgroundColor());
         holder.tvSchedule.setText(scheduleInfo.getScheduleName() + "@" + scheduleInfo.getSchedulePlace());
         holder.tvSchedule.setTextColor(scheduleInfo.getTextColor());
         return convertView;
     }
 
     class ViewHolder {
-        private ClickBackgoundView clickBackgoundView;
+        private ClickBackgroundView clickBackgroundView;
         private TextView tvSchedule;
     }
 

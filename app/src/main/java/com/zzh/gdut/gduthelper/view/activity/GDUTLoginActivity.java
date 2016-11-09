@@ -1,6 +1,7 @@
 package com.zzh.gdut.gduthelper.view.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +12,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseActivity;
 import com.zzh.gdut.gduthelper.presenter.LoginPresenter;
-import com.zzh.gdut.gduthelper.util.ApiUtil;
+import com.zzh.gdut.gduthelper.util.AppConstants;
 import com.zzh.gdut.gduthelper.util.JsoupUtil;
 import com.zzh.gdut.gduthelper.util.ToastUtil;
 import com.zzh.gdut.gduthelper.view.vinterface.LoginInterface;
@@ -26,6 +27,10 @@ import butterknife.OnClick;
 
 public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresenter> implements LoginInterface {
     private static final String TAG = "GDUTLoginActivity";
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String userName;
+    private String password;
     @BindView(R.id.et_account)
     MaterialEditText etAccount;
     @BindView(R.id.et_password)
@@ -50,6 +55,8 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     protected void initViews() {
         showToolbarAndShowNavigation("教务系统" , true);
+        etAccount.setText(userName);
+        etPassword.setText(password);
         //一开始就获取验证码
         mPresenter.getImageCode();
         ToastUtil.showToast(GDUTLoginActivity.this, "正在获取验证码..");
@@ -58,6 +65,11 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     protected void initAttributes() {
         ButterKnife.bind(this);
+        sharedPreferences = getSharedPreferences("login" , MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        userName = sharedPreferences.getString("userName" , "");
+        password = sharedPreferences.getString("password" , "");
     }
 
     @Override
@@ -140,22 +152,28 @@ public class GDUTLoginActivity extends BaseActivity<LoginInterface, LoginPresent
     @Override
     public void getImageCodeSuccess(byte[] bytes) {
         Log.e(TAG, "getImageCodeSuccess: " + bytes.length);
-        imgCode.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-    }
+        imgCode.setScaleType(ImageView.ScaleType.FIT_XY);
+        imgCode.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));    }
 
     @Override
     public void getImageCodeFail(String fail) {
         Log.e(TAG, "getImageCodeFail: " + fail);
+        imgCode.setScaleType(ImageView.ScaleType.CENTER);
+        imgCode.setImageResource(R.drawable.ic_error_outline_black_36dp);
         ToastUtil.showToast(GDUTLoginActivity.this, "获取验证码失败");
     }
 
     @Override
     public void getInfoSuccess(String result) {
         Log.e(TAG, "getInfoSuccess: " + result);
-        JsoupUtil.getUserName(result);
-        ApiUtil.USER_NUMBER = etAccount.getText().toString();
+        editor.putString("userName" , etAccount.getText().toString());
+        editor.putString("password" , etPassword.getText().toString());
+        editor.commit();
         ToastUtil.showToast(GDUTLoginActivity.this, "登陆成功");
-        Intent intent = new Intent(GDUTLoginActivity.this, MainActivity.class);
+
+        Intent intent = new Intent(GDUTLoginActivity.this, GDUTMainActivity.class);
+        intent.putExtra(AppConstants.TAG_USER_NUMBER, etAccount.getText().toString());
+        intent.putExtra(AppConstants.TAG_USER_NAME,JsoupUtil.getUserName(result) );
         startActivity(intent);
         finish();
         //TODO 登陆成功后的操作

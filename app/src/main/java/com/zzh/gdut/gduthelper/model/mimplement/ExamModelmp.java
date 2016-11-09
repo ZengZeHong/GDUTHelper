@@ -15,11 +15,11 @@ import java.net.URLEncoder;
 
 public class ExamModelmp implements ExamModel {
     @Override
-    public void searchExam(ResultListener resultListener) {
+    public void searchExam(ResultListener resultListener , String userName , String userNumber) {
         try {
             String url = ApiUtil.URL_HREF_SEARCH_EXAM +
-                    "?xh=" + ApiUtil.USER_NUMBER +
-                    "&xm=" + URLEncoder.encode(ApiUtil.USER_NAME, NetworkConnection.STRING_CODE) +
+                    "?xh=" + userNumber +
+                    "&xm=" + URLEncoder.encode(userName, NetworkConnection.STRING_CODE) +
                     "&gnmkdm=N121501";
             NetworkUtil.getInstance().get(url , resultListener);
 

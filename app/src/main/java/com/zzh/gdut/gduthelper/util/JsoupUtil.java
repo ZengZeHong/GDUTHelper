@@ -96,16 +96,16 @@ public class JsoupUtil {
      *
      * @param result
      */
-    public static void getUserName(String result) {
+    public static String getUserName(String result) {
         Document document = Jsoup.parse(result);
         Elements elements = document.getElementsByTag("span");
         String data = elements.get(1).text();
         if (data.contains("同学")) {
             data = data.substring(0, data.indexOf("同学"));
             Log.e(TAG, "getUserName: " + data);
-            ApiUtil.USER_NAME = data;
+            return data;
         }
-
+        return null;
     }
 
     /**
@@ -359,22 +359,24 @@ public class JsoupUtil {
     private static List<ScheduleInfo> getScheduleInfo(int i, int span, int line, Element element) {
         List<ScheduleInfo> list = new ArrayList<>();
         if (!element.text().equals(" ")) {
-            String[] data = element.text().split(" ");
-            int offest;
-            if (data.length % 6 == 0 && line < 9)
-                offest = 6;
-            else offest = 4;
-            for (int j = 0; j < data.length; j = j + offest) {
-                ScheduleInfo scheduleInfo = new ScheduleInfo();
-                if (j + offest <= data.length) {
-                    scheduleInfo.setScheduleName(data[j + 0]);
-                    scheduleInfo.setScheduleTime(data[j + 1]);
-                    Log.e(TAG, "getScheduleInfo: name " + data[j + 0]);
-                    Log.e(TAG, "getScheduleInfo: time " + data[j + 1]);
-                    scheduleInfo.setScheduleTeacher(data[j + 2]);
-                    scheduleInfo.setSchedulePlace(data[j + 3]);
-                    scheduleInfo.setLocation(i - span, line);
-                    list.add(scheduleInfo);
+            Log.e(TAG, "getScheduleInfo: html " + element.html() );
+            String[] schedules = element.html().split("<br><br>");
+            for(String schedule : schedules) {
+                String[] data = schedule.split("<br>");
+                Log.e(TAG, "getScheduleInfo: schedule " +  schedule );
+                    try {
+                        ScheduleInfo scheduleInfo = new ScheduleInfo();
+                        scheduleInfo.setScheduleName(data[0]);
+                        scheduleInfo.setScheduleTime(data[1]);
+                        Log.e(TAG, "getScheduleInfo: name " + data[0]);
+                        Log.e(TAG, "getScheduleInfo: time " + data[1]);
+                        scheduleInfo.setScheduleTeacher(data[2]);
+                        scheduleInfo.setSchedulePlace(data[3]);
+                        scheduleInfo.setLocation(i - span, line);
+                        list.add(scheduleInfo);
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        Log.e(TAG, "ArrayIndexOutOfBoundsException: " );
+                        e.printStackTrace();
                 }
             }
         }

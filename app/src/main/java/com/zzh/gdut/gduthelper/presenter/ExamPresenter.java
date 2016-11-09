@@ -13,9 +13,16 @@ import com.zzh.gdut.gduthelper.view.vinterface.ExamInterface;
 public class ExamPresenter extends BasePresenter<ExamInterface> {
     private ExamModel examModel;
     private ExamInterface examInterface;
+    private String userName;
+    private String userNumber;
     public ExamPresenter(ExamInterface examInterface){
         this.examInterface = examInterface;
         examModel = new ExamModelmp();
+    }
+
+    public void initData(String userName , String userNumber){
+        this.userName = userName;
+        this.userNumber = userNumber;
     }
     public void searchExam(){
         examModel.searchExam(new ResultListener() {
@@ -30,6 +37,6 @@ public class ExamPresenter extends BasePresenter<ExamInterface> {
                 if(examInterface != null)
                     examInterface.searchFail(fail);
             }
-        });
+        } , userName , userNumber);
     }
 }

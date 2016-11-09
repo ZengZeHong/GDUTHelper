@@ -13,12 +13,16 @@ import com.zzh.gdut.gduthelper.view.vinterface.ScheduleInterface;
 public class SchedulePresenter extends BasePresenter<ScheduleInterface> {
     private ScheduleInterface scheduleInterface;
     private ScheduleModel scheduleModel;
-
+    private String userName;
+    private String userNumber;
     public SchedulePresenter(ScheduleInterface scheduleInterface) {
         this.scheduleInterface = scheduleInterface;
         scheduleModel = new ScheduleModelImp();
     }
-
+    public void initData(String userName , String userNumber){
+        this.userName = userName;
+        this.userNumber = userNumber;
+    }
     public void getSchedule(String year, String term) {
         scheduleModel.getSchedule(year, term, new ResultListener() {
             @Override
@@ -48,6 +52,6 @@ public class SchedulePresenter extends BasePresenter<ScheduleInterface> {
                 if (scheduleInterface != null)
                     scheduleInterface.getScheduleFail(fail);
             }
-        });
+        } , userName , userNumber);
     }
 }

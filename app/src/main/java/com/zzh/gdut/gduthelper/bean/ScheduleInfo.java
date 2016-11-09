@@ -2,6 +2,7 @@ package com.zzh.gdut.gduthelper.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by ZengZeHong on 2016/10/13.
@@ -127,6 +128,7 @@ public class ScheduleInfo implements Comparable, Parcelable {
 
     @Override
     public int compareTo(Object another) {
+        Log.e("scheduleTime", "compareTo: " + scheduleTime );
         String timeWeek = scheduleTime.substring(scheduleTime.indexOf("{") + 1, scheduleTime.indexOf("}"));
         String[] range = timeWeek.substring(timeWeek.indexOf("第") + 1, timeWeek.indexOf("周")).split("-");
         if (another instanceof ScheduleInfo) {

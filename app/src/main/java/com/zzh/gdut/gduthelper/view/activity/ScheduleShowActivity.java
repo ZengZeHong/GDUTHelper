@@ -13,7 +13,9 @@ import com.zzh.gdut.gduthelper.R;
 import com.zzh.gdut.gduthelper.base.BaseNormalActivity;
 import com.zzh.gdut.gduthelper.bean.ScheduleInfo;
 import com.zzh.gdut.gduthelper.view.adapter.GalleryAdapter;
+import com.zzh.gdut.gduthelper.view.widget.ClickBackgroundView;
 import com.zzh.gdut.gduthelper.view.widget.SCGallery;
+import com.zzh.gdut.gduthelper.view.widget.ScheduleRelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ import butterknife.OnClick;
  * Created by ZengZeHong on 2016/10/23.
  */
 
-public class ScheduleShowActivity extends BaseNormalActivity {
+public class ScheduleShowActivity extends BaseNormalActivity implements AdapterView.OnItemClickListener , AdapterView.OnItemLongClickListener {
     public static final String LIST_TAG = "list";
     private static final String TAG = "ScheduleShowActivity";
     private GalleryAdapter adapter;
@@ -45,20 +47,14 @@ public class ScheduleShowActivity extends BaseNormalActivity {
         gallery = (SCGallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);
         gallery.setSelection(getPosition(list));
+        //弹出动画
         Animator anim = AnimatorInflater.loadAnimator(this, R.animator.gallery_anim);
         anim.setTarget(gallery);
         anim.start();
-        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //普通点击
-                Intent intent = new Intent(ScheduleShowActivity.this , ScheduleItemActivity.class);
-                intent.putExtra(ScheduleItemActivity.TAG_ITEM , list.get(position));
-                startActivity(intent);
-                finish();
-            }
-        });
+        gallery.setOnItemClickListener(this);
+        gallery.setOnItemLongClickListener(this);
     }
+
 
     @Override
     protected void initAttributes() {
@@ -109,5 +105,25 @@ public class ScheduleShowActivity extends BaseNormalActivity {
     protected void backAnimation() {
         finish();
         overridePendingTransition(R.anim.translate_not_move, R.anim.alpha_out);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //普通点击
+        Intent intent = new Intent(ScheduleShowActivity.this , ScheduleItemActivity.class);
+        intent.putExtra(ScheduleItemActivity.TAG_ITEM , list.get(position));
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.translate_right_in, R.anim.translate_not_move);
+
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        //取消选中背景
+        ScheduleRelativeLayout mScheduleRelativeLayout = (ScheduleRelativeLayout) view;
+        ClickBackgroundView mClickBackgroundView = (ClickBackgroundView) mScheduleRelativeLayout.getChildAt(0);
+        mClickBackgroundView.setClick(false);
+        return true;
     }
 }

@@ -7,5 +7,5 @@ import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
  */
 
 public interface ChangePwModel {
-    void changePassword(String originalPw , String newPw , String confirmPw , ResultListener resultListener);
+    void changePassword(String userNumber , String originalPw , String newPw , String confirmPw , ResultListener resultListener);
 }

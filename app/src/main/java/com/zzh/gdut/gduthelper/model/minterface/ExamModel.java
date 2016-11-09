@@ -7,5 +7,5 @@ import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
  */
 
 public interface ExamModel {
-    void searchExam(ResultListener resultListener);
+    void searchExam(ResultListener resultListener , String userName , String userNumber);
 }

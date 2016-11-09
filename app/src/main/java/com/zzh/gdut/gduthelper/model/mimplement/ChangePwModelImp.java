@@ -15,11 +15,11 @@ import java.net.URLEncoder;
  */
 public class ChangePwModelImp implements ChangePwModel {
     @Override
-    public void changePassword(String originalPw, String newPw, String confirmPw, ResultListener resultListener) {
+    public void changePassword(String userNumber ,String originalPw, String newPw, String confirmPw, ResultListener resultListener) {
         String url;
         try {
             url = ApiUtil.URL_HREF_CHANGE_PASSWORD +
-                    "?xh=" + ApiUtil.USER_NUMBER +
+                    "?xh=" + userNumber +
                     "&gnmkdm=N121502";
             PostBody postBody = new PostBody.Builder().
                     addParams("__VIEWSTATE", URLEncoder.encode("dDwxMDIyOTMyNDk0Ozs+3Mw2oW6uW7Iko3ZeO3k8EC8moSk=", NetworkConnection.STRING_CODE)).

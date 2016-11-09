@@ -27,11 +27,11 @@ public class PersonInfoModelImp implements PersonInfoModel {
      * @param resultListener
      */
     @Override
-    public void submitData(ResultListener resultListener, PersonInfo personInfo) {
+    public void submitData(ResultListener resultListener, PersonInfo personInfo , String userName , String userNumber) {
         try {
             String url = ApiUtil.URL_GET_PERSON_INFO +
-                    "?xh=" + ApiUtil.USER_NUMBER +
-                    "&xm=" + URLEncoder.encode(ApiUtil.USER_NAME, NetworkConnection.STRING_CODE) +
+                    "?xh=" + userNumber +
+                    "&xm=" + URLEncoder.encode(userName, NetworkConnection.STRING_CODE) +
                     "&gnmkdm=N121501";
             Log.e(TAG, "submitData: url " + url);
             PostBody postBody = new PostBody.Builder().
@@ -77,11 +77,11 @@ public class PersonInfoModelImp implements PersonInfoModel {
      * 获取用户的个人信息
      */
     @Override
-    public void getPersonInfoData(ResultListener resultListener) {
+    public void getPersonInfoData(ResultListener resultListener , String userName , String userNumber) {
         try {
             String url = ApiUtil.URL_GET_PERSON_INFO +
-                    "?xh=" + ApiUtil.USER_NUMBER +
-                    "&xm=" + URLEncoder.encode(ApiUtil.USER_NAME, NetworkConnection.STRING_CODE) +
+                    "?xh=" +userNumber +
+                    "&xm=" + URLEncoder.encode(userName, NetworkConnection.STRING_CODE) +
                     "&gnmkdm=N121501";
             Log.e(TAG, "getPersonInfoData:  " + url);
             NetworkUtil.getInstance().get(url, resultListener);
@@ -95,7 +95,7 @@ public class PersonInfoModelImp implements PersonInfoModel {
      * 获取用户的头像
      */
     @Override
-    public void getUserImageHead(ByteListener byteListener) {
-        NetworkUtil.getInstance().get(ApiUtil.URL_GET_IMAGE_HEAD + ApiUtil.USER_NUMBER, byteListener);
+    public void getUserImageHead(ByteListener byteListener , String userNumber) {
+        NetworkUtil.getInstance().get(ApiUtil.URL_GET_IMAGE_HEAD + userNumber, byteListener);
     }
 }

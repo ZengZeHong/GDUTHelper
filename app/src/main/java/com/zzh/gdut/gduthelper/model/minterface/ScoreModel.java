@@ -8,5 +8,5 @@ import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
 
 public interface ScoreModel {
     //tag分为按学期查询，按学年查询，在校学习成绩查询这些
-    void searchScore(String year , String term , String tag , ResultListener resultListener);
+    void searchScore(String year , String term , String tag , ResultListener resultListener , String userName , String userNumber);
 }

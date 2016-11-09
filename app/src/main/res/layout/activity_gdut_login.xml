@@ -24,7 +24,6 @@
             android:hint="@string/et_account_hint"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/mainTestSize_16sp"
-            android:text="3114005890"
             app:met_errorColor="@color/customRed"
             app:met_floatingLabel="normal"
             app:met_floatingLabelText="@string/et_account_hint"
@@ -64,14 +63,13 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_centerVertical="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/code" />
+                android:scaleType="center"
+                android:src="@drawable/ic_error_outline_black_36dp" />
         </LinearLayout>
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
-            android:text="a6585086"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

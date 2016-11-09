@@ -1,0 +1,18 @@
+<RelativeLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_term"
+    android:clickable="true"
+    android:background="@drawable/click_background"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <TextView
+        android:id="@+id/tv_term"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/secondaryText"
+        android:textSize="@dimen/mainTestSize_16sp"
+        android:padding="@dimen/viewMargin_10dp"
+        android:text="dwqd"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+    />
+</RelativeLayout>

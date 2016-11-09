@@ -9,6 +9,6 @@ import com.zzh.gdut.gduthelper.networkutil.callback.ResultListener;
 public interface ScheduleModel {
     void getSchedule(String year, String term, ResultListener resultListener);
 
-    void getSchedule(ResultListener resultListener);
+    void getSchedule(ResultListener resultListener , String userName , String userNumber);
 
 }
