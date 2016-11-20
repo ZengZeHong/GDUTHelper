@@ -13,3 +13,6 @@
 个人课表是参考超级课程表设计的，不过不用与它的是课表是用自定义View实现d，基本功能与课程表一样，包括点击的画廊效果。
 不过课表的扩展性还未设计。
 
+![image](https://github.com/ZengZeHong/GDUTHelper/blob/master/app/src/main/res/drawable/show_two.png?raw=true)
+![image](https://github.com/ZengZeHong/GDUTHelper/blob/master/app/src/main/res/drawable/show_three.png?raw=true)
+![image](https://github.com/ZengZeHong/GDUTHelper/blob/master/app/src/main/res/drawable/show_one.png?raw=true)
